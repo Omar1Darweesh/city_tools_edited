@@ -7,6 +7,7 @@ import {
   ValidateNested,
   IsNumber,
   IsBoolean,
+  IsString, // ADD THIS IMPORT
   Min,
 } from 'class-validator';
 import { Type } from 'class-transformer';
@@ -34,6 +35,10 @@ export class SalesLineDto {
   @Min(0)
   @IsOptional()
   taxRate?: number;
+
+  @IsString() // ADD THIS
+  @IsOptional() // ADD THIS
+  priceType?: string; // ADD THIS LINE
 }
 
 export class CreateSaleDto {

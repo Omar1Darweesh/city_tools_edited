@@ -48,6 +48,7 @@ export default function App() {
           <Route path="stock-adjustments" element={<StockAdjustments />} />
           <Route path="transfers" element={<Transfers />} />
           <Route path="returns" element={<Returns />} />
+          <Route path="/platform-settings" element={<ProtectedRoute><PlatformSettings /></ProtectedRoute>} />
           <Route path="settings" element={<PlatformSettings />} />
           <Route path="price-management" element={<PriceManagement />} />
           {/* <Route path="product-transactions" element={<ProductTransactions />} /> */}

@@ -346,7 +346,7 @@ export default function Dashboard() {
                 </div>
             </div>
 
-            {/* Quick Actions */}
+            {/* Quick Actions 
             <div style={{ marginBottom: '32px' }}>
                 <h2 style={{ fontSize: '20px', fontWeight: '700', color: '#0f172a', marginBottom: '16px' }}>
                     ⚡ إجراءات سريعة
@@ -381,7 +381,7 @@ export default function Dashboard() {
                         onClick={() => navigate('/reports')}
                     />
                 </div>
-            </div>
+            </div>*/}
 
             {/* Activity Feed */}
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: '24px' }}>

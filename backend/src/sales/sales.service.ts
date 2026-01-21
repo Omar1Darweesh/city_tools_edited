@@ -167,6 +167,7 @@ export class SalesService {
               lineDiscount: new Prisma.Decimal(line.lineDiscount),
               taxRate: new Prisma.Decimal(line.taxRate),
               lineTotal: new Prisma.Decimal(line.lineTotal),
+              priceType: line.priceType || null, // ADD THIS LINE
             })),
           },
           channel,
@@ -672,6 +673,7 @@ export class SalesService {
         lineDiscount: Number(line.lineDiscount),
         taxRate: Number(line.taxRate),
         lineTotal: Number(line.lineTotal),
+        priceType: line.priceType || null,
       })),
     };
   }

@@ -62,7 +62,9 @@ export class UsersController {
     ) || [];
 
     const roles = user.roles?.map((ur: any) => ur.role.name) || [];
-
+    const pages = user.roles?.flatMap((ur: any) =>
+      ur.role.pages?.map((rp: any) => rp.page) || [],
+    ) || [];
     return {
       id: user.id,
       username: user.username,
@@ -70,6 +72,8 @@ export class UsersController {
       branch: user.branch,
       roles,
       permissions,
+      pages,  // ✅ ADD THIS
+
     };
   }
 }

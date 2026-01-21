@@ -8,6 +8,11 @@ export class RolesService {
     async findAll() {
         return this.prisma.role.findMany({
             include: {
+                pages: {
+                    include: {
+                        page: true,
+                    },
+                },
                 permissions: {
                     include: {
                         permission: true,
@@ -21,6 +26,11 @@ export class RolesService {
         const role = await this.prisma.role.findUnique({
             where: { id },
             include: {
+                pages: {
+                    include: {
+                        page: true,
+                    },
+                },
                 permissions: {
                     include: {
                         permission: true,
@@ -36,7 +46,12 @@ export class RolesService {
         return role;
     }
 
-    async create(data: { name: string; description?: string; permissionIds: number[] }) {
+    async create(data: {
+        name: string;
+        description?: string;
+        pageIds?: number[];
+        platformPermissionIds?: number[];
+    }) {
         const existing = await this.prisma.role.findUnique({
             where: { name: data.name },
         });
@@ -49,13 +64,23 @@ export class RolesService {
             data: {
                 name: data.name,
                 description: data.description,
+                pages: {
+                    create: (data.pageIds || []).map((id) => ({
+                        page: { connect: { id } },
+                    })),
+                },
                 permissions: {
-                    create: data.permissionIds.map((id) => ({
+                    create: (data.platformPermissionIds || []).map((id) => ({
                         permission: { connect: { id } },
                     })),
                 },
             },
             include: {
+                pages: {
+                    include: {
+                        page: true,
+                    },
+                },
                 permissions: {
                     include: {
                         permission: true,
@@ -65,8 +90,17 @@ export class RolesService {
         });
     }
 
-    async update(id: number, data: { name?: string; description?: string; permissionIds?: number[] }) {
+    async update(
+        id: number,
+        data: {
+            name?: string;
+            description?: string;
+            pageIds?: number[];
+            platformPermissionIds?: number[];
+        },
+    ) {
         const role = await this.prisma.role.findUnique({ where: { id } });
+
         if (!role) {
             throw new NotFoundException('Role not found');
         }
@@ -78,22 +112,18 @@ export class RolesService {
             }
         }
 
-        // Handle permissions update if provided
-        let permissionsUpdate = {};
-        if (data.permissionIds) {
-            // First, delete existing
+        // Handle pages update
+        if (data.pageIds !== undefined) {
+            await this.prisma.rolePage.deleteMany({
+                where: { roleId: id },
+            });
+        }
+
+        // Handle platform permissions update
+        if (data.platformPermissionIds !== undefined) {
             await this.prisma.rolePermission.deleteMany({
                 where: { roleId: id },
             });
-
-            // Then create new
-            permissionsUpdate = {
-                permissions: {
-                    create: data.permissionIds.map((pid) => ({
-                        permission: { connect: { id: pid } },
-                    })),
-                },
-            };
         }
 
         return this.prisma.role.update({
@@ -101,9 +131,27 @@ export class RolesService {
             data: {
                 name: data.name,
                 description: data.description,
-                ...permissionsUpdate,
+                ...(data.pageIds !== undefined && {
+                    pages: {
+                        create: data.pageIds.map((pageId) => ({
+                            page: { connect: { id: pageId } },
+                        })),
+                    },
+                }),
+                ...(data.platformPermissionIds !== undefined && {
+                    permissions: {
+                        create: data.platformPermissionIds.map((permId) => ({
+                            permission: { connect: { id: permId } },
+                        })),
+                    },
+                }),
             },
             include: {
+                pages: {
+                    include: {
+                        page: true,
+                    },
+                },
                 permissions: {
                     include: {
                         permission: true,
@@ -128,6 +176,38 @@ export class RolesService {
         });
     }
 
+    // Get all pages grouped by category
+    async getPages() {
+        const pages = await this.prisma.page.findMany({
+            where: { active: true },
+            orderBy: { sortOrder: 'asc' },
+        });
+
+        // Group by category
+        const grouped = pages.reduce((acc, page) => {
+            if (!acc[page.category]) {
+                acc[page.category] = [];
+            }
+            acc[page.category].push(page);
+            return acc;
+        }, {} as Record<string, typeof pages>);
+
+        return grouped;
+    }
+
+    // Get platform permissions only (those starting with "platform:")
+    async getPlatformPermissions() {
+        return this.prisma.permission.findMany({
+            where: {
+                name: {
+                    startsWith: 'platform:',
+                },
+            },
+            orderBy: { name: 'asc' },
+        });
+    }
+
+    // Legacy: kept for backward compatibility
     async getPermissions() {
         return this.prisma.permission.findMany();
     }

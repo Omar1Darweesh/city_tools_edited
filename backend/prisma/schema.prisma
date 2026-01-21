@@ -71,6 +71,7 @@ model Role {
   createdAt   DateTime         @default(now()) @map("created_at")
   updatedAt   DateTime         @updatedAt @map("updated_at")
   permissions RolePermission[]
+  pages       RolePage[]
   users       UserRole[]
 
   @@map("roles")
@@ -84,6 +85,32 @@ model Permission {
   roles       RolePermission[]
 
   @@map("permissions")
+}
+
+model Page {
+  id          Int        @id @default(autoincrement())
+  key         String     @unique @db.VarChar(50)  // "sales", "products", "customers"
+  nameEn      String     @map("name_en") @db.VarChar(100)
+  nameAr      String     @map("name_ar") @db.VarChar(100)
+  category    String     @db.VarChar(50)  // "transactions", "inventory", "admin", "people"
+  icon        String?    @db.VarChar(50)
+  route       String?    @db.VarChar(100)  // "/sales", "/products"
+  sortOrder   Int        @default(0) @map("sort_order")
+  active      Boolean    @default(true)
+  createdAt   DateTime   @default(now()) @map("created_at")
+  roles       RolePage[]
+
+  @@map("pages")
+}
+
+model RolePage {
+  roleId Int  @map("role_id")
+  pageId Int  @map("page_id")
+  page   Page @relation(fields: [pageId], references: [id], onDelete: Cascade)
+  role   Role @relation(fields: [roleId], references: [id], onDelete: Cascade)
+
+  @@id([roleId, pageId])
+  @@map("role_pages")
 }
 
 model UserRole {
@@ -306,6 +333,7 @@ model SalesLine {
   lineDiscount   Decimal      @default(0) @map("line_discount") @db.Decimal(10, 2)
   taxRate        Decimal      @default(0) @map("tax_rate") @db.Decimal(5, 2)
   lineTotal      Decimal      @map("line_total") @db.Decimal(10, 2)
+  priceType      String?       @map("pricetype") @db.VarChar(20)
   product        Product      @relation(fields: [productId], references: [id])
   salesInvoice   SalesInvoice @relation(fields: [salesInvoiceId], references: [id], onDelete: Cascade)
 

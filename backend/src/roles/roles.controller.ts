@@ -1,4 +1,14 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, ParseIntPipe } from '@nestjs/common';
+import {
+    Controller,
+    Get,
+    Post,
+    Body,
+    Patch,
+    Param,
+    Delete,
+    UseGuards,
+    ParseIntPipe,
+} from '@nestjs/common';
 import { RolesService } from './roles.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 
@@ -12,6 +22,17 @@ export class RolesController {
         return this.rolesService.findAll();
     }
 
+    @Get('pages')
+    getPages() {
+        return this.rolesService.getPages();
+    }
+
+    @Get('platform-permissions')
+    getPlatformPermissions() {
+        return this.rolesService.getPlatformPermissions();
+    }
+
+    // Legacy endpoint - kept for backward compatibility
     @Get('permissions')
     getPermissions() {
         return this.rolesService.getPermissions();
@@ -23,14 +44,28 @@ export class RolesController {
     }
 
     @Post()
-    create(@Body() body: { name: string; description?: string; permissionIds: number[] }) {
+    create(
+        @Body()
+        body: {
+            name: string;
+            description?: string;
+            pageIds?: number[];
+            platformPermissionIds?: number[];
+        },
+    ) {
         return this.rolesService.create(body);
     }
 
     @Patch(':id')
     update(
         @Param('id', ParseIntPipe) id: number,
-        @Body() body: { name?: string; description?: string; permissionIds?: number[] },
+        @Body()
+        body: {
+            name?: string;
+            description?: string;
+            pageIds?: number[];
+            platformPermissionIds?: number[];
+        },
     ) {
         return this.rolesService.update(id, body);
     }

@@ -63,11 +63,12 @@ export default function Products() {
     const [showTransactions, setShowTransactions] = useState(false);
     const [selectedProductForTransactions, setSelectedProductForTransactions] = useState<any>(null);
     const [showInactive, setShowInactive] = useState(false);
+    const [stockFilter, setStockFilter] = useState<string>(''); // Add this line
 
     useEffect(() => {
         fetchProducts();
         fetchCategories();
-    }, [searchTerm, selectedCategory, selectedSubcategory, selectedItemType, page, showInactive]);
+    }, [searchTerm, selectedCategory, selectedSubcategory, selectedItemType, page, showInactive, stockFilter]); // Add stockFilter here
 
     const fetchProducts = async () => {
         setLoading(true);
@@ -85,7 +86,29 @@ export default function Products() {
             if (!showInactive) params.active = true;
 
             const response = await apiClient.get('/products', { params });
-            setProducts(response.data.data);
+
+            let filteredProducts = response.data.data;
+            if (stockFilter) {
+                filteredProducts = filteredProducts.filter((product: Product) => {
+                    const stock = product.stock || 0;
+                    const minQty = product.minQty || 0;
+                    const maxQty = product.maxQty || 0;
+
+                    switch (stockFilter) {
+                        case 'empty':
+                            return stock === 0;
+                        case 'low':
+                            return stock > 0 && stock <= minQty;
+                        case 'enough':
+                            return stock > minQty && stock < maxQty;
+                        case 'high':
+                            return stock >= maxQty;
+                        default:
+                            return true;
+                    }
+                });
+            }
+            setProducts(filteredProducts);
             setTotalPages(Math.ceil(response.data.total / 50));
         } catch (error) {
             console.error('Failed to fetch products:', error);
@@ -143,7 +166,7 @@ export default function Products() {
         return subcategory?.itemTypes || [];
     };
 
-    const hasActiveFilters = searchTerm || selectedCategory || selectedSubcategory || selectedItemType;
+    const hasActiveFilters = searchTerm || selectedCategory || selectedSubcategory || selectedItemType || stockFilter;
 
     return (
         <div style={{ padding: '2rem' }}>
@@ -359,6 +382,44 @@ export default function Products() {
                             ))}
                         </select>
                     </div>
+
+                    {/* Stock Level Filter */}
+                    <div style={{ position: 'relative' }}>
+                        <Filter
+                            size={18}
+                            style={{
+                                position: 'absolute',
+                                right: '12px',
+                                top: '50%',
+                                transform: 'translateY(-50%)',
+                                color: stockFilter ? '#667eea' : '#9ca3af'
+                            }}
+                        />
+                        <select
+                            value={stockFilter}
+                            onChange={(e) => {
+                                setStockFilter(e.target.value);
+                                setPage(1);
+                            }}
+                            style={{
+                                width: '100%',
+                                padding: '0.75rem 2.5rem 0.75rem 1rem',
+                                border: stockFilter ? '2px solid #667eea' : '1px solid #e5e7eb',
+                                borderRadius: '8px',
+                                fontSize: '0.875rem',
+                                background: 'white',
+                                transition: 'all 0.2s',
+                                fontWeight: stockFilter ? 600 : 'normal'
+                            }}
+                        >
+                            <option value="">كل المخزون</option>
+                            <option value="empty">نافذ (0)</option>
+                            <option value="low">منخفض (&lt;= الحد الأدنى)</option>
+                            <option value="enough">كافي (بين الحدود)</option>
+                            <option value="high">مرتفع (&gt;= الحد الأقصى)</option>
+                        </select>
+                    </div>
+
                 </div>
 
                 {/* Filter Actions Row */}
@@ -449,6 +510,7 @@ export default function Products() {
                                     setSelectedCategory(null);
                                     setSelectedSubcategory(null);
                                     setSelectedItemType(null);
+                                    setStockFilter(''); // Add this line
                                     setPage(1);
                                 }}
                                 style={{

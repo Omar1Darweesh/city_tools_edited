@@ -4,10 +4,13 @@ import * as bcrypt from 'bcrypt';
 const prisma = new PrismaClient();
 
 async function main() {
-    console.log('🌱 Seeding database...');
+    console.log('🌱 Starting database seed...\n');
 
-    // Create a demo branch
-    const branch = await prisma.branch.upsert({
+    // ========================================
+    // 1. CREATE BRANCHES
+    // ========================================
+    console.log('🏢 Creating branches...');
+    const mainBranch = await prisma.branch.upsert({
         where: { code: 'BR001' },
         update: {},
         create: {
@@ -17,85 +20,137 @@ async function main() {
             active: true,
         },
     });
-    console.log('✅ Created branch:', branch.name);
+    console.log('✅ Branch created\n');
 
-    // Create stock location for the branch
-    const stockLocation = await prisma.stockLocation.upsert({
-        where: { id: 1 },
-        update: {},
-        create: {
-            branchId: branch.id,
-            name: 'Main Store',
-            active: true,
-        },
-    });
-    console.log('✅ Created stock location:', stockLocation.name);
 
-    // Create roles
-    const adminRole = await prisma.role.upsert({
-        where: { name: 'ADMIN' },
-        update: {},
-        create: {
-            name: 'ADMIN',
-            description: 'Full system access',
-        },
+    // ========================================
+    // 2. CREATE STOCK LOCATIONS
+    // ========================================
+    console.log('📍 Creating stock locations...');
+
+    // Main Warehouse
+    const existingMainWarehouse = await prisma.stockLocation.findFirst({
+        where: {
+            branchId: mainBranch.id,
+            name: 'Main Warehouse'
+        }
     });
 
-    const managerRole = await prisma.role.upsert({
-        where: { name: 'MANAGER' },
-        update: {},
-        create: {
-            name: 'MANAGER',
-            description: 'Branch manager with elevated permissions',
-        },
+    if (!existingMainWarehouse) {
+        await prisma.stockLocation.create({
+            data: {
+                branchId: mainBranch.id,
+                name: 'Main Warehouse',
+                active: true,
+            },
+        });
+    }
+
+    // Showroom
+    const existingShowroom = await prisma.stockLocation.findFirst({
+        where: {
+            branchId: mainBranch.id,
+            name: 'Showroom'
+        }
     });
 
-    const storekeeperRole = await prisma.role.upsert({
-        where: { name: 'STOREKEEPER' },
-        update: {},
-        create: {
-            name: 'STOREKEEPER',
-            description: 'Inventory and receiving management',
-        },
-    });
+    if (!existingShowroom) {
+        await prisma.stockLocation.create({
+            data: {
+                branchId: mainBranch.id,
+                name: 'Showroom',
+                active: true,
+            },
+        });
+    }
 
-    const cashierRole = await prisma.role.upsert({
-        where: { name: 'CASHIER' },
-        update: {},
-        create: {
-            name: 'CASHIER',
-            description: 'POS operations only',
-        },
-    });
-    console.log('✅ Created roles');
+    console.log('✅ 2 stock locations created\n');
 
-    // Create permissions
+
+    // ========================================
+    // 2. CREATE DEFAULT CATEGORIES
+    // ========================================
+    console.log('📦 Creating default categories...');
+    const categories = [
+        { name: 'Mixed', nameAr: 'مختلط', active: true },
+        { name: 'Defective', nameAr: 'تلافيات', active: true },
+    ];
+
+    for (const cat of categories) {
+        const existing = await prisma.category.findFirst({
+            where: { name: cat.name }
+        });
+
+        if (!existing) {
+            await prisma.category.create({
+                data: cat,
+            });
+        }
+    }
+    console.log(`✅ ${categories.length} categories created\n`);
+
+
+    // ========================================
+    // 2. CREATE PERMISSIONS
+    // ========================================
+    console.log('🔐 Creating permissions...');
     const permissions = [
         { name: 'products:read', description: 'View products' },
         { name: 'products:write', description: 'Create/edit products' },
         { name: 'sales:create', description: 'Create sales' },
         { name: 'sales:read', description: 'View sales' },
         { name: 'stock:read', description: 'View stock' },
-        { name: 'stock:adjust', description: 'Adjust stock' },
+        { name: 'stock:adjust', description: 'Adjust stock levels' },
         { name: 'purchasing:read', description: 'View purchases' },
         { name: 'purchasing:write', description: 'Create purchases' },
-        { name: 'users:manage', description: 'Manage users' },
-        { name: 'settings:manage', description: 'Manage settings' },
+        { name: 'users:manage', description: 'Manage users and roles' },
+        { name: 'settings:manage', description: 'Manage system settings' },
     ];
 
     for (const perm of permissions) {
         await prisma.permission.upsert({
             where: { name: perm.name },
-            update: {},
+            update: perm,
             create: perm,
         });
     }
-    console.log('✅ Created permissions');
+    console.log(`✅ ${permissions.length} permissions created\n`);
 
-    // Assign permissions to roles
+    // ========================================
+    // 3. CREATE ROLES
+    // ========================================
+    console.log('📋 Creating roles...');
+    const adminRole = await prisma.role.upsert({
+        where: { name: 'ADMIN' },
+        update: {},
+        create: { name: 'ADMIN', description: 'Full system access' },
+    });
+
+    await prisma.role.upsert({
+        where: { name: 'MANAGER' },
+        update: {},
+        create: { name: 'MANAGER', description: 'Branch manager' },
+    });
+
+    await prisma.role.upsert({
+        where: { name: 'STOREKEEPER' },
+        update: {},
+        create: { name: 'STOREKEEPER', description: 'Inventory management' },
+    });
+
+    await prisma.role.upsert({
+        where: { name: 'CASHIER' },
+        update: {},
+        create: { name: 'CASHIER', description: 'POS operations' },
+    });
+    console.log('✅ 4 roles created\n');
+
+    // ========================================
+    // 4. ASSIGN PERMISSIONS TO ADMIN ROLE
+    // ========================================
+    console.log('🔗 Assigning permissions to ADMIN...');
     const allPermissions = await prisma.permission.findMany();
 
-    // Admin gets all permissions
     for (const perm of allPermissions) {
         await prisma.rolePermission.upsert({
             where: {
@@ -111,80 +166,131 @@ async function main() {
             },
         });
     }
+    console.log(`✅ Assigned ${allPermissions.length} permissions to ADMIN\n`);
 
-    // Manager gets most permissions except user management
-    const managerPerms = allPermissions.filter((p) => !p.name.includes('users:manage'));
-    for (const perm of managerPerms) {
-        await prisma.rolePermission.upsert({
+    // ========================================
+    // 5. CREATE PAGES
+    // ========================================
+    console.log('📄 Creating pages...');
+    const pages = [
+        // Transactions (المعاملات)
+        { key: 'sales', nameAr: 'المبيعات', nameEn: 'Sales', route: '/sales', category: 'transactions', icon: 'ShoppingCart', sortOrder: 1 },
+        { key: 'returns', nameAr: 'المرتجعات', nameEn: 'Returns', route: '/returns', category: 'transactions', icon: 'RotateCcw', sortOrder: 2 },
+        { key: 'customer-payments', nameAr: 'حسابات العملاء', nameEn: 'Customer Payments', route: '/customer-payments', category: 'transactions', icon: 'DollarSign', sortOrder: 3 },
+        { key: 'receive-goods', nameAr: 'استلام بضاعة', nameEn: 'Receive Goods', route: '/receive-goods', category: 'transactions', icon: 'Package', sortOrder: 4 },
+        { key: 'transfers', nameAr: 'التحويلات', nameEn: 'Transfers', route: '/transfers', category: 'transactions', icon: 'Plane', sortOrder: 5 },
+
+        // Inventory (المخزون)
+        { key: 'products', nameAr: 'المنتجات', nameEn: 'Products', route: '/products', category: 'inventory', icon: 'Box', sortOrder: 6 },
+        { key: 'categories', nameAr: 'التصنيفات', nameEn: 'Categories', route: '/categories', category: 'inventory', icon: 'Tags', sortOrder: 7 },
+        { key: 'stock-adjustments', nameAr: 'تسوية المخزون', nameEn: 'Stock Adjustments', route: '/stock-adjustments', category: 'inventory', icon: 'ClipboardList', sortOrder: 8 },
+        { key: 'price-management', nameAr: 'إدارة الأسعار', nameEn: 'Price Management', route: '/price-management', category: 'inventory', icon: 'DollarSign', sortOrder: 9 },
+
+        // People (الأشخاص)
+        { key: 'customers', nameAr: 'العملاء', nameEn: 'Customers', route: '/customers', category: 'people', icon: 'Users', sortOrder: 11 },
+        { key: 'suppliers', nameAr: 'الموردين', nameEn: 'Suppliers', route: '/suppliers', category: 'people', icon: 'Truck', sortOrder: 12 },
+
+        // Admin (الإدارة)
+        { key: 'users', nameAr: 'المستخدمين', nameEn: 'Users', route: '/users', category: 'admin', icon: 'UserCog', sortOrder: 13 },
+        { key: 'roles', nameAr: 'الأدوار والصلاحيات', nameEn: 'Roles', route: '/roles', category: 'admin', icon: 'Shield', sortOrder: 14 },
+        { key: 'platform-settings', nameAr: 'إعدادات المنصات', nameEn: 'Platform Settings', route: '/platform-settings', category: 'admin', icon: 'Settings', sortOrder: 15 },
+        { key: 'reports', nameAr: 'التقارير', nameEn: 'Reports', route: '/reports', category: 'admin', icon: 'BarChart3', sortOrder: 16 },
+    ];
+
+
+    for (const page of pages) {
+        await prisma.page.upsert({
+            where: { key: page.key },
+            update: { ...page, active: true },
+            create: { ...page, active: true },
+        });
+    }
+    console.log(`✅ ${pages.length} pages created\n`);
+
+    // ========================================
+    // 6. ASSIGN ALL PAGES TO ADMIN ROLE
+    // ========================================
+    console.log('🔗 Assigning pages to ADMIN role...');
+    const allPages = await prisma.page.findMany();
+
+    for (const page of allPages) {
+        await prisma.rolePage.upsert({
             where: {
-                roleId_permissionId: {
-                    roleId: managerRole.id,
-                    permissionId: perm.id,
+                roleId_pageId: {
+                    roleId: adminRole.id,
+                    pageId: page.id,
                 },
             },
             update: {},
             create: {
-                roleId: managerRole.id,
-                permissionId: perm.id,
+                roleId: adminRole.id,
+                pageId: page.id,
             },
         });
     }
+    console.log(`✅ Assigned ${allPages.length} pages to ADMIN\n`);
 
-    // Storekeeper permissions
-    const storekeeperPerms = allPermissions.filter((p) =>
-        ['products:read', 'stock:read', 'stock:adjust', 'purchasing:read', 'purchasing:write'].includes(p.name),
-    );
-    for (const perm of storekeeperPerms) {
-        await prisma.rolePermission.upsert({
-            where: {
-                roleId_permissionId: {
-                    roleId: storekeeperRole.id,
-                    permissionId: perm.id,
-                },
-            },
-            update: {},
-            create: {
-                roleId: storekeeperRole.id,
-                permissionId: perm.id,
-            },
-        });
-    }
 
-    // Cashier permissions
-    const cashierPerms = allPermissions.filter((p) =>
-        ['products:read', 'sales:create', 'sales:read'].includes(p.name),
-    );
-    for (const perm of cashierPerms) {
-        await prisma.rolePermission.upsert({
+    // ========================================
+    // 8. CREATE DEFAULT CASHIER USER
+    // ========================================
+    console.log('👤 Creating default cashier user...');
+    const cashierPasswordHash = await bcrypt.hash('123456', 10);
+
+    // Get the CASHIER role
+    const cashierRole = await prisma.role.findUnique({
+        where: { name: 'CASHIER' }
+    });
+
+    const cashierUser = await prisma.user.upsert({
+        where: { username: 'cashier' },
+        update: {},
+        create: {
+            username: 'cashier',
+            fullName: 'Cashier User',
+            passwordHash: cashierPasswordHash,
+            branchId: mainBranch.id,
+            active: true,
+        },
+    });
+
+    // Assign CASHIER role to user
+    if (cashierRole) {
+        await prisma.userRole.upsert({
             where: {
-                roleId_permissionId: {
+                userId_roleId: {
+                    userId: cashierUser.id,
                     roleId: cashierRole.id,
-                    permissionId: perm.id,
                 },
             },
             update: {},
             create: {
+                userId: cashierUser.id,
                 roleId: cashierRole.id,
-                permissionId: perm.id,
             },
         });
     }
-    console.log('✅ Assigned permissions to roles');
+    console.log('✅ Cashier user created (username: cashier, password: 123456)\n');
 
-    // Create admin user
-    const hashedPassword = await bcrypt.hash('admin123', 10);
+    // ========================================
+    // 7. CREATE DEFAULT ADMIN USER
+    // ========================================
+    console.log('👤 Creating default admin user...');
+    const passwordHash = await bcrypt.hash('admin123', 10);
+
     const adminUser = await prisma.user.upsert({
         where: { username: 'admin' },
         update: {},
         create: {
             username: 'admin',
-            passwordHash: hashedPassword,
             fullName: 'System Administrator',
-            branchId: branch.id,
+            passwordHash,
+            branchId: mainBranch.id,
             active: true,
         },
     });
 
+    // Assign ADMIN role to user
     await prisma.userRole.upsert({
         where: {
             userId_roleId: {
@@ -198,96 +304,27 @@ async function main() {
             roleId: adminRole.id,
         },
     });
-    console.log('✅ Created admin user (username: admin, password: admin123)');
+    console.log('✅ Admin user created (username: admin, password: admin123)\n');
 
-    // Create a cashier user
-    const cashierPassword = await bcrypt.hash('cashier123', 10);
-    const cashierUser = await prisma.user.upsert({
-        where: { username: 'cashier' },
-        update: {},
-        create: {
-            username: 'cashier',
-            passwordHash: cashierPassword,
-            fullName: 'John Cashier',
-            branchId: branch.id,
-            active: true,
-        },
-    });
+    console.log('🎉 Seed complete!\n');
+    console.log('📋 Summary:');
+    console.log(`   - Branches: 1`);
+    console.log(`   - Categories: 2`);
+    console.log(`   - Roles: 4`);
+    console.log(`   - Permissions: ${permissions.length}`);
+    console.log(`   - Pages: ${pages.length}`);
+    console.log(`   - Users: 2 (admin, cashier)`);
+    console.log('\n✅ Login credentials:');
+    console.log('   👨‍💼 Admin: admin / admin123');
+    console.log('   💰 Cashier: cashier / 123456');
 
-    await prisma.userRole.upsert({
-        where: {
-            userId_roleId: {
-                userId: cashierUser.id,
-                roleId: cashierRole.id,
-            },
-        },
-        update: {},
-        create: {
-            userId: cashierUser.id,
-            roleId: cashierRole.id,
-        },
-    });
-    console.log('✅ Created cashier user (username: cashier, password: cashier123)');
-
-    // ✅ CREATE SYSTEM CATEGORIES (AUTOMATIC)
-    // These categories are created automatically and should not be deleted
-    const defectiveCategory = await prisma.category.upsert({
-        where: { id: 1 },
-        update: {},
-        create: {
-            name: 'DEFECTIVE',
-            nameAr: 'تالف',
-            active: true,
-        },
-    });
-
-    const mixedCategory = await prisma.category.upsert({
-        where: { id: 2 },
-        update: {},
-        create: {
-            name: 'MIXED',
-            nameAr: 'منوعات',
-            active: true,
-        },
-    });
-    console.log('✅ Created system categories: DEFECTIVE (تالف), MIXED (منوعات)');
-    console.log('   ⚠️  These are system categories for special products');
-
-    // Create a supplier
-    const supplier = await prisma.supplier.upsert({
-        where: { id: 1 },
-        update: {},
-        create: {
-            name: 'Tech Supplies Inc.',
-            contact: 'Ahmed Ali',
-            phone: '+1234567890',
-            email: 'contact@techsupplies.com',
-            address: '456 Supplier St., Industrial Area',
-            paymentTerms: 'Net 30 days',
-            active: true,
-        },
-    });
-    console.log('✅ Created sample supplier');
-
-    console.log('');
-    console.log('🎉 Seeding completed successfully!');
-    console.log('');
-    console.log('📝 Test Credentials:');
-    console.log('   Admin - username: admin password: admin123');
-    console.log('   Cashier - username: cashier password: cashier123');
-    console.log('');
-    console.log('📦 System Categories Created:');
-    console.log('   1. DEFECTIVE (تالف) - For damaged/defective products');
-    console.log('   2. MIXED (منوعات) - For miscellaneous items');
-    console.log('');
 }
 
 main()
-    .then(async () => {
-        await prisma.$disconnect();
-    })
-    .catch(async (e) => {
-        console.error('❌ Error seeding database:', e);
-        await prisma.$disconnect();
+    .catch((e) => {
+        console.error('❌ Seed error:', e);
         process.exit(1);
+    })
+    .finally(async () => {
+        await prisma.$disconnect();
     });

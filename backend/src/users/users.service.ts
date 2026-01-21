@@ -112,6 +112,11 @@ export class UsersService {
                   include: {
                     permission: true
                   }
+                },
+                pages: {  // ✅ ADD THIS
+                  include: {
+                    page: true
+                  }
                 }
               }
             }

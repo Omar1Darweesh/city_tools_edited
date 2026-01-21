@@ -39,6 +39,7 @@ interface SaleDetail {
         unitPrice: number;
         lineTotal: number;
         taxRate: number;
+        priceType?: 'RETAIL' | 'WHOLESALE' | 'CUSTOM'; // ADD THIS
         product: {
             nameEn: string;
             nameAr?: string;
@@ -364,20 +365,28 @@ export default function SalesDetail() {
                     <div style={{ marginBottom: '8px' }}>
                         {sale.lines.map(line => {
                             const lineSubtotal = line.qty * Number(line.unitPrice);
-
                             return (
                                 <div key={line.id} style={{ marginBottom: '6px' }}>
                                     <div style={{ fontWeight: 'bold', fontSize: '11px', color: '#000' }}>
                                         {line.product.nameAr || line.product.nameEn}
+                                        {line.priceType === 'CUSTOM' && (
+                                            <span style={{ fontSize: '9px', marginRight: '4px' }}> *</span>
+                                        )}
                                     </div>
-                                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px', fontWeight: '600' }}>
-                                        <span style={{ color: '#000' }}>{line.qty} x {Number(line.unitPrice).toFixed(2)}</span>
-                                        <span style={{ fontWeight: 'bold', color: '#000' }}>{lineSubtotal.toFixed(2)} ر.س</span>
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px', fontWeight: 600 }}>
+                                        <span style={{ color: '#000' }}>
+                                            {line.qty} x {Number(line.unitPrice).toFixed(2)}
+                                            {line.priceType === 'CUSTOM' && (
+                                                <span style={{ fontSize: '8px' }}> [خاص]</span>
+                                            )}
+                                        </span>
+                                        <span style={{ fontWeight: 'bold', color: '#000' }}>{lineSubtotal.toFixed(2)} ج</span>
                                     </div>
                                 </div>
                             );
                         })}
                     </div>
+
 
                     <div style={{ borderTop: '1px dashed #000', margin: '8px 0' }} />
 
@@ -417,8 +426,8 @@ export default function SalesDetail() {
 
                     <div style={{ textAlign: 'center', fontSize: '11px', marginTop: '10px', color: '#000' }}>
                         <div style={{ marginBottom: '4px', fontWeight: 'bold' }}>شكراً لتعاملكم معنا</div>
-                        <div style={{ fontSize: '9px', marginBottom: '4px', fontWeight: '600' }}>Thank you for your business</div>
-                        <div style={{ fontSize: '9px', fontWeight: '600' }}>{new Date().toLocaleString('ar-EG')}</div>
+                        <div style={{ fontSize: '10px', marginBottom: '4px', fontWeight: 'bold', color: '#000' }}>Thank you for your business</div>
+                        <div style={{ fontSize: '10px', fontWeight: 'bold', color: '#000' }}>{new Date().toLocaleString('ar-EG')}</div>
                     </div>
 
                     <div style={{ textAlign: 'center', marginTop: '10px', fontSize: '10px' }}>
@@ -499,7 +508,21 @@ export default function SalesDetail() {
                                             <tr key={line.id} style={{ borderBottom: '1px solid #e2e8f0' }}>
                                                 <td style={{ padding: '12px', fontSize: '14px', color: '#334155' }}>
                                                     {line.product.nameAr || line.product.nameEn}
+                                                    {line.priceType === 'CUSTOM' && (
+                                                        <span style={{
+                                                            marginRight: '8px',
+                                                            padding: '2px 8px',
+                                                            background: '#f3e8ff',
+                                                            color: '#7c3aed',
+                                                            borderRadius: '4px',
+                                                            fontSize: '11px',
+                                                            fontWeight: 600
+                                                        }}>
+                                                            ★ سعر خاص
+                                                        </span>
+                                                    )}
                                                 </td>
+
                                                 <td style={{ padding: '12px', textAlign: 'center', fontSize: '13px', color: '#64748b', fontFamily: 'monospace' }}>
                                                     {line.product.barcode}
                                                 </td>

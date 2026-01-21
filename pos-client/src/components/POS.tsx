@@ -359,7 +359,7 @@ function POS() {
         setMessage('');
         try {
             const branchId = user.branchId || user.branch?.id || 1;
-            const data = await apiClient.get(`/products/find?barcode=${barcode}&branchId=${branchId}`);
+            const data = await apiClient.get(`products/find/${barcode}?branchId=${branchId}`);
             addToCart(data);
             setMessage(`✅ ${data.nameAr || data.nameEn}`);
             setBarcode('');
@@ -538,7 +538,9 @@ function POS() {
                     qty: item.qty,
                     unitPrice: parseFloat(item.price.toFixed(2)),
                     taxRate: parseFloat((config.tax * 100).toFixed(2)),
-                    lineDiscount: 0
+                    lineDiscount: 0,
+                    priceType: item.priceType || 'RETAIL'  // ← ADD THIS LINE!
+
                 })),
                 paymentMethod: paymentMethod,
                 totalDiscount: parseFloat(totals.discountAmount.toFixed(2)),
@@ -2357,15 +2359,24 @@ function POS() {
                                         <div key={line.id} style={{ marginBottom: '6px' }}>
                                             <div style={{ fontWeight: 'bold', fontSize: '11px', color: '#000' }}>
                                                 {line.nameAr || line.nameEn}
+                                                {line.priceType === 'CUSTOM' && (
+                                                    <span style={{ fontSize: '9px', marginRight: '4px' }}> *</span>
+                                                )}
                                             </div>
-                                            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px', fontWeight: '600' }}>
-                                                <span style={{ color: '#000' }}>{line.qty} x {Number(line.price).toFixed(2)}</span>
-                                                <span style={{ fontWeight: 'bold', color: '#000' }}>{lineSubtotal.toFixed(2)} ر.س</span>
+                                            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '11px', fontWeight: 600 }}>
+                                                <span style={{ color: '#000' }}>
+                                                    {line.qty} x {Number(line.price).toFixed(2)}
+                                                    {line.priceType === 'CUSTOM' && (
+                                                        <span style={{ fontSize: '8px' }}> [خاص]</span>
+                                                    )}
+                                                </span>
+                                                <span style={{ fontWeight: 'bold', color: '#000' }}>{lineSubtotal.toFixed(2)} ج</span>
                                             </div>
                                         </div>
                                     );
                                 })}
                             </div>
+
 
                             <div style={{ borderTop: '1px dashed #000', margin: '8px 0' }} />
 
@@ -2424,7 +2435,7 @@ function POS() {
                             )}
 
                             {receiptData.paymentType === 'CREDIT' && (
-                                <div style={{ fontSize: '11px', marginBottom: '8px', background: '#000', color: '#fff', padding: '5px', borderRadius: '4px', textAlign: 'center', fontWeight: 'bold' }}>
+                                <div style={{ fontSize: '11px', marginBottom: '8px', background: '#000', color: '#000000', padding: '5px', borderRadius: '4px', textAlign: 'center', fontWeight: 'bold' }}>
                                     <div>آجل - المبلغ الكامل: {Number(receiptData.totals.finalTotal).toFixed(2)} ر.س</div>
                                 </div>
                             )}
@@ -2441,10 +2452,10 @@ function POS() {
 
                             {/* Footer */}
                             <div style={{ textAlign: 'center', fontSize: '11px', marginTop: '10px', color: '#000' }}>
-                                <div style={{ marginBottom: '4px', fontWeight: 'bold' }}>شكراً لتعاملكم معنا</div>
-                                <div style={{ fontSize: '9px', marginBottom: '4px', fontWeight: '600' }}>Thank you for your business</div>
-                                <div style={{ fontSize: '9px', fontWeight: '600' }}>{new Date().toLocaleString('ar-EG')}</div>
+                                <div style={{ fontSize: '10px', marginBottom: '4px', fontWeight: 'bold', color: '#000' }}>Thank you for your business</div>
+                                <div style={{ fontSize: '10px', fontWeight: 'bold', color: '#000' }}>{new Date().toLocaleString('ar-EG')}</div>
                             </div>
+
 
                             {/* Barcode Simulation */}
                             <div style={{ textAlign: 'center', marginTop: '10px', fontSize: '10px' }}>

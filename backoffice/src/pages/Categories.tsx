@@ -573,7 +573,7 @@ export default function Categories() {
 function CategoryCard({ category, isExpanded, onToggle, onEdit, onDelete, onAddSubcategory, expandedSubcategories, onToggleSubcategory, onEditSubcategory, onDeleteSubcategory, onAddItemType, onEditItemType, onDeleteItemType, expandedItemTypes, onToggleItemType, itemProducts }: any) {
     // ✅ Detect special categories
     const isMixed = category.name?.toLowerCase() === 'mixed' || category.nameAr === 'متنوع';
-    const isDefective = category.name?.toLowerCase() === 'defective' || category.nameAr === 'تلافيات';
+    const isDefective = category.name?.toLowerCase().includes('defect') || category.nameAr === 'معيوب'
     const isSpecial = isMixed || isDefective;
 
     // ✅ Different colors for special categories
