@@ -86,14 +86,27 @@ export class ReturnsService {
 
 
     async createReturn(data: CreateReturnDto & { userId: number }) {
+        console.log('\n🔵 ===== RETURN PROCESS STARTED =====');
+        console.log('📦 Return Data:', JSON.stringify({
+            salesInvoiceId: data.salesInvoiceId,
+            itemsCount: data.items.length,
+            items: data.items.map(i => ({
+                productId: i.productId,
+                qty: i.qtyReturned,
+                returnType: i.returnType,
+                hasPricing: !!i.defectedProductPricing
+            }))
+        }, null, 2));
+
         const { salesInvoiceId, items, reason, userId } = data;
 
+        // ✅ STEP 1: Auto-set return type for defective products
+        console.log('\n🔍 STEP 1: Checking for defective products...');
         for (const item of items) {
             const isDefective = await this.isDefectiveProduct(item.productId);
+            console.log(`   Product ${item.productId}: isDefective = ${isDefective}`);
 
-            // ✅ Auto-set return type for defective products FIRST
             if (isDefective) {
-                // If user explicitly tried to set it as STOCK, throw error
                 if (item.returnType && item.returnType !== ReturnType.DEFECTIVE) {
                     const product = await this.prisma.product.findUnique({
                         where: { id: item.productId },
@@ -104,17 +117,70 @@ export class ReturnsService {
                         throw new NotFoundException(`Product ${item.productId} not found`);
                     }
 
+                    console.log(`   ❌ ERROR: Trying to return defective product as STOCK`);
                     throw new BadRequestException(
                         `المنتج "${product.nameAr || product.nameEn}" (${product.code}) هو منتج معيب ويجب إرجاعه كمنتج معيب فقط`
                     );
                 }
 
-                // Always set to DEFECTIVE for defective products
                 item.returnType = ReturnType.DEFECTIVE;
+                console.log(`   ✅ Auto-set to DEFECTIVE for product ${item.productId}`);
             }
         }
 
-        // Verify sales invoice exists
+        // ✅ STEP 2: Validate pricing for NEW defective products BEFORE transaction
+        console.log('\n🔍 STEP 2: Validating defective pricing...');
+        for (const item of items) {
+            if (item.returnType === ReturnType.DEFECTIVE) {
+                console.log(`   Checking product ${item.productId}...`);
+                const isAlreadyDefective = await this.isDefectiveProduct(item.productId);
+                console.log(`   Already defective: ${isAlreadyDefective}`);
+
+                if (!isAlreadyDefective) {
+                    const originalProduct = await this.prisma.product.findUnique({
+                        where: { id: item.productId },
+                    });
+
+                    if (!originalProduct) {
+                        console.log(`   ❌ ERROR: Product not found`);
+                        throw new NotFoundException(`Product ${item.productId} not found`);
+                    }
+
+                    const defectiveBarcode = `${originalProduct.barcode}_DEF`;
+                    const defectiveCategory = await this.prisma.category.findFirst({
+                        where: {
+                            OR: [
+                                { name: { equals: 'Defective', mode: 'insensitive' } },
+                                { nameAr: 'تلافيات' },
+                            ],
+                        },
+                    });
+
+                    const existingDefective = defectiveCategory
+                        ? await this.prisma.product.findFirst({
+                            where: {
+                                barcode: defectiveBarcode,
+                                categoryId: defectiveCategory.id,
+                            },
+                        })
+                        : null;
+
+                    console.log(`   Existing defective product: ${existingDefective ? 'YES' : 'NO'}`);
+                    console.log(`   Has pricing: ${!!item.defectedProductPricing}`);
+
+                    if (!existingDefective && !item.defectedProductPricing) {
+                        console.log(`   ❌ ERROR: Missing pricing for new defective product`);
+                        throw new BadRequestException(
+                            `أسعار المنتج المعيب مطلوبة للمنتج: ${originalProduct.nameAr || originalProduct.nameEn}`
+                        );
+                    }
+                    console.log(`   ✅ Pricing validation passed`);
+                }
+            }
+        }
+
+        // ✅ STEP 3: Verify sales invoice exists
+        console.log('\n🔍 STEP 3: Verifying sales invoice...');
         const salesInvoice = await this.prisma.salesInvoice.findUnique({
             where: { id: salesInvoiceId },
             include: {
@@ -128,10 +194,13 @@ export class ReturnsService {
         });
 
         if (!salesInvoice) {
+            console.log(`   ❌ ERROR: Sales invoice not found`);
             throw new NotFoundException(`Sales invoice with ID ${salesInvoiceId} not found`);
         }
+        console.log(`   ✅ Invoice found: ${salesInvoice.invoiceNo}`);
 
-        // ✅ Check for already returned quantities
+        // ✅ STEP 4: Check for already returned quantities
+        console.log('\n🔍 STEP 4: Checking already returned quantities...');
         const existingReturns = await this.prisma.salesReturn.findMany({
             where: { salesInvoiceId },
             include: { lines: true },
@@ -144,14 +213,17 @@ export class ReturnsService {
                 returnedQuantities.set(line.productId, current + line.qtyReturned);
             });
         });
+        console.log(`   Found ${existingReturns.length} existing returns`);
 
-        // Validate return quantities
+        // ✅ STEP 5: Validate return quantities
+        console.log('\n🔍 STEP 5: Validating return quantities...');
         for (const item of items) {
             const salesLine = salesInvoice.lines.find(
                 (line) => line.productId === item.productId,
             );
 
             if (!salesLine) {
+                console.log(`   ❌ ERROR: Product ${item.productId} not in invoice`);
                 throw new BadRequestException(
                     `Product ${item.productId} not found in sales invoice`,
                 );
@@ -160,18 +232,23 @@ export class ReturnsService {
             const alreadyReturned = returnedQuantities.get(item.productId) || 0;
             const availableToReturn = salesLine.qty - alreadyReturned;
 
+            console.log(`   Product ${item.productId}: sold=${salesLine.qty}, returned=${alreadyReturned}, available=${availableToReturn}, requesting=${item.qtyReturned}`);
+
             if (item.qtyReturned > availableToReturn) {
+                console.log(`   ❌ ERROR: Quantity exceeds available`);
                 throw new BadRequestException(
                     `Cannot return ${item.qtyReturned} of product ${salesLine.product.nameAr}. ` +
                     `Already returned: ${alreadyReturned}, Available: ${availableToReturn}`,
                 );
             }
         }
+        console.log(`   ✅ All quantities valid`);
 
-        // Calculate total refund
+        // ✅ STEP 6: Calculate total refund
         const totalRefund = items.reduce((sum, item) => sum + item.refundAmount, 0);
+        console.log(`\n💰 STEP 6: Total refund calculated: ${totalRefund.toFixed(2)}`);
 
-        // Generate return number
+        // ✅ STEP 7: Generate return number
         const today = new Date();
         const dateStr = today.toISOString().split('T')[0].replace(/-/g, '');
         const branchCode = salesInvoice.branch.code;
@@ -192,35 +269,10 @@ export class ReturnsService {
         }
 
         const returnNo = `RET-${branchCode}-${dateStr}-${sequence.toString().padStart(4, '0')}`;
+        console.log(`\n📋 STEP 7: Generated return number: ${returnNo}`);
 
-        // ✅ Create return with lines (INCLUDING returnType)
-        const salesReturn = await this.prisma.salesReturn.create({
-            data: {
-                returnNo,
-                salesInvoiceId,
-                branchId: salesInvoice.branchId,
-                createdBy: userId,
-                totalRefund: totalRefund,
-                reason,
-                lines: {
-                    create: items.map((item) => ({
-                        productId: item.productId,
-                        qtyReturned: item.qtyReturned,
-                        refundAmount: item.refundAmount,
-                        returnType: item.returnType || ReturnType.STOCK, // ✅ DEFAULT TO STOCK
-                    })),
-                },
-            },
-            include: {
-                lines: {
-                    include: {
-                        product: true,
-                    },
-                },
-            },
-        });
-
-        // Get the main stock location for this branch
+        // ✅ STEP 8: Get stock location BEFORE transaction
+        console.log('\n🔍 STEP 8: Validating stock location...');
         const stockLocation = await this.prisma.stockLocation.findFirst({
             where: {
                 branchId: salesInvoice.branchId,
@@ -229,46 +281,101 @@ export class ReturnsService {
         });
 
         if (!stockLocation) {
+            console.log(`   ❌ ERROR: No active stock location`);
             throw new BadRequestException(
                 `No active stock location found for branch ${salesInvoice.branch.name}`,
             );
         }
+        console.log(`   ✅ Stock location found: ${stockLocation.id}`);
 
-        // ✅ Process each return item based on return type
-        const auditPromises = items.map(async (item) => {
-            const returnType = item.returnType || ReturnType.STOCK;
-
-            if (returnType === ReturnType.STOCK) {
-                // ✅ STOCK: Return to original product
-                await this.handleStockReturn(
-                    item,
-                    stockLocation.id,
-                    salesReturn,
-                    salesInvoice,
-                    userId,
-                );
-            } else if (returnType === ReturnType.DEFECTIVE) {
-                // ✅ DEFECTIVE: Create/update defective product
-                await this.handleDefectiveReturn(
-                    item,
-                    stockLocation.id,
-                    salesReturn,
-                    salesInvoice,
-                    userId,
-                );
-            }
-        });
-
-        await Promise.all(auditPromises);
+        // ✅ STEP 9: WRAP EVERYTHING IN TRANSACTION
+        console.log('\n🔄 STEP 9: Starting database transaction...');
+        console.log('   ⚠️  All operations from here will ROLLBACK if any error occurs');
 
         try {
-            await this.salesService.recalculateProfitAfterReturn(salesInvoiceId);
-        } catch (error) {
-            console.error('⚠️ Failed to recalculate profit:', error);
-        }
+            const salesReturn = await this.prisma.$transaction(async (tx) => {
+                console.log('\n   📝 Creating return record...');
+                const createdReturn = await tx.salesReturn.create({
+                    data: {
+                        returnNo,
+                        salesInvoiceId,
+                        branchId: salesInvoice.branchId,
+                        createdBy: userId,
+                        totalRefund: totalRefund,
+                        reason,
+                        lines: {
+                            create: items.map((item) => ({
+                                productId: item.productId,
+                                qtyReturned: item.qtyReturned,
+                                refundAmount: item.refundAmount,
+                                returnType: item.returnType || ReturnType.STOCK,
+                            })),
+                        },
+                    },
+                    include: {
+                        lines: {
+                            include: {
+                                product: true,
+                            },
+                        },
+                    },
+                });
+                console.log(`   ✅ Return record created with ID: ${createdReturn.id}`);
 
-        console.log(`✅ Return ${returnNo} processed with ${items.length} items`);
-        return salesReturn;
+                console.log('\n   🔄 Processing stock movements...');
+                for (const item of items) {
+                    const returnType = item.returnType || ReturnType.STOCK;
+                    console.log(`   Processing product ${item.productId} as ${returnType}...`);
+
+                    if (returnType === ReturnType.STOCK) {
+                        await this.handleStockReturnTx(
+                            tx,
+                            item,
+                            stockLocation.id,
+                            createdReturn,
+                            salesInvoice,
+                            userId,
+                        );
+                    } else if (returnType === ReturnType.DEFECTIVE) {
+                        await this.handleDefectiveReturnTx(
+                            tx,
+                            item,
+                            stockLocation.id,
+                            createdReturn,
+                            salesInvoice,
+                            userId,
+                        );
+                    }
+                }
+
+                console.log('   ✅ All stock movements completed successfully');
+                return createdReturn;
+            });
+
+            console.log('\n✅ TRANSACTION COMMITTED SUCCESSFULLY');
+            console.log(`   Return ID: ${salesReturn.id}`);
+            console.log(`   Return No: ${salesReturn.returnNo}`);
+
+            // ✅ STEP 10: Recalculate profit
+            console.log('\n🔍 STEP 10: Recalculating profit...');
+            try {
+                await this.salesService.recalculateProfitAfterReturn(salesInvoiceId);
+                console.log('   ✅ Profit recalculated');
+            } catch (error) {
+                console.error('   ⚠️  Failed to recalculate profit:', error);
+            }
+
+            console.log(`\n🎉 ===== RETURN PROCESS COMPLETED =====`);
+            console.log(`✅ Return ${returnNo} processed with ${items.length} items\n`);
+            return salesReturn;
+
+        } catch (error) {
+            console.log('\n❌ ===== TRANSACTION ROLLED BACK =====');
+            console.log('   All database changes have been reverted');
+            console.log('   Error:', error.message);
+            console.log('🔴 ===== RETURN PROCESS FAILED =====\n');
+            throw error;
+        }
     }
 
     // ✅ HELPER: Handle normal stock return
@@ -526,6 +633,249 @@ export class ReturnsService {
         });
     }
 
+    // ✅ NEW: Transaction version of handleStockReturn
+    private async handleStockReturnTx(
+        tx: any,
+        item: any,
+        stockLocationId: number,
+        salesReturn: any,
+        salesInvoice: any,
+        userId: number,
+    ) {
+        await tx.stockMovement.create({
+            data: {
+                productId: item.productId,
+                stockLocationId,
+                qtyChange: item.qtyReturned,
+                movementType: 'RETURN',
+                refTable: 'sales_returns',
+                refId: salesReturn.id,
+                notes: `Return to stock from invoice ${salesInvoice.invoiceNo}`,
+                createdBy: userId,
+            },
+        });
+
+        console.log(
+            `✅ STOCK RETURN: Product ID ${item.productId}, Qty: ${item.qtyReturned}`,
+        );
+
+        await tx.productAudit.create({
+            data: {
+                productId: item.productId,
+                action: 'UPDATE',
+                userId,
+                oldData: {
+                    returnInfo: {
+                        returnNo: salesReturn.returnNo,
+                        salesInvoiceNo: salesInvoice.invoiceNo,
+                        qty: item.qtyReturned,
+                        returnType: 'STOCK',
+                    },
+                },
+                newData: {
+                    stockMovement: {
+                        qtyChange: item.qtyReturned,
+                        movementType: 'RETURN',
+                    },
+                },
+            },
+        });
+    }
+
+    // ✅ NEW: Transaction version of handleDefectiveReturn
+    private async handleDefectiveReturnTx(
+        tx: any,
+        item: any,
+        stockLocationId: number,
+        salesReturn: any,
+        salesInvoice: any,
+        userId: number,
+    ) {
+        const originalProduct = await tx.product.findUnique({
+            where: { id: item.productId },
+            include: {
+                category: true,
+                itemType: true,
+            },
+        });
+
+        if (!originalProduct) {
+            throw new NotFoundException(`Product ${item.productId} not found`);
+        }
+
+        // Check if product is already defective
+        const isAlreadyDefective = await this.isDefectiveProduct(item.productId);
+
+        if (isAlreadyDefective) {
+            await tx.stockMovement.create({
+                data: {
+                    productId: item.productId,
+                    stockLocationId,
+                    qtyChange: item.qtyReturned,
+                    movementType: 'RETURN',
+                    refTable: 'sales_returns',
+                    refId: salesReturn.id,
+                    notes: `Defective product returned from invoice ${salesInvoice.invoiceNo}`,
+                    createdBy: userId,
+                },
+            });
+
+            console.log(
+                `✅ DEFECTIVE RETURN: Product ${originalProduct.code} (already defective) returned to stock, Qty: +${item.qtyReturned}`,
+            );
+
+            return tx.productAudit.create({
+                data: {
+                    productId: item.productId,
+                    action: 'UPDATE',
+                    userId,
+                    oldData: {
+                        returnInfo: {
+                            returnNo: salesReturn.returnNo,
+                            salesInvoiceNo: salesInvoice.invoiceNo,
+                            qty: item.qtyReturned,
+                            returnType: 'DEFECTIVE',
+                            alreadyDefective: true,
+                        },
+                    },
+                    newData: {
+                        stockMovement: {
+                            qtyChange: item.qtyReturned,
+                            movementType: 'RETURN',
+                        },
+                    },
+                },
+            });
+        }
+
+        // Find or create defective category
+        let defectiveCategory = await tx.category.findFirst({
+            where: {
+                OR: [
+                    { name: { equals: 'Defective', mode: 'insensitive' } },
+                    { nameAr: 'تلافيات' },
+                ],
+            },
+        });
+
+        if (!defectiveCategory) {
+            defectiveCategory = await tx.category.create({
+                data: {
+                    name: 'Defective',
+                    nameAr: 'تلافيات',
+                    active: true,
+                },
+            });
+        }
+
+        const defectiveBarcode = `${originalProduct.barcode}_DEF`;
+        let defectiveProduct = await tx.product.findFirst({
+            where: {
+                barcode: defectiveBarcode,
+                categoryId: defectiveCategory.id,
+            },
+        });
+
+        if (defectiveProduct) {
+            console.log(
+                `♻️ Reusing existing defective product: ${defectiveProduct.code}`,
+            );
+
+            // Update prices if provided
+            if (item.defectedProductPricing) {
+                const { priceRetail, priceWholesale } = item.defectedProductPricing;
+                defectiveProduct = await tx.product.update({
+                    where: { id: defectiveProduct.id },
+                    data: {
+                        priceRetail,
+                        priceWholesale,
+                    },
+                });
+                console.log(
+                    `📝 Updated prices: Retail ${priceRetail}, Wholesale ${priceWholesale}`,
+                );
+            }
+        } else {
+            // Create new defective product
+            const { priceRetail, priceWholesale } = item.defectedProductPricing;
+
+            const lastProduct = await tx.product.findFirst({
+                orderBy: { id: 'desc' },
+            });
+
+            const nextId = (lastProduct?.id || 0) + 1;
+            const defectiveCode = `DEF${String(nextId).padStart(6, '0')}`;
+
+            defectiveProduct = await tx.product.create({
+                data: {
+                    code: defectiveCode,
+                    barcode: defectiveBarcode,
+                    nameEn: `${originalProduct.nameEn} (Defective)`,
+                    nameAr: `${originalProduct.nameAr || originalProduct.nameEn} (تالف)`,
+                    categoryId: defectiveCategory.id,
+                    itemTypeId: null,
+                    brand: originalProduct.brand,
+                    unit: originalProduct.unit,
+                    cost: originalProduct.cost,
+                    priceRetail: priceRetail,
+                    priceWholesale: priceWholesale,
+                    minQty: 0,
+                    maxQty: null,
+                    active: true,
+                },
+            });
+
+            console.log(
+                `✅ Created NEW defective product: ${defectiveProduct.code}`,
+            );
+        }
+
+        await tx.stockMovement.create({
+            data: {
+                productId: defectiveProduct.id,
+                stockLocationId,
+                qtyChange: item.qtyReturned,
+                movementType: 'RETURN',
+                refTable: 'sales_returns',
+                refId: salesReturn.id,
+                notes: `Defective return from invoice ${salesInvoice.invoiceNo} (Original: ${originalProduct.code})`,
+                createdBy: userId,
+            },
+        });
+
+        console.log(
+            `⚠️ DEFECTIVE RETURN: Product ${originalProduct.code} → ${defectiveProduct.code}, Qty: +${item.qtyReturned}`,
+        );
+
+        return tx.productAudit.create({
+            data: {
+                productId: defectiveProduct.id,
+                action: 'UPDATE',
+                userId,
+                oldData: {
+                    returnInfo: {
+                        returnNo: salesReturn.returnNo,
+                        salesInvoiceNo: salesInvoice.invoiceNo,
+                        originalProductId: originalProduct.id,
+                        originalProductCode: originalProduct.code,
+                        qty: item.qtyReturned,
+                        returnType: 'DEFECTIVE',
+                    },
+                },
+                newData: {
+                    defectiveProduct: {
+                        id: defectiveProduct.id,
+                        code: defectiveProduct.code,
+                        barcode: defectiveProduct.barcode,
+                    },
+                    stockMovement: {
+                        qtyChange: item.qtyReturned,
+                        movementType: 'RETURN',
+                    },
+                },
+            },
+        });
+    }
 
 
     async isDefectiveProduct(productId: number): Promise<boolean> {

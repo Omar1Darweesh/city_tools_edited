@@ -133,6 +133,53 @@ export default function SalesDetail() {
     const totalRefunded = returns.reduce((sum, ret) => sum + Number(ret.totalRefund || 0), 0);
     const netRevenue = sale ? Number(sale.total) - totalRefunded : 0;
 
+    // ✅ ADD THIS NEW BLOCK - Calculate adjusted values for display
+    const calculateAdjustedValues = () => {
+        if (!sale || returns.length === 0) {
+            // No returns - show original values
+            return {
+                remainingRevenue: Number(sale?.subtotal || 0) - Number(sale?.totalDiscount || 0),
+                adjustedTax: Number(sale?.totalTax || 0),
+                adjustedCommission: Number(sale?.platformCommission || 0),
+                fixedShipping: Number(sale?.shippingFee || 0),
+            };
+        }
+
+        // Calculate returned revenue (based on unit prices)
+        let returnedRevenue = 0;
+        for (const returnRecord of returns) {
+            for (const returnLine of returnRecord.lines) {
+                const originalLine = sale.lines.find((l) => l.productId === returnLine.productId);
+                if (originalLine) {
+                    returnedRevenue += Number(originalLine.unitPrice) * returnLine.qtyReturned;
+                }
+            }
+        }
+
+        // Original and remaining revenue
+        const originalRevenue = Number(sale.subtotal) - Number(sale.totalDiscount || 0);
+        const remainingRevenue = originalRevenue - returnedRevenue;
+
+        // Calculate proportion
+        const proportion = originalRevenue > 0 ? remainingRevenue / originalRevenue : 1;
+
+        // Adjust tax and commission proportionally
+        const adjustedTax = Number(sale.totalTax || 0) * proportion;
+        const adjustedCommission = Number(sale.platformCommission || 0) * proportion;
+
+        // Shipping stays fixed
+        const fixedShipping = Number(sale.shippingFee || 0);
+
+        return {
+            remainingRevenue,
+            adjustedTax,
+            adjustedCommission,
+            fixedShipping,
+        };
+    };
+
+    const { remainingRevenue, adjustedTax, adjustedCommission, fixedShipping } = calculateAdjustedValues();
+
     // Calculate returned quantities per product
     const getReturnedQty = (productId: number) => {
         return returns.reduce((sum, ret) => {
@@ -390,6 +437,7 @@ export default function SalesDetail() {
 
                     <div style={{ borderTop: '1px dashed #000', margin: '8px 0' }} />
 
+
                     {/* Totals */}
                     <div style={{ fontSize: '11px', marginBottom: '8px', fontWeight: '600' }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '3px' }}>
@@ -406,6 +454,16 @@ export default function SalesDetail() {
                             <span style={{ color: '#000' }}>الضريبة:</span>
                             <span style={{ color: '#000' }}>+{Number(sale.totalTax).toFixed(2)} ر.س</span>
                         </div>
+                        {/* Shipping Fee */}
+                        {Number(sale.shippingFee) > 0 && (
+                            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '3px' }}>
+                                <span style={{ color: '#000' }}>رسوم الشحن:</span>
+                                <span style={{ color: '#000' }}>
+                                    +{Number(sale.shippingFee).toFixed(2)} ر.س  {/* ✅ FIXED! */}
+                                </span>
+                            </div>
+                        )}
+
                     </div>
 
                     <div style={{ borderTop: '2px solid #000', margin: '8px 0' }} />
@@ -715,11 +773,11 @@ export default function SalesDetail() {
                         </div>
                     )}
 
-                    {/* CORRECTED PROFIT ANALYSIS */}
+                    {/* ==================== PROFIT ANALYSIS - OPTION 2 ==================== */}
                     <div style={{
                         background: '#ffffff',
                         padding: '24px',
-                        borderRadius: '8px',
+                        borderRadius: '12px',
                         border: '1px solid #e5e7eb',
                         boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
                         marginBottom: '30px',
@@ -735,7 +793,7 @@ export default function SalesDetail() {
                             paddingBottom: '12px',
                             borderBottom: '2px solid #e5e7eb',
                         }}>
-                            💰 تحليل الربحية
+                            💰 تحليل الربحية التفصيلي
                             {returns.length > 0 && (
                                 <span style={{
                                     fontSize: '14px',
@@ -743,168 +801,554 @@ export default function SalesDetail() {
                                     background: '#fef3c7',
                                     color: '#92400e',
                                     borderRadius: '12px',
-                                    fontWeight: '600',
+                                    fontWeight: 600,
                                 }}>
                                     بعد المرتجعات
                                 </span>
                             )}
                         </h3>
 
-                        {/* USE BACKEND VALUES DIRECTLY */}
+                        {/* SECTION 1: CUSTOMER PAYMENT INFO (INFORMATIONAL ONLY) */}
                         <div style={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            gap: '1px',
-                            background: '#e5e7eb',
-                            borderRadius: '6px',
-                            overflow: 'hidden',
+                            marginBottom: '24px',
+                            padding: '20px',
+                            background: '#f0f9ff',
+                            borderRadius: '8px',
+                            border: '1px solid #bfdbfe',
                         }}>
-                            {/* 1. Original Total */}
                             <div style={{
+                                fontSize: '16px',
+                                fontWeight: '600',
+                                color: '#1e40af',
+                                marginBottom: '16px',
                                 display: 'flex',
-                                justifyContent: 'space-between',
                                 alignItems: 'center',
-                                padding: '16px 20px',
-                                background: '#f9fafb',
-                                fontSize: '15px',
+                                gap: '8px',
                             }}>
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                    <span style={{ fontSize: '18px' }}>💵</span>
-                                    <span style={{ fontWeight: '600', color: '#374151' }}>إجمالي الفاتورة الأصلي</span>
-                                </div>
-                                <span style={{ fontWeight: 'bold', fontSize: '16px', color: '#111827' }}>
-                                    {Number(sale.total).toFixed(2)} ج.م
-                                </span>
+                                <span style={{ fontSize: '22px' }}>💳</span>
+                                حركة الأموال مع العميل
                             </div>
 
-                            {/* 2. Returns (if any) */}
-                            {sale.totalRefunded && Number(sale.totalRefunded) > 0 && (
+                            {/* Step 1: Original Payment */}
+                            <div style={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                gap: '2px',
+                                marginBottom: returns.length > 0 ? '16px' : '0',
+                            }}>
                                 <div style={{
                                     display: 'flex',
                                     justifyContent: 'space-between',
                                     alignItems: 'center',
-                                    padding: '14px 20px 14px 40px',
+                                    padding: '14px 18px',
+                                    background: '#dbeafe',
+                                    borderRadius: '8px',
+                                }}>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                        <span style={{ fontSize: '20px' }}>✅</span>
+                                        <span style={{ fontWeight: 'bold', fontSize: '16px', color: '#1e40af' }}>
+                                            المبلغ المدفوع من العميل
+                                        </span>
+                                    </div>
+                                    <span style={{ fontWeight: 'bold', fontSize: '19px', color: '#1e40af' }}>
+                                        {Number(sale.total).toFixed(2)} ر.س
+                                    </span>
+                                </div>
+
+                                {/* Breakdown of original payment */}
+                                <div style={{
+                                    fontSize: '12px',
+                                    color: '#64748b',
+                                    padding: '8px 18px 0 18px',
+                                    lineHeight: '1.6',
+                                }}>
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '2px' }}>
+                                        <span>المجموع الفرعي:</span>
+                                        <span>{Number(sale.subtotal).toFixed(2)} ر.س</span>
+                                    </div>
+                                    {sale.totalDiscount > 0 && (
+                                        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '2px', color: '#ef4444' }}>
+                                            <span>الخصم:</span>
+                                            <span>-{Number(sale.totalDiscount).toFixed(2)} ر.س</span>
+                                        </div>
+                                    )}
+                                    {sale.totalTax > 0 && (
+                                        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '2px' }}>
+                                            <span>الضريبة:</span>
+                                            <span>+{Number(sale.totalTax).toFixed(2)} ر.س</span>
+                                        </div>
+                                    )}
+                                    {sale.shippingFee > 0 && (
+                                        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                                            <span>رسوم الشحن:</span>
+                                            <span>+{Number(sale.shippingFee).toFixed(2)} ر.س</span>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+
+                            {/* Step 2: Returns Section - Only if returns exist */}
+                            {returns.length > 0 && (
+                                <>
+                                    {/* Visual Separator */}
+                                    <div style={{
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        gap: '12px',
+                                        margin: '16px 0',
+                                    }}>
+                                        <div style={{ flex: 1, height: '1px', background: '#cbd5e1' }}></div>
+                                        <span style={{ fontSize: '24px' }}>⬇️</span>
+                                        <div style={{ flex: 1, height: '1px', background: '#cbd5e1' }}></div>
+                                    </div>
+
+                                    {/* Returns Warning Box */}
+                                    <div style={{
+                                        padding: '12px 16px',
+                                        background: '#fffbeb',
+                                        border: '2px solid #fbbf24',
+                                        borderRadius: '8px',
+                                        marginBottom: '12px',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        gap: '10px',
+                                    }}>
+                                        <span style={{ fontSize: '20px' }}>⚠️</span>
+                                        <div style={{ fontSize: '13px', color: '#92400e', lineHeight: '1.5' }}>
+                                            <strong>تم إرجاع {returns.length} منتج</strong> - تم استرجاع جزء من المبلغ للعميل
+                                        </div>
+                                    </div>
+
+                                    {/* Refunded Amount */}
+                                    <div style={{
+                                        display: 'flex',
+                                        justifyContent: 'space-between',
+                                        alignItems: 'center',
+                                        padding: '14px 18px',
+                                        background: '#fee2e2',
+                                        borderRadius: '8px',
+                                        border: '2px solid #f87171',
+                                        marginBottom: '16px',
+                                    }}>
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                            <span style={{ fontSize: '20px' }}>🔄</span>
+                                            <span style={{ fontWeight: 'bold', fontSize: '16px', color: '#dc2626' }}>
+                                                المبلغ المسترد للعميل
+                                            </span>
+                                        </div>
+                                        <span style={{ fontWeight: 'bold', fontSize: '19px', color: '#dc2626' }}>
+                                            -{totalRefunded.toFixed(2)} ر.س
+                                        </span>
+                                    </div>
+
+                                    {/* Visual Separator */}
+                                    <div style={{
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        gap: '12px',
+                                        margin: '16px 0',
+                                    }}>
+                                        <div style={{ flex: 1, height: '2px', background: '#16a34a' }}></div>
+                                        <span style={{ fontSize: '20px', fontWeight: 'bold', color: '#16a34a' }}>=</span>
+                                        <div style={{ flex: 1, height: '2px', background: '#16a34a' }}></div>
+                                    </div>
+
+                                    {/* Final Net Amount */}
+                                    <div style={{
+                                        display: 'flex',
+                                        justifyContent: 'space-between',
+                                        alignItems: 'center',
+                                        padding: '16px 18px',
+                                        background: '#dcfce7',
+                                        borderRadius: '8px',
+                                        border: '2px solid #16a34a',
+                                        boxShadow: '0 2px 8px rgba(22, 163, 74, 0.2)',
+                                    }}>
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                            <span style={{ fontSize: '22px' }}>💵</span>
+                                            <span style={{ fontWeight: 'bold', fontSize: '17px', color: '#16a34a' }}>
+                                                صافي المبلغ النهائي
+                                            </span>
+                                        </div>
+                                        <span style={{ fontWeight: 'bold', fontSize: '20px', color: '#16a34a' }}>
+                                            {netRevenue.toFixed(2)} ر.س
+                                        </span>
+                                    </div>
+
+                                    {/* Explanation Note */}
+                                    <div style={{
+                                        marginTop: '12px',
+                                        padding: '10px 14px',
+                                        background: '#f1f5f9',
+                                        borderRadius: '6px',
+                                        fontSize: '12px',
+                                        color: '#475569',
+                                        lineHeight: '1.5',
+                                    }}>
+                                        <strong>💡 ملاحظة:</strong> العميل دفع {Number(sale.total).toFixed(2)} ر.س في البداية، ثم استرجع {totalRefunded.toFixed(2)} ر.س بعد المرتجعات. المبلغ الصافي الذي حصلت عليه هو {netRevenue.toFixed(2)} ر.س
+                                    </div>
+                                </>
+                            )}
+
+                            {/* No Returns - Show simple summary */}
+                            {returns.length === 0 && (
+                                <div style={{
+                                    marginTop: '12px',
+                                    padding: '10px 14px',
+                                    background: '#ecfdf5',
+                                    borderRadius: '6px',
+                                    fontSize: '12px',
+                                    color: '#065f46',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '8px',
+                                }}>
+                                    <span>✅</span>
+                                    <span>لا يوجد مرتجعات - المبلغ الكامل مستلم</span>
+                                </div>
+                            )}
+                        </div>
+
+                        {/* ==================== BRIDGE SECTION ==================== */}
+                        {returns.length > 0 && (
+                            <div style={{
+                                background: '#fffbeb',
+                                padding: '20px',
+                                borderRadius: '12px',
+                                border: '2px solid #fbbf24',
+                                marginBottom: '24px',
+                                boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+                            }}>
+                                <div style={{
+                                    fontSize: '15px',
+                                    fontWeight: '600',
+                                    color: '#92400e',
+                                    marginBottom: '12px',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '8px',
+                                }}>
+                                    <span style={{ fontSize: '20px' }}>📋</span>
+                                    تحليل المبلغ المستلم من العميل
+                                </div>
+
+                                <div style={{
+                                    fontSize: '14px',
+                                    color: '#78350f',
+                                    marginBottom: '12px',
+                                    lineHeight: '1.6',
+                                }}>
+                                    من أصل <strong style={{ color: '#16a34a' }}>{netRevenue.toFixed(2)} ر.س</strong> المستلمة من العميل، إليك التوزيع:
+                                </div>
+
+                                <div style={{
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    gap: '8px',
+                                    background: '#ffffff',
+                                    padding: '16px',
+                                    borderRadius: '8px',
+                                }}>
+                                    {/* Revenue Portion */}
+                                    <div style={{
+                                        display: 'flex',
+                                        justifyContent: 'space-between',
+                                        alignItems: 'center',
+                                        padding: '10px 14px',
+                                        background: '#ecfdf5',
+                                        borderRadius: '6px',
+                                        border: '1px solid #86efac',
+                                    }}>
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                            <span style={{ fontSize: '16px' }}>💵</span>
+                                            <span style={{ fontSize: '14px', fontWeight: '600', color: '#065f46' }}>
+                                                إيرادات المبيعات (بعد الخصم)
+                                            </span>
+                                        </div>
+                                        <span style={{ fontSize: '16px', fontWeight: 'bold', color: '#16a34a' }}>
+                                            {remainingRevenue.toFixed(2)} ر.س
+                                        </span>
+                                    </div>
+
+                                    {/* Tax + Shipping Combined */}
+                                    <div style={{
+                                        display: 'flex',
+                                        justifyContent: 'space-between',
+                                        alignItems: 'center',
+                                        padding: '10px 14px',
+                                        background: '#fef3c7',
+                                        borderRadius: '6px',
+                                        border: '1px solid #fde047',
+                                    }}>
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                            <span style={{ fontSize: '16px' }}>📦</span>
+                                            <span style={{ fontSize: '14px', color: '#78350f' }}>
+                                                الضريبة + رسوم الشحن
+                                            </span>
+                                        </div>
+                                        <span style={{ fontSize: '15px', fontWeight: '600', color: '#92400e' }}>
+                                            +{(netRevenue - remainingRevenue).toFixed(2)} ر.س
+                                        </span>
+                                    </div>
+
+                                    {/* Total Check */}
+                                    <div style={{
+                                        display: 'flex',
+                                        justifyContent: 'space-between',
+                                        alignItems: 'center',
+                                        padding: '12px 14px',
+                                        background: '#f0f9ff',
+                                        borderRadius: '6px',
+                                        border: '2px solid #3b82f6',
+                                        marginTop: '4px',
+                                    }}>
+                                        <span style={{ fontSize: '14px', fontWeight: 'bold', color: '#1e40af' }}>
+                                            = المجموع (التحقق)
+                                        </span>
+                                        <span style={{ fontSize: '16px', fontWeight: 'bold', color: '#1e40af' }}>
+                                            {netRevenue.toFixed(2)} ر.س ✅
+                                        </span>
+                                    </div>
+                                </div>
+
+                                {/* Detailed Breakdown */}
+                                <div style={{
+                                    marginTop: '12px',
+                                    padding: '12px 14px',
+                                    background: '#f8fafc',
+                                    borderRadius: '6px',
+                                    fontSize: '12px',
+                                    color: '#64748b',
+                                    lineHeight: '1.6',
+                                    border: '1px solid #e2e8f0',
+                                }}>
+                                    <div style={{ fontWeight: 'bold', marginBottom: '6px', color: '#475569' }}>تفصيل دقيق:</div>
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '2px' }}>
+                                        <span>• الإيرادات بعد الخصم:</span>
+                                        <span>{remainingRevenue.toFixed(2)} ر.س</span>
+                                    </div>
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '2px' }}>
+                                        <span>• الضريبة المعدلة:</span>
+                                        <span>{adjustedTax.toFixed(2)} ر.س</span>
+                                    </div>
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '2px' }}>
+                                        <span>• رسوم الشحن (ثابتة):</span>
+                                        <span>{fixedShipping.toFixed(2)} ر.س</span>
+                                    </div>
+                                    <div style={{ display: 'flex', justifyContent: 'space-between', borderTop: '1px solid #cbd5e1', paddingTop: '4px', marginTop: '4px', fontWeight: 'bold', color: '#1e40af' }}>
+                                        <span>= المجموع:</span>
+                                        <span>{netRevenue.toFixed(2)} ر.س</span>
+                                    </div>
+                                </div>
+
+                                {/* Explanation Note */}
+                                <div style={{
+                                    marginTop: '12px',
+                                    padding: '10px 14px',
+                                    background: '#fef3c7',
+                                    borderRadius: '6px',
+                                    fontSize: '13px',
+                                    color: '#78350f',
+                                    lineHeight: '1.5',
+                                    border: '1px solid #fde68a',
+                                }}>
+                                    <strong>💡 ملاحظة:</strong> من أصل {netRevenue.toFixed(2)} ر.س، فقط <strong>{remainingRevenue.toFixed(2)} ر.س</strong> تعتبر إيرادات حقيقية تستخدم في حساب الربح.
+                                </div>
+                            </div>
+                        )}
+
+
+
+                        {/* SECTION 2: PROFIT CALCULATION */}
+                        <div style={{
+                            padding: '16px',
+                            background: '#f9fafb',
+                            borderRadius: '8px',
+                            border: '1px solid #e5e7eb',
+                        }}>
+                            <div style={{
+                                fontSize: '15px',
+                                fontWeight: '600',
+                                color: '#374151',
+                                marginBottom: '12px',
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '8px',
+                            }}>
+                                <span style={{ fontSize: '20px' }}>📊</span>
+                                حساب صافي الربح
+                            </div>
+
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '1px', background: '#e5e7eb', borderRadius: '8px', overflow: 'hidden' }}>
+
+                                {/* 1. Net Revenue (Starting Point) */}
+                                <div style={{
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                    alignItems: 'center',
+                                    padding: '14px 20px',
+                                    background: '#ecfdf5',
+                                    fontSize: '15px',
+                                }}>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                        <span style={{ fontSize: '18px' }}>💵</span>
+                                        <span style={{ fontWeight: 'bold', color: '#065f46' }}>صافي الإيرادات (بعد الخصم)</span>
+                                    </div>
+                                    <span style={{ fontWeight: 'bold', fontSize: '17px', color: '#065f46' }}>
+                                        {remainingRevenue.toFixed(2)} ر.س
+                                    </span>
+                                </div>
+
+                                {/* 2. Cost of Goods */}
+                                <div style={{
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                    alignItems: 'center',
+                                    padding: '12px 20px 12px 40px',
                                     background: '#ffffff',
                                     fontSize: '14px',
                                 }}>
                                     <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                        <span style={{ color: '#9ca3af' }}>↩️</span>
-                                        <span style={{ color: '#6b7280' }}>مرتجعات</span>
+                                        <span style={{ color: '#9ca3af' }}>📦</span>
+                                        <span style={{ color: '#6b7280' }}>تكلفة البضاعة</span>
                                     </div>
-                                    <span style={{ color: '#ef4444', fontWeight: '600' }}>
-                                        -{Number(sale.totalRefunded).toFixed(2)} ج.م
+                                    <span style={{ color: '#ef4444', fontWeight: 600 }}>
+                                        -{Number(sale.costOfGoods || 0).toFixed(2)} ر.س
                                     </span>
                                 </div>
-                            )}
 
-                            {/* 3. Net Revenue */}
-                            <div style={{
-                                display: 'flex',
-                                justifyContent: 'space-between',
-                                alignItems: 'center',
-                                padding: '14px 20px',
-                                background: '#eff6ff',
-                                fontSize: '15px',
-                                borderTop: '1px dashed #d1d5db',
-                                borderBottom: '1px dashed #d1d5db',
-                            }}>
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                    <span style={{ color: '#9ca3af' }}>📊</span>
-                                    <span style={{ fontWeight: '600', color: '#1e40af' }}>صافي الإيرادات</span>
-                                </div>
-                                <span style={{ fontWeight: 'bold', color: '#1e40af', fontSize: '16px' }}>
-                                    {sale.netRevenue !== undefined && sale.netRevenue !== null
-                                        ? Number(sale.netRevenue).toFixed(2)
-                                        : Number(sale.total).toFixed(2)} ج.م
-                                </span>
-                            </div>
+                                {/* 3. Tax (adjusted) */}
+                                {adjustedTax > 0 && (
+                                    <div style={{
+                                        display: 'flex',
+                                        justifyContent: 'space-between',
+                                        alignItems: 'center',
+                                        padding: '12px 20px 12px 40px',
+                                        background: '#ffffff',
+                                        fontSize: '14px',
+                                    }}>
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                            <span style={{ color: '#9ca3af' }}>📊</span>
+                                            <span style={{ color: '#6b7280' }}>الضريبة</span>
+                                        </div>
+                                        <span style={{ color: '#ef4444', fontWeight: 600 }}>
+                                            -{adjustedTax.toFixed(2)} ر.س
+                                        </span>
+                                    </div>
+                                )}
 
+                                {/* 4. Platform Commission (adjusted) */}
+                                {adjustedCommission > 0 && (
+                                    <div style={{
+                                        display: 'flex',
+                                        justifyContent: 'space-between',
+                                        alignItems: 'center',
+                                        padding: '12px 20px 12px 40px',
+                                        background: '#ffffff',
+                                        fontSize: '14px',
+                                    }}>
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                            <span style={{ color: '#9ca3af' }}>💼</span>
+                                            <span style={{ color: '#6b7280' }}>عمولة المنصة</span>
+                                        </div>
+                                        <span style={{ color: '#ef4444', fontWeight: 600 }}>
+                                            -{adjustedCommission.toFixed(2)} ر.س
+                                        </span>
+                                    </div>
+                                )}
 
-                            {/* 4. Cost of Goods */}
-                            <div style={{
-                                display: 'flex',
-                                justifyContent: 'space-between',
-                                alignItems: 'center',
-                                padding: '14px 20px 14px 40px',
-                                background: '#ffffff',
-                                fontSize: '14px',
-                            }}>
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                    <span style={{ color: '#9ca3af' }}>📦</span>
-                                    <span style={{ color: '#6b7280' }}>تكلفة البضاعة {sale.totalRefunded && sale.totalRefunded > 0 ? '(معدلة)' : ''}</span>
-                                </div>
-                                <span style={{ color: '#ef4444', fontWeight: '600' }}>
-                                    -{Number(sale.costOfGoods || 0).toFixed(2)} ج.م
-                                </span>
-                            </div>
+                                {/* 5. Shipping Fee (FIXED) */}
+                                {fixedShipping > 0 && (
+                                    <div style={{
+                                        display: 'flex',
+                                        justifyContent: 'space-between',
+                                        alignItems: 'center',
+                                        padding: '12px 20px 12px 40px',
+                                        background: '#ffffff',
+                                        fontSize: '14px',
+                                    }}>
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                            <span style={{ color: '#9ca3af' }}>🚚</span>
+                                            <span style={{ color: '#6b7280' }}>رسوم الشحن</span>
+                                        </div>
+                                        <span style={{ color: '#ef4444', fontWeight: 600 }}>
+                                            -{fixedShipping.toFixed(2)} ر.س
+                                        </span>
+                                    </div>
+                                )}
 
-                            {/* 5. Gross Profit */}
-                            <div style={{
-                                display: 'flex',
-                                justifyContent: 'space-between',
-                                alignItems: 'center',
-                                padding: '14px 20px',
-                                background: '#f9fafb',
-                                fontSize: '14px',
-                                borderTop: '1px dashed #d1d5db',
-                                borderBottom: '1px dashed #d1d5db',
-                            }}>
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                    <span style={{ color: '#9ca3af' }}>💰</span>
-                                    <span style={{ fontWeight: '600', color: '#374151' }}>إجمالي الربح</span>
-                                </div>
-                                <span style={{ fontWeight: 'bold', color: '#16a34a' }}>
-                                    {Number(sale.grossProfit || 0).toFixed(2)} ج.م
-                                </span>
-                            </div>
-
-                            {/* 6. Net Profit */}
-                            <div style={{
-                                display: 'flex',
-                                justifyContent: 'space-between',
-                                alignItems: 'center',
-                                padding: '18px 20px',
-                                background: sale.netProfit >= 0 ? '#f0fdf4' : '#fef2f2',
-                                fontSize: '16px',
-                                borderTop: '2px solid #111827',
-                            }}>
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                    <span style={{ fontSize: '20px' }}>{sale.netProfit >= 0 ? '✅' : '⚠️'}</span>
-                                    <span style={{ fontWeight: 'bold', color: '#111827' }}>صافي الربح</span>
-                                </div>
-                                <span style={{
-                                    fontWeight: 'bold',
-                                    fontSize: '18px',
-                                    color: sale.netProfit >= 0 ? '#16a34a' : '#dc2626',
+                                {/* = NET PROFIT (FINAL RESULT) */}
+                                <div style={{
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                    alignItems: 'center',
+                                    padding: '16px 20px',
+                                    background: sale.netProfit >= 0 ? '#f0fdf4' : '#fef2f2',
+                                    fontSize: '16px',
+                                    borderTop: '3px solid #111827',
                                 }}>
-                                    {Number(sale.netProfit || 0).toFixed(2)} ج.م
-                                </span>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                        <span style={{ fontSize: '22px' }}>{sale.netProfit >= 0 ? '✅' : '⚠️'}</span>
+                                        <span style={{
+                                            fontWeight: 'bold',
+                                            color: sale.netProfit >= 0 ? '#065f46' : '#991b1b'
+                                        }}>
+                                            = صافي الربح النهائي
+                                        </span>
+                                    </div>
+                                    <span style={{
+                                        fontWeight: 'bold',
+                                        fontSize: '19px',
+                                        color: sale.netProfit >= 0 ? '#10b981' : '#ef4444'
+                                    }}>
+                                        {Number(sale.netProfit || 0).toFixed(2)} ر.س
+                                    </span>
+                                </div>
+
                             </div>
 
                             {/* Profit Margin Badge */}
-                            <div style={{ display: 'flex', justifyContent: 'center', marginTop: '16px' }}>
+                            <div style={{
+                                display: 'flex',
+                                justifyContent: 'center',
+                                marginTop: '16px',
+                            }}>
                                 <div style={{
-                                    padding: '10px 20px',
-                                    background: '#f9fafb',
-                                    border: '1px solid #e5e7eb',
-                                    borderRadius: '6px',
-                                    fontSize: '14px',
-                                    color: '#374151',
+                                    padding: '10px 24px',
+                                    background: sale.profitMargin >= 0 ? '#ecfdf5' : '#fef2f2',
+                                    border: `2px solid ${sale.profitMargin >= 0 ? '#10b981' : '#ef4444'}`,
+                                    borderRadius: '20px',
+                                    fontSize: '15px',
                                 }}>
-                                    <span style={{ fontWeight: '600' }}>هامش الربح: </span>
+                                    <span style={{ fontWeight: '600', color: '#374151' }}>هامش الربح: </span>
                                     <span style={{
                                         fontWeight: 'bold',
-                                        color: sale.profitMargin >= 0 ? '#16a34a' : '#dc2626',
+                                        color: sale.profitMargin >= 0 ? '#10b981' : '#ef4444',
+                                        fontSize: '17px',
                                     }}>
                                         {Number(sale.profitMargin || 0).toFixed(2)}%
                                     </span>
                                 </div>
                             </div>
                         </div>
+
+
+                        {/* Formula Explanation */}
+                        <div style={{
+                            marginTop: '16px',
+                            padding: '12px 16px',
+                            background: '#fffbeb',
+                            border: '1px solid #fde68a',
+                            borderRadius: '8px',
+                            fontSize: '13px',
+                            color: '#92400e',
+                            lineHeight: '1.6',
+                        }}>
+                            <strong>💡 المعادلة:</strong> صافي الربح = صافي الإيرادات - (تكلفة البضاعة + الضريبة + العمولة + الشحن)
+                            <br />
+                            <strong>هامش الربح</strong> = (صافي الربح ÷ صافي الإيرادات) × 100
+                        </div>
                     </div>
-
-
-
                 </div>
             </div>
         </>

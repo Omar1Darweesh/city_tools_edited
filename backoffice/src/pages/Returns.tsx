@@ -449,12 +449,43 @@ export default function Returns() {
         };
     };
 
+    // ✅ ADD THIS NEW FUNCTION - Frontend validation
+    const canSubmit = () => {
+        const itemsToReturn = returnItems.filter(item => item.returnQty > 0);
+
+        if (itemsToReturn.length === 0) return false;
+
+        // Check if any defective items need pricing
+        for (const item of itemsToReturn) {
+            if (item.returnType === "DEFECTIVE" && !defectiveProducts[item.productId]) {
+                const pricing = getDefectedPricing(item.lineId);
+                const status = defectiveStatus[item.lineId];
+
+                // If creating new defective product, pricing is required
+                if (!status?.exists) {
+                    if (!pricing.priceRetail || !pricing.priceWholesale) {
+                        return false; // ❌ Missing pricing
+                    }
+
+                    // Check if prices are valid numbers > 0
+                    const retail = parseFloat(pricing.priceRetail);
+                    const wholesale = parseFloat(pricing.priceWholesale);
+
+                    if (isNaN(retail) || isNaN(wholesale) || retail <= 0 || wholesale <= 0) {
+                        return false; // ❌ Invalid pricing
+                    }
+                }
+            }
+        }
+
+        return true; // ✅ All validation passed
+    };
 
 
     const handleSubmit = async () => {
         try {
             setSubmitting(true);
-            setError('');
+            setError("");
 
             const returnLines = returnItems
                 .filter((item) => item.returnQty > 0)
@@ -466,12 +497,12 @@ export default function Returns() {
                         returnType: i.returnType,
                     };
 
-                    // ✅ Only send pricing if:
+                    // Only send pricing if:
                     // 1. Return type is DEFECTIVE
                     // 2. Product is NOT already defective (converting normal → defective)
-                    if (i.returnType === 'DEFECTIVE' && !defectiveProducts[i.productId]) {
+                    if (i.returnType === "DEFECTIVE" && !defectiveProducts[i.productId]) {
                         const pricing = getDefectedPricing(i.lineId);
-                        if (pricing.priceRetail || pricing.priceWholesale) {
+                        if (pricing.priceRetail && pricing.priceWholesale) {
                             line.defectedProductPricing = {
                                 priceRetail: parseFloat(pricing.priceRetail),
                                 priceWholesale: parseFloat(pricing.priceWholesale),
@@ -482,49 +513,55 @@ export default function Returns() {
                     return line;
                 });
 
-
             if (returnLines.length === 0) {
-                alert('يرجى تحديد المنتجات المراد إرجاعها');
+                alert("الرجاء اختيار منتج واحد على الأقل للإرجاع");
                 setSubmitting(false);
                 return;
             }
 
-            await apiClient.post('/pos/returns', {
+            // ✅ ADD THIS - Frontend validation BEFORE API call
+            for (const line of returnLines) {
+                if (line.returnType === "DEFECTIVE" && !defectiveProducts[line.productId]) {
+                    const item = returnItems.find(i => i.productId === line.productId);
+                    if (item) {
+                        const status = defectiveStatus[item.lineId];
+
+                        if (!status?.exists && !line.defectedProductPricing) {
+                            setError(`أسعار المنتج المعيب مطلوبة للمنتج: ${item.productName}`);
+                            setSubmitting(false);
+                            return; // ⚠️ STOP - Don't send request
+                        }
+                    }
+                }
+            }
+
+            await apiClient.post("/pos/returns", {
                 salesInvoiceId: selectedInvoice.id,
                 items: returnLines,
-                reason
+                reason,
             });
 
-            setSuccess('✅ تم إنشاء طلب الإرجاع بنجاح');
+            setSuccess("تم إرجاع المنتجات بنجاح");
             setShowModal(false);
             setDefectedPricing([]);
             fetchInvoices();
 
-            setTimeout(() => setSuccess(''), 3000);
+            setTimeout(() => setSuccess(""), 3000);
         } catch (err: any) {
-            console.error('Failed to submit return:', err);
-            console.error('Backend error response:', err.response?.data); // ✅ ADD THIS
-
-            // Better error message
-            let errorMessage = 'فشل إنشاء طلب الإرجاع';
+            // Extract error message from backend
+            let errorMessage = "فشل في إرجاع المنتجات";
 
             if (err.response?.data?.message) {
-                const backendMessage = err.response.data.message;
-                console.error('Backend message:', backendMessage); // ✅ ADD THIS
-
-                // Check if it's the pricing error
-                if (backendMessage.includes('pricing is required')) {
-                    errorMessage = '⚠️ يرجى إدخال أسعار البيع للمنتجات المعيبة (المرجعة لأول مرة)';
-                } else {
-                    errorMessage = backendMessage;
-                }
+                errorMessage = err.response.data.message;
             }
 
+            // Show error to user
             setError(errorMessage);
         } finally {
             setSubmitting(false);
         }
     };
+
 
     const filteredInvoices = Array.isArray(invoices) ? invoices : [];
 
@@ -1167,13 +1204,43 @@ export default function Returns() {
                         </div>
 
                         <div style={styles.modalFooter}>
-                            <button style={styles.btnCancel} onClick={() => setShowModal(false)}>
+                            <button
+                                style={styles.btnCancel}
+                                onClick={() => setShowModal(false)}
+                            >
                                 إلغاء
                             </button>
-                            <button style={styles.btnConfirm} onClick={handleSubmit} disabled={submitting}>
-                                {submitting ? 'جاري الإرجاع...' : 'تأكيد الإرجاع'}
-                            </button>
+
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', flex: 1 }}>
+                                <button
+                                    style={{
+                                        ...styles.btnConfirm,
+                                        opacity: !canSubmit() ? 0.5 : 1,
+                                        cursor: !canSubmit() ? 'not-allowed' : 'pointer',
+                                        background: !canSubmit() ? '#94a3b8' : '#10b981',
+                                    }}
+                                    onClick={handleSubmit}
+                                    disabled={submitting || !canSubmit()}
+                                >
+                                    {submitting ? "جاري الإرجاع..." : "تأكيد الإرجاع"}
+                                </button>
+
+                                {/* Helper text when button is disabled */}
+                                {!canSubmit() && returnItems.some(i => i.returnQty > 0) && (
+                                    <div style={{
+                                        fontSize: '13px',
+                                        color: '#dc2626',
+                                        textAlign: 'center',
+                                        padding: '4px 8px',
+                                        background: '#fee2e2',
+                                        borderRadius: '6px',
+                                    }}>
+                                        ⚠️ يجب إدخال أسعار المنتجات المعيبة قبل الإرجاع
+                                    </div>
+                                )}
+                            </div>
                         </div>
+
                     </div>
                 </div>
             )}

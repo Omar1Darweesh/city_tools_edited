@@ -365,6 +365,10 @@ export default function Sales() {
                                 <th style={{ padding: '12px 16px', textAlign: 'right', fontWeight: '600', color: '#374151', borderBottom: '2px solid #e5e7eb' }}>الخصم</th>
                                 <th style={{ padding: '12px 16px', textAlign: 'right', fontWeight: '600', color: '#374151', borderBottom: '2px solid #e5e7eb' }}>الضريبة</th>
                                 <th style={{ padding: '12px 16px', textAlign: 'right', fontWeight: '600', color: '#374151', borderBottom: '2px solid #e5e7eb' }}>عمولة المنصة</th>
+                                <th style={{ padding: '12px 16px', textAlign: 'right', fontWeight: 600, color: '#374151', borderBottom: '2px solid #e5e7eb' }}>
+                                    رسوم الشحن
+                                </th>
+
                                 <th style={{ padding: '12px 16px', textAlign: 'right', fontWeight: '600', color: '#374151', borderBottom: '2px solid #e5e7eb' }}>الإجمالي</th>
                                 <th style={{ padding: '12px 16px', textAlign: 'right', fontWeight: '600', color: '#374151', borderBottom: '2px solid #e5e7eb' }}>المرتجع</th>
                                 <th style={{ padding: '12px 16px', textAlign: 'right', fontWeight: '600', color: '#374151', borderBottom: '2px solid #e5e7eb' }}>الصافي</th>
@@ -426,6 +430,10 @@ export default function Sales() {
                                         <td style={{ padding: '12px 16px', borderBottom: '1px solid #e5e7eb' }}>
                                             {sale.platformCommission > 0 ? `+${Number(sale.platformCommission).toFixed(2)} ر.س` : '-'}
                                         </td>
+                                        <td style={{ padding: '12px 16px', borderBottom: '1px solid #e5e7eb' }}>
+                                            {sale.shippingFee && sale.shippingFee > 0 ? `${Number(sale.shippingFee).toFixed(2)} ر.س` : '-'}
+                                        </td>
+
                                         <td style={{ padding: '12px 16px', borderBottom: '1px solid #e5e7eb', fontWeight: '700', fontSize: '15px' }}>
                                             {Number(sale.total).toFixed(2)} ر.س
                                         </td>

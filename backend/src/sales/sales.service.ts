@@ -80,7 +80,7 @@ export class SalesService {
     // Step 4: Calculate final total
     const total = subtotalAfterDiscount + totalTax + shippingFee;
 
-    // ✅ Step 5: Calculate Profit
+    // Step 5: Calculate Profit
     let costOfGoods = 0;
     for (const line of enrichedLines) {
       const product = await this.prisma.product.findUnique({
@@ -92,26 +92,37 @@ export class SalesService {
       }
     }
 
-    // What customer actually paid (INCLUDING tax)
+    // CORRECTED PROFIT CALCULATION
+    // Customer pays: (Subtotal - Discount) + Tax + Shipping = Total
     const customerPayment = total;
-    // Gross Profit = Revenue after tax - Cost
-    const revenueAfterTax = subtotalAfterDiscount;
-    const grossProfit = revenueAfterTax - costOfGoods;
-    // ✅ UPDATED: Net Profit = Gross Profit - Commission - Shipping Fee
-    const netProfit = grossProfit - platformCommission - shippingFee;
-    // ✅ FIXED: Profit margin against what CUSTOMER PAID (not revenue after tax)
-    const profitMargin = customerPayment > 0 ? (netProfit / customerPayment) * 100 : 0;
+
+    // Net Profit = Revenue - ALL COSTS (including tax & shipping)
+    // Revenue = Subtotal after discount (what you actually earned from selling)
+    const revenue = subtotalAfterDiscount;
+
+    // All costs
+    const totalCosts = costOfGoods + platformCommission + totalTax + shippingFee;
+
+    // Net Profit
+    const netProfit = revenue - totalCosts;
+
+    // Gross Profit (before commission, tax, shipping)
+    const grossProfit = revenue - costOfGoods;
+
+    // Profit Margin = (Net Profit / Revenue) × 100
+    const profitMargin = revenue > 0 ? (netProfit / revenue) * 100 : 0;
 
     console.log('💰 Profit Calculation:');
-    console.log('Customer Paid (total):', customerPayment.toFixed(2));
-    console.log('Tax Component:', totalTax.toFixed(2));
-    console.log('Revenue (after tax):', revenueAfterTax.toFixed(2));
-    console.log('Cost of Goods:', costOfGoods.toFixed(2));
-    console.log('Gross Profit:', grossProfit.toFixed(2));
-    console.log('Platform Commission:', platformCommission.toFixed(2));
-    console.log('Shipping Fee:', shippingFee.toFixed(2));
-    console.log('Net Profit:', netProfit.toFixed(2));
-    console.log('Profit Margin:', profitMargin.toFixed(2) + '%');
+    console.log(`Customer Paid (Total): ${customerPayment.toFixed(2)}`);
+    console.log(`Revenue (Subtotal after discount): ${revenue.toFixed(2)}`);
+    console.log(`Cost of Goods: -${costOfGoods.toFixed(2)}`);
+    console.log(`Platform Commission: -${platformCommission.toFixed(2)}`);
+    console.log(`Tax: -${totalTax.toFixed(2)}`);
+    console.log(`Shipping Fee: -${shippingFee.toFixed(2)}`);
+    console.log(`Total Costs: -${totalCosts.toFixed(2)}`);
+    console.log(`Gross Profit: ${grossProfit.toFixed(2)}`);
+    console.log(`Net Profit: ${netProfit.toFixed(2)}`);
+    console.log(`Profit Margin: ${profitMargin.toFixed(2)}%`);
     console.log(' ^ Calculated as: (' + netProfit.toFixed(2) + ' / ' + customerPayment.toFixed(2) + ') × 100');
 
     // ✅ NEW: Determine payment status
@@ -771,8 +782,16 @@ export class SalesService {
     const invoice = await this.prisma.salesInvoice.findUnique({
       where: { id: salesInvoiceId },
       include: {
-        lines: { include: { product: true } },
-        returns: { include: { lines: { include: { product: true } } } },
+        lines: {
+          include: { product: true },
+        },
+        returns: {
+          include: {
+            lines: {
+              include: { product: true },
+            },
+          },
+        },
       },
     });
 
@@ -780,16 +799,16 @@ export class SalesService {
       throw new NotFoundException(`Invoice ${salesInvoiceId} not found`);
     }
 
-    // ✅ STEP 1: Calculate total refunded amount
+    // STEP 1: Calculate total refunded amount (what customer got back)
     const totalRefunded = invoice.returns.reduce(
       (sum, ret) => sum + Number(ret.totalRefund || 0),
       0,
     );
 
     const originalTotal = Number(invoice.total);
-    const netRevenue = originalTotal - totalRefunded;
+    const netRevenue = originalTotal - totalRefunded; // For display only
 
-    // ✅ STEP 2: Calculate ACTUAL cost of returned items
+    // STEP 2: Calculate ACTUAL cost of returned items
     let returnedCost = 0;
     for (const returnRecord of invoice.returns) {
       for (const returnLine of returnRecord.lines) {
@@ -800,28 +819,57 @@ export class SalesService {
       }
     }
 
-    // ✅ STEP 3: Calculate remaining cost (original - returned)
+    // STEP 3: Calculate remaining cost (original - returned)
     const originalCost = Number(invoice.costOfGoods || 0);
     const remainingCost = originalCost - returnedCost;
 
-    // ✅ STEP 4: Adjust tax, commission, shipping proportionally
-    const remainingProportion = originalTotal > 0 ? netRevenue / originalTotal : 1;
+    // STEP 4: Calculate remaining REVENUE (not total!)
+    // Revenue = Subtotal after discount (before tax and shipping)
+    const originalSubtotal = Number(invoice.subtotal || 0);
+    const originalDiscount = Number(invoice.totalDiscount || 0);
+    const originalRevenue = originalSubtotal - originalDiscount;
+
+    // Calculate how much revenue was returned (based on unit prices after discount)
+    let returnedRevenue = 0;
+    for (const returnRecord of invoice.returns) {
+      for (const returnLine of returnRecord.lines) {
+        // Find the original line to get the unit price
+        const originalLine = invoice.lines.find(
+          (l) => l.productId === returnLine.productId,
+        );
+        if (originalLine) {
+          const unitPrice = Number(originalLine.unitPrice);
+          returnedRevenue += unitPrice * returnLine.qtyReturned;
+        }
+      }
+    }
+
+    const remainingRevenue = originalRevenue - returnedRevenue;
+
+    // STEP 5: Adjust costs proportionally based on REVENUE ratio (not total ratio)
+    const remainingProportion =
+      originalRevenue > 0 ? remainingRevenue / originalRevenue : 1;
+
+    // ✅ Tax and Commission: Adjust proportionally
     const adjustedTax = Number(invoice.totalTax || 0) * remainingProportion;
     const adjustedCommission = Number(invoice.platformCommission || 0) * remainingProportion;
-    const adjustedShipping = Number(invoice.shippingFee || 0) * remainingProportion;
 
-    // ✅ STEP 5: Calculate profit with correct cost
-    const actualRevenue = netRevenue - adjustedTax;
-    const grossProfit = actualRevenue - remainingCost;
-    const netProfit = grossProfit - adjustedCommission - adjustedShipping;
-    const profitMargin = netRevenue > 0 ? (netProfit / netRevenue) * 100 : 0;
+    // ✅ Shipping: Keep FIXED (no proportion adjustment)
+    const fixedShipping = Number(invoice.shippingFee || 0);
 
-    // ✅ STEP 6: Update the invoice
+    // STEP 6: Calculate profit (matching createSale logic)
+    // Net Profit = Revenue - (Cost + Commission + Tax + Shipping)
+    const totalCosts = remainingCost + adjustedCommission + adjustedTax + fixedShipping;
+    const netProfit = remainingRevenue - totalCosts;
+    const grossProfit = remainingRevenue - remainingCost;
+    const profitMargin = remainingRevenue > 0 ? (netProfit / remainingRevenue) * 100 : 0;
+
+    // STEP 7: Update the invoice
     await this.prisma.salesInvoice.update({
       where: { id: salesInvoiceId },
       data: {
         totalRefunded: new Prisma.Decimal(totalRefunded),
-        netRevenue: new Prisma.Decimal(netRevenue),
+        netRevenue: new Prisma.Decimal(netRevenue), // For display
         costOfGoods: new Prisma.Decimal(remainingCost),
         grossProfit: new Prisma.Decimal(grossProfit),
         netProfit: new Prisma.Decimal(netProfit),
@@ -829,9 +877,16 @@ export class SalesService {
       },
     });
 
-    console.log(`✅ Profit recalculated for invoice ${invoice.invoiceNo}:`);
-    console.log(`   Original Cost: ${originalCost.toFixed(2)}, Returned Cost: ${returnedCost.toFixed(2)}`);
-    console.log(`   Remaining Cost: ${remainingCost.toFixed(2)}, Net Profit: ${netProfit.toFixed(2)}`);
+    console.log(`✅ Profit recalculated for invoice ${invoice.invoiceNo}`);
+    console.log(`Original Revenue: ${originalRevenue.toFixed(2)} ر.س`);
+    console.log(`Returned Revenue: ${returnedRevenue.toFixed(2)} ر.س`);
+    console.log(`Remaining Revenue: ${remainingRevenue.toFixed(2)} ر.س`);
+    console.log(`Remaining Cost: ${remainingCost.toFixed(2)} ر.س`);
+    console.log(`Adjusted Tax: ${adjustedTax.toFixed(2)} ر.س (proportional)`);
+    console.log(`Adjusted Commission: ${adjustedCommission.toFixed(2)} ر.س (proportional)`);
+    console.log(`Fixed Shipping: ${fixedShipping.toFixed(2)} ر.س (FIXED - NO CHANGE)`);
+    console.log(`Net Profit: ${netProfit.toFixed(2)} ر.س`);
+    console.log(`Profit Margin: ${profitMargin.toFixed(2)}%`);
 
     return { originalTotal, totalRefunded, netRevenue, netProfit, profitMargin };
   }
