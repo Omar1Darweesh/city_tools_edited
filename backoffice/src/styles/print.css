@@ -1,0 +1,146 @@
+/* Print Styles for Receipt */
+@media print {
+
+    /* Hide everything first */
+    body * {
+        visibility: hidden;
+    }
+
+    /* Hide navigation, buttons, etc */
+    .print-hide {
+        display: none !important;
+        visibility: hidden !important;
+    }
+
+    /* ✅ CRITICAL FIX: Show and position print content */
+    .print-content {
+        display: block !important;
+        /* ✅ Override display: none */
+        visibility: visible !important;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 80mm;
+        margin: 0;
+        padding: 10mm;
+        background: white;
+        direction: rtl;
+        text-align: right;
+    }
+
+    /* Make all children visible */
+    .print-content,
+    .print-content * {
+        visibility: visible !important;
+    }
+
+    /* Receipt Header */
+    .receipt-header {
+        text-align: center;
+        border-bottom: 2px dashed #000;
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+    }
+
+    .receipt-header h1 {
+        font-size: 20px;
+        margin: 0 0 5px 0;
+        font-weight: bold;
+    }
+
+    .receipt-header p {
+        margin: 3px 0;
+        font-size: 11px;
+    }
+
+    /* Receipt Body */
+    .receipt-body {
+        font-size: 11px;
+    }
+
+    .receipt-row {
+        display: flex !important;
+        /* ✅ Added !important */
+        justify-content: space-between;
+        padding: 4px 0;
+        border-bottom: 1px dashed #ddd;
+    }
+
+    .receipt-item {
+        padding: 6px 0;
+        border-bottom: 1px dashed #eee;
+    }
+
+    .receipt-item-name {
+        font-weight: bold;
+        margin-bottom: 3px;
+        font-size: 12px;
+    }
+
+    .receipt-item-details {
+        font-size: 10px;
+        color: #333;
+        display: flex !important;
+        /* ✅ Added !important */
+        justify-content: space-between;
+    }
+
+    /* Receipt Summary */
+    .receipt-summary {
+        border-top: 2px dashed #000;
+        margin-top: 10px;
+        padding-top: 10px;
+    }
+
+    .receipt-summary-row {
+        display: flex !important;
+        /* ✅ Added !important */
+        justify-content: space-between;
+        padding: 4px 0;
+        font-size: 12px;
+    }
+
+    .receipt-summary-row.total {
+        font-size: 15px;
+        font-weight: bold;
+        border-top: 2px solid #000;
+        margin-top: 5px;
+        padding-top: 8px;
+    }
+
+    /* Receipt Footer */
+    .receipt-footer {
+        text-align: center;
+        margin-top: 15px;
+        padding-top: 10px;
+        border-top: 2px dashed #000;
+        font-size: 10px;
+    }
+
+    .receipt-footer p {
+        margin: 4px 0;
+    }
+
+    /* Remove shadows and colors for print */
+    * {
+        box-shadow: none !important;
+        text-shadow: none !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    /* Page setup */
+    @page {
+        size: 80mm auto;
+        margin: 0;
+    }
+}
+
+/* ✅ ADD THIS: Show print content in screen for debugging (optional - remove in production) */
+/*
+.print-content {
+  display: block !important;
+  border: 2px solid red;
+  margin-top: 20px;
+}
+*/

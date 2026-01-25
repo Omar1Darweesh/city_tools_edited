@@ -1,0 +1,1024 @@
+import { Injectable } from '@nestjs/common';
+import { PrismaService } from '../prisma.service';
+
+@Injectable()
+export class ReportsService {
+    constructor(private prisma: PrismaService) { }
+
+    // ✅ FIXED: Proper returns calculation using netRevenue from invoices
+    async getSalesSummary(params?: {
+        startDate?: Date;
+        endDate?: Date;
+        branchId?: number;
+    }) {
+        const { startDate, endDate, branchId } = params || {};
+        const where: any = {};
+
+        if (branchId) where.branchId = branchId;
+        if (startDate || endDate) {
+            where.createdAt = {};
+            if (startDate) where.createdAt.gte = startDate;
+            if (endDate) {
+                const endOfDay = new Date(endDate);
+                endOfDay.setHours(23, 59, 59, 999);
+                where.createdAt.lte = endOfDay;
+            }
+        }
+
+        // ✅ Get sales with proper fields (totalRefunded, netRevenue already calculated by sales.service)
+        const [salesAgg, salesByChannel] = await Promise.all([
+            this.prisma.salesInvoice.aggregate({
+                where,
+                _sum: {
+                    total: true,
+                    totalTax: true,
+                    platformCommission: true,
+                    totalRefunded: true,
+                    netRevenue: true,
+                },
+                _count: true,
+            }),
+            this.prisma.salesInvoice.groupBy({
+                by: ['channel'],
+                where,
+                _sum: { total: true },
+                _count: true,
+            }),
+        ]);
+
+        const totalSales = Number(salesAgg._sum.total || 0);
+        const totalTax = Number(salesAgg._sum.totalTax || 0);
+        const totalCommission = Number(salesAgg._sum.platformCommission || 0);
+        const totalRefunds = Number(salesAgg._sum.totalRefunded || 0);
+
+        // ✅ Use netRevenue if available, otherwise calculate
+        const netSales =
+            salesAgg._sum.netRevenue != null
+                ? Number(salesAgg._sum.netRevenue)
+                : totalSales - totalRefunds;
+
+        return {
+            totalSales,
+            totalTax,
+            totalCommission,
+            salesCount: salesAgg._count,
+            totalReturns: totalRefunds,
+            returnsCount: 0,
+            netSales,
+            salesByChannel: salesByChannel.map((ch) => ({
+                channel: ch.channel || 'NORMAL',
+                total: Number(ch._sum.total || 0),
+                count: ch._count,
+            })),
+        };
+    }
+
+    async getTopProducts(params?: {
+        limit?: number;
+        branchId?: number;
+        startDate?: Date;
+        endDate?: Date;
+    }) {
+        const { limit = 10, branchId, startDate, endDate } = params || {};
+        const where: any = {};
+
+        if (branchId) where.salesInvoice = { branchId };
+        if (startDate || endDate) {
+            where.salesInvoice = {
+                ...where.salesInvoice,
+                createdAt: {},
+            };
+            if (startDate) where.salesInvoice.createdAt.gte = startDate;
+            if (endDate) {
+                const endOfDay = new Date(endDate);
+                endOfDay.setHours(23, 59, 59, 999);
+                where.salesInvoice.createdAt.lte = endOfDay;
+            }
+        }
+
+        const topProducts = await this.prisma.salesLine.groupBy({
+            by: ['productId'],
+            where,
+            _sum: { qty: true, lineTotal: true },
+            orderBy: { _sum: { lineTotal: 'desc' } },
+            take: limit,
+        });
+
+        const productsWithDetails = await Promise.all(
+            topProducts.map(async (item) => {
+                const product = await this.prisma.product.findUnique({
+                    where: { id: item.productId },
+                });
+
+                const totalRevenue = Number(item._sum.lineTotal || 0);
+                const totalQty = item._sum.qty || 0;
+                const cost = product ? Number(product.cost) * totalQty : 0;
+                const profit = totalRevenue - cost;
+
+                return {
+                    productId: item.productId,
+                    productName: product?.nameAr || product?.nameEn || 'Unknown',
+                    quantity: totalQty,
+                    revenue: totalRevenue,
+                    profit: profit,
+                };
+            }),
+        );
+
+        return productsWithDetails;
+    }
+
+    async getLowStockProducts(params?: { threshold?: number; branchId?: number }) {
+        const { threshold = 10, branchId } = params || {};
+        const where: any = { active: true };
+
+        if (branchId) {
+            where.stockMovements = {
+                some: {
+                    stockLocation: { branchId },
+                },
+            };
+        }
+
+        const products = await this.prisma.product.findMany({
+            where,
+            include: {
+                stockMovements: {
+                    where: branchId
+                        ? { stockLocation: { branchId } }
+                        : undefined,
+                },
+            },
+        });
+
+        const lowStockProducts = products
+            .map((product) => {
+                const stock = product.stockMovements.reduce(
+                    (sum, mov) => sum + mov.qtyChange,
+                    0,
+                );
+                return {
+                    id: product.id,
+                    nameEn: product.nameEn,
+                    nameAr: product.nameAr,
+                    code: product.code,
+                    barcode: product.barcode,
+                    stock,
+                };
+            })
+            .filter((p) => p.stock < threshold)
+            .sort((a, b) => a.stock - b.stock);
+
+        return lowStockProducts;
+    }
+
+    async getDashboardMetrics(params?: {
+        branchId?: number;
+        startDate?: Date;
+        endDate?: Date;
+    }) {
+        const { branchId, startDate, endDate } = params || {};
+
+        const [salesSummary, topProducts, lowStock, salesLines, paymentMethods, salesByCategory, hourlyStats] =
+            await Promise.all([
+                this.getSalesSummary({ branchId, startDate, endDate }),
+                this.getTopProducts({ limit: 10, branchId, startDate, endDate }),
+                this.getLowStockProducts({ threshold: 10, branchId }),
+                this.getSalesLinesForProfit({ branchId, startDate, endDate }),
+                this.getPaymentMethodBreakdown({ branchId, startDate, endDate }),
+                this.getSalesByCategory({ branchId, startDate, endDate }),
+                this.getHourlySalesStats({ branchId, startDate, endDate }),
+            ]);
+
+        // ✅ FIXED: Distinguish between Gross and Net revenue
+        const totalRevenue = salesSummary.totalSales; // Gross
+        const netSales = salesSummary.netSales; // Net
+        const totalCost = salesLines.reduce(
+            (sum, line) => sum + line.cost * line.qty,
+            0,
+        );
+        const grossProfit = netSales - totalCost;
+        const profitMargin =
+            netSales > 0 ? (grossProfit / netSales) * 100 : 0;
+
+        // ✅ FIXED: Don't subtract tax (already included in netSales)
+        const netProfit = grossProfit - salesSummary.totalCommission;
+
+        const allProducts = await this.prisma.product.findMany({
+            where: { active: true },
+            include: { stockMovements: true },
+        });
+
+        const totalStockValue = allProducts.reduce((sum, product) => {
+            const stock = product.stockMovements.reduce(
+                (s, mov) => s + mov.qtyChange,
+                0,
+            );
+            return sum + stock * Number(product.cost);
+        }, 0);
+
+        const outOfStock = allProducts.filter((p) => {
+            const stock = p.stockMovements.reduce((s, mov) => s + mov.qtyChange, 0);
+            return stock <= 0;
+        });
+
+        const salesByChannelWithPercentage = salesSummary.salesByChannel.map(
+            (ch) => ({
+                ...ch,
+                percentage: totalRevenue > 0 ? (ch.total / totalRevenue) * 100 : 0,
+            }),
+        );
+
+        return {
+            sales: {
+                totalRevenue,
+                orderCount: salesSummary.salesCount,
+                averageOrderValue:
+                    salesSummary.salesCount > 0
+                        ? totalRevenue / salesSummary.salesCount
+                        : 0,
+                totalReturns: salesSummary.totalReturns,
+                netSales,
+            },
+            financial: {
+                grossProfit,
+                profitMargin,
+                totalCost,
+                totalTax: salesSummary.totalTax,
+                totalCommission: salesSummary.totalCommission,
+                netProfit,
+            },
+            inventory: {
+                totalStockValue,
+                lowStockCount: lowStock.length,
+                outOfStockCount: outOfStock.length,
+                totalProducts: allProducts.length,
+            },
+            performance: {
+                topProducts,
+                salesByChannel: salesByChannelWithPercentage,
+                salesByPayment: paymentMethods,
+                salesByCategory,
+                hourlyStats,
+            },
+        };
+    }
+
+    private async getSalesByCategory(params?: {
+        branchId?: number;
+        startDate?: Date;
+        endDate?: Date;
+    }) {
+        const { branchId, startDate, endDate } = params || {};
+        const where: any = {};
+
+        if (branchId) where.salesInvoice = { branchId };
+        if (startDate || endDate) {
+            where.salesInvoice = { ...where.salesInvoice, createdAt: {} };
+            if (startDate) where.salesInvoice.createdAt.gte = startDate;
+            if (endDate) {
+                const endOfDay = new Date(endDate);
+                endOfDay.setHours(23, 59, 59, 999);
+                where.salesInvoice.createdAt.lte = endOfDay;
+            }
+        }
+
+        const categorySales = await this.prisma.salesLine.groupBy({
+            by: ['productId'],
+            where,
+            _sum: { lineTotal: true, qty: true },
+        });
+
+        // Group by category (need to fetch products to get categoryId)
+        // Optimization: Fetch all products with categories first, or do aggregation in JS
+        // Since Prisma doesn't support deep join in groupBy, we do it manually or optimized query
+        const productIds = categorySales.map((c) => c.productId);
+        const products = await this.prisma.product.findMany({
+            where: { id: { in: productIds } },
+            include: { category: true },
+        });
+
+        const categoryMap = new Map<
+            string,
+            { total: number; count: number; name: string }
+        >();
+
+        for (const item of categorySales) {
+            const product = products.find((p) => p.id === item.productId);
+            const categoryName = product?.category?.nameAr || 'غير مصنف';
+            const current = categoryMap.get(categoryName) || {
+                total: 0,
+                count: 0,
+                name: categoryName,
+            };
+
+            current.total += Number(item._sum.lineTotal || 0);
+            current.count += item._sum.qty || 0;
+            categoryMap.set(categoryName, current);
+        }
+
+        return Array.from(categoryMap.values()).sort((a, b) => b.total - a.total);
+    }
+
+    private async getHourlySalesStats(params?: {
+        branchId?: number;
+        startDate?: Date;
+        endDate?: Date;
+    }) {
+        // Use raw query for hourly grouping as it's database specific and cleaner
+        const { branchId, startDate, endDate } = params || {};
+
+        // Fallback or JS processing if raw query is complex with Prisma
+        // We will fetch sales with createdAt and process in JS for simplicity and DB compatibility
+        const where: any = {};
+        if (branchId) where.branchId = branchId;
+        if (startDate || endDate) {
+            where.createdAt = {};
+            if (startDate) where.createdAt.gte = startDate;
+            if (endDate) {
+                const endOfDay = new Date(endDate);
+                endOfDay.setHours(23, 59, 59, 999);
+                where.createdAt.lte = endOfDay;
+            }
+        }
+
+        const sales = await this.prisma.salesInvoice.findMany({
+            where,
+            select: { createdAt: true, total: true },
+        });
+
+        const hourlyMap = new Map<string, { hour: string; total: number; count: number }>();
+
+        // Initialize all hours 00-23
+        for (let i = 0; i < 24; i++) {
+            const h = i.toString().padStart(2, '0') + ':00';
+            hourlyMap.set(h, { hour: h, total: 0, count: 0 });
+        }
+
+        for (const sale of sales) {
+            const d = new Date(sale.createdAt);
+            // We want LOCAL hour usually, but server time is stored. 
+            // Assuming reports are viewed in same timezone context or server time is consistent.
+            // Adjusting to local time of the request if we knew offset, but standard practice:
+            // Group by hour of the timestamp (UTC if stored as such).
+            // FIXME: Ideally shift to requested timezone. For now, using server local hour.
+            const h = d.getHours().toString().padStart(2, '0') + ':00';
+
+            const current = hourlyMap.get(h) || { hour: h, total: 0, count: 0 };
+            current.total += Number(sale.total);
+            current.count += 1;
+            hourlyMap.set(h, current);
+        }
+
+        return Array.from(hourlyMap.values());
+    }
+
+    private async getSalesLinesForProfit(params?: {
+        branchId?: number;
+        startDate?: Date;
+        endDate?: Date;
+    }) {
+        const { branchId, startDate, endDate } = params || {};
+        const where: any = {};
+
+        if (branchId) where.salesInvoice = { branchId };
+        if (startDate || endDate) {
+            where.salesInvoice = {
+                ...where.salesInvoice,
+                createdAt: {},
+            };
+            if (startDate) where.salesInvoice.createdAt.gte = startDate;
+            if (endDate) {
+                const endOfDay = new Date(endDate);
+                endOfDay.setHours(23, 59, 59, 999);
+                where.salesInvoice.createdAt.lte = endOfDay;
+            }
+        }
+
+        const salesLines = await this.prisma.salesLine.findMany({
+            where,
+            include: { product: true },
+        });
+
+        return salesLines.map((line) => ({
+            qty: line.qty,
+            cost: Number(line.product.cost),
+            revenue: Number(line.lineTotal),
+        }));
+    }
+
+    private async getPaymentMethodBreakdown(params?: {
+        branchId?: number;
+        startDate?: Date;
+        endDate?: Date;
+    }) {
+        const { branchId, startDate, endDate } = params || {};
+        const where: any = {};
+
+        if (branchId) where.branchId = branchId;
+        if (startDate || endDate) {
+            where.createdAt = {};
+            if (startDate) where.createdAt.gte = startDate;
+            if (endDate) {
+                const endOfDay = new Date(endDate);
+                endOfDay.setHours(23, 59, 59, 999);
+                where.createdAt.lte = endOfDay;
+            }
+        }
+
+        const paymentBreakdown = await this.prisma.salesInvoice.groupBy({
+            by: ['paymentMethod'],
+            where,
+            _sum: { total: true },
+            _count: true,
+        });
+
+        return paymentBreakdown.map((pm) => ({
+            method: pm.paymentMethod || 'Unknown',
+            total: Number(pm._sum.total || 0),
+            count: pm._count,
+        }));
+    }
+
+    async getDashboardSummary(params?: { branchId?: number }) {
+        try {
+            const { branchId } = params || {};
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            const tomorrow = new Date(today);
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            const yesterday = new Date(today);
+            yesterday.setDate(yesterday.getDate() - 1);
+
+            const where = branchId ? { branchId } : {};
+            const whereToday = { ...where, createdAt: { gte: today, lt: tomorrow } };
+            const whereYesterday = {
+                ...where,
+                createdAt: { gte: yesterday, lt: today },
+            };
+
+            const [
+                todaySales,
+                yesterdaySales,
+                todaySalesLines,
+                topProductsToday,
+                lowStockProducts,
+                recentSales,
+                todayReturns,
+                yesterdayReturns,
+                totalProducts,
+                totalCustomers,
+            ] = await Promise.all([
+                this.prisma.salesInvoice.aggregate({
+                    where: whereToday,
+                    _sum: { total: true, totalRefunded: true, netRevenue: true },
+                    _count: true,
+                }),
+                this.prisma.salesInvoice.aggregate({
+                    where: whereYesterday,
+                    _sum: { total: true, totalRefunded: true, netRevenue: true },
+                    _count: true,
+                }),
+                this.prisma.salesLine.findMany({
+                    where: { salesInvoice: whereToday },
+                    include: { product: true },
+                }),
+                this.getTopProducts({
+                    limit: 10,
+                    branchId,
+                    startDate: today,
+                    endDate: tomorrow,
+                }),
+                this.getLowStockProducts({ threshold: 10, branchId }),
+                this.prisma.salesInvoice.findMany({
+                    where: whereToday,
+                    orderBy: { createdAt: 'desc' },
+                    take: 10,
+                    select: {
+                        id: true,
+                        invoiceNo: true,
+                        total: true,
+                        paymentMethod: true,
+                        createdAt: true,
+                    },
+                }),
+                this.prisma.salesReturn.aggregate({
+                    where: whereToday,
+                    _sum: { totalRefund: true },
+                }),
+                this.prisma.salesReturn.aggregate({
+                    where: whereYesterday,
+                    _sum: { totalRefund: true },
+                }),
+                this.prisma.product.count({ where: { active: true } }),
+                this.prisma.customer.count(),
+            ]);
+
+            const todayCost = todaySalesLines.reduce(
+                (sum, line) =>
+                    sum + Number(line.product?.cost || 0) * (line.qty || 0),
+                0,
+            );
+
+            const todayGrossRevenue = Number(todaySales._sum.total || 0);
+            const todayReturnsVal = Number(todaySales._sum.totalRefunded || 0);
+            const todayRevenue = Number(
+                todaySales._sum.netRevenue || todayGrossRevenue - todayReturnsVal,
+            );
+            const todayProfit = todayRevenue - todayCost;
+            const todayOrders = todaySales._count;
+            const avgOrderValue = todayOrders > 0 ? todayRevenue / todayOrders : 0;
+
+            const yesterdayGrossRevenue = Number(yesterdaySales._sum.total || 0);
+            const yesterdayReturnsVal = Number(
+                yesterdaySales._sum.totalRefunded || 0,
+            );
+            const yesterdayRevenue = Number(
+                yesterdaySales._sum.netRevenue ||
+                yesterdayGrossRevenue - yesterdayReturnsVal,
+            );
+
+            const allProducts = await this.prisma.product.findMany({
+                where: { active: true },
+                include: { stockMovements: true },
+            });
+
+            const stockValue = allProducts.reduce((sum, product) => {
+                const stock = product.stockMovements.reduce(
+                    (s, mov) => s + mov.qtyChange,
+                    0,
+                );
+                return sum + stock * Number(product.cost || 0);
+            }, 0);
+
+            const outOfStock = allProducts.filter((p) => {
+                const stock = p.stockMovements.reduce((s, mov) => s + mov.qtyChange, 0);
+                return stock <= 0;
+            }).length;
+
+            return {
+                today: {
+                    sales: todayRevenue,
+                    orders: todayOrders,
+                    profit: todayProfit,
+                    avgOrderValue,
+                    returns: todayReturnsVal,
+                },
+                yesterday: {
+                    sales: yesterdayRevenue,
+                    orders: yesterdaySales._count,
+                    returns: yesterdayReturnsVal,
+                },
+                inventory: {
+                    totalProducts,
+                    lowStock: lowStockProducts.length,
+                    outOfStock,
+                    stockValue,
+                },
+                recentSales:
+                    recentSales.map((s) => ({ ...s, total: Number(s.total) })) || [],
+                topProductsToday: topProductsToday || [],
+                lowStockProducts: lowStockProducts || [],
+                totalCustomers: totalCustomers || 0,
+            };
+        } catch (error) {
+            console.error('Error in getDashboardSummary:', error);
+            return {
+                today: { sales: 0, orders: 0, profit: 0, avgOrderValue: 0, returns: 0 },
+                yesterday: { sales: 0, orders: 0, returns: 0 },
+                inventory: { totalProducts: 0, lowStock: 0, outOfStock: 0, stockValue: 0 },
+                recentSales: [],
+                topProductsToday: [],
+                lowStockProducts: [],
+                totalCustomers: 0,
+            };
+        }
+    }
+
+    // ========== NEW ENHANCED REPORT METHODS ==========
+
+    /**
+     * Get customer analytics - breakdown by type, top customers
+     */
+    async getCustomerAnalytics(params?: {
+        branchId?: number;
+        startDate?: Date;
+        endDate?: Date;
+    }) {
+        const { branchId, startDate, endDate } = params || {};
+        const invoiceWhere: any = {};
+
+        if (branchId) invoiceWhere.branchId = branchId;
+        if (startDate || endDate) {
+            invoiceWhere.createdAt = {};
+            if (startDate) invoiceWhere.createdAt.gte = startDate;
+            if (endDate) {
+                const endOfDay = new Date(endDate);
+                endOfDay.setHours(23, 59, 59, 999);
+                invoiceWhere.createdAt.lte = endOfDay;
+            }
+        }
+
+        // Get total customers
+        const totalCustomers = await this.prisma.customer.count({ where: { active: true } });
+
+        // Get customer type breakdown
+        const customersByType = await this.prisma.customer.groupBy({
+            by: ['type'],
+            where: { active: true },
+            _count: true,
+        });
+
+        // Get top customers by revenue in period
+        const topCustomersData = await this.prisma.salesInvoice.groupBy({
+            by: ['customerId'],
+            where: {
+                ...invoiceWhere,
+                customerId: { not: null },
+            },
+            _sum: { total: true, netRevenue: true },
+            _count: true,
+            orderBy: { _sum: { total: 'desc' } },
+            take: 10,
+        });
+
+        const customerIds = topCustomersData.map(c => c.customerId).filter(Boolean) as number[];
+        const customers = await this.prisma.customer.findMany({
+            where: { id: { in: customerIds } },
+        });
+
+        const topCustomers = topCustomersData.map(c => {
+            const customer = customers.find(cust => cust.id === c.customerId);
+            return {
+                customerId: c.customerId,
+                name: customer?.name || 'عميل غير مسجل',
+                type: customer?.type || 'RETAIL',
+                totalRevenue: Number(c._sum.total || 0),
+                netRevenue: Number(c._sum.netRevenue || c._sum.total || 0),
+                orderCount: c._count,
+            };
+        });
+
+        // Count invoices with vs without customers (new vs walk-in)
+        const [withCustomer, withoutCustomer] = await Promise.all([
+            this.prisma.salesInvoice.count({
+                where: { ...invoiceWhere, customerId: { not: null } },
+            }),
+            this.prisma.salesInvoice.count({
+                where: { ...invoiceWhere, customerId: null },
+            }),
+        ]);
+
+        return {
+            totalCustomers,
+            customersByType: customersByType.map(ct => ({
+                type: ct.type,
+                count: ct._count,
+            })),
+            topCustomers,
+            registeredSales: withCustomer,
+            walkInSales: withoutCustomer,
+        };
+    }
+
+    /**
+     * Get returns analysis - breakdown by type, top returned products
+     */
+    async getReturnsAnalysis(params?: {
+        branchId?: number;
+        startDate?: Date;
+        endDate?: Date;
+    }) {
+        const { branchId, startDate, endDate } = params || {};
+        const where: any = {};
+
+        if (branchId) where.branchId = branchId;
+        if (startDate || endDate) {
+            where.createdAt = {};
+            if (startDate) where.createdAt.gte = startDate;
+            if (endDate) {
+                const endOfDay = new Date(endDate);
+                endOfDay.setHours(23, 59, 59, 999);
+                where.createdAt.lte = endOfDay;
+            }
+        }
+
+        // Get returns summary
+        const returnsAgg = await this.prisma.salesReturn.aggregate({
+            where,
+            _sum: { totalRefund: true },
+            _count: true,
+        });
+
+        // Get returns by type
+        const returnLineWhere: any = {};
+        if (branchId) returnLineWhere.salesReturn = { branchId };
+        if (startDate || endDate) {
+            returnLineWhere.salesReturn = {
+                ...returnLineWhere.salesReturn,
+                createdAt: {},
+            };
+            if (startDate) returnLineWhere.salesReturn.createdAt.gte = startDate;
+            if (endDate) {
+                const endOfDay = new Date(endDate);
+                endOfDay.setHours(23, 59, 59, 999);
+                returnLineWhere.salesReturn.createdAt.lte = endOfDay;
+            }
+        }
+
+        const returnsByType = await this.prisma.salesReturnLine.groupBy({
+            by: ['returnType'],
+            where: returnLineWhere,
+            _sum: { refundAmount: true, qtyReturned: true },
+            _count: true,
+        });
+
+        // Get top returned products
+        const topReturnedProducts = await this.prisma.salesReturnLine.groupBy({
+            by: ['productId'],
+            where: returnLineWhere,
+            _sum: { refundAmount: true, qtyReturned: true },
+            _count: true,
+            orderBy: { _sum: { qtyReturned: 'desc' } },
+            take: 10,
+        });
+
+        const productIds = topReturnedProducts.map(p => p.productId);
+        const products = await this.prisma.product.findMany({
+            where: { id: { in: productIds } },
+        });
+
+        const topReturned = topReturnedProducts.map(p => {
+            const product = products.find(prod => prod.id === p.productId);
+            return {
+                productId: p.productId,
+                productName: product?.nameAr || product?.nameEn || 'Unknown',
+                qtyReturned: p._sum.qtyReturned || 0,
+                refundAmount: Number(p._sum.refundAmount || 0),
+                returnCount: p._count,
+            };
+        });
+
+        // Calculate return rate (returns / sales ratio)
+        const salesTotal = await this.prisma.salesInvoice.aggregate({
+            where: branchId ? { branchId, createdAt: where.createdAt } : { createdAt: where.createdAt },
+            _sum: { total: true },
+        });
+
+        const totalSalesValue = Number(salesTotal._sum.total || 0);
+        const totalReturnsValue = Number(returnsAgg._sum.totalRefund || 0);
+        const returnRate = totalSalesValue > 0 ? (totalReturnsValue / totalSalesValue) * 100 : 0;
+
+        return {
+            totalReturnsValue,
+            totalReturnsCount: returnsAgg._count,
+            returnRate: Math.round(returnRate * 100) / 100,
+            returnsByType: returnsByType.map(rt => ({
+                type: rt.returnType,
+                count: rt._count,
+                qty: rt._sum.qtyReturned || 0,
+                value: Number(rt._sum.refundAmount || 0),
+            })),
+            topReturnedProducts: topReturned,
+        };
+    }
+
+    /**
+     * Get daily sales trend for charts
+     */
+    async getDailySalesTrend(params?: {
+        branchId?: number;
+        startDate?: Date;
+        endDate?: Date;
+    }) {
+        const { branchId, startDate, endDate } = params || {};
+
+        // Default to last 30 days if no dates provided
+        const end = endDate || new Date();
+        const start = startDate || new Date(end.getTime() - 30 * 24 * 60 * 60 * 1000);
+
+        const where: any = { createdAt: { gte: start, lte: end } };
+        if (branchId) where.branchId = branchId;
+
+        const invoices = await this.prisma.salesInvoice.findMany({
+            where,
+            select: {
+                createdAt: true,
+                total: true,
+                netRevenue: true,
+                grossProfit: true,
+            },
+        });
+
+        // Group by date
+        const dailyMap = new Map<string, { total: number; count: number; profit: number }>();
+
+        for (const inv of invoices) {
+            const dateKey = inv.createdAt.toISOString().split('T')[0];
+            const current = dailyMap.get(dateKey) || { total: 0, count: 0, profit: 0 };
+            current.total += Number(inv.netRevenue || inv.total || 0);
+            current.count += 1;
+            current.profit += Number(inv.grossProfit || 0);
+            dailyMap.set(dateKey, current);
+        }
+
+        // Fill in missing dates with zeros
+        const result: Array<{ date: string; total: number; count: number; profit: number }> = [];
+        const currentDate = new Date(start);
+        while (currentDate <= end) {
+            const dateKey = currentDate.toISOString().split('T')[0];
+            const data = dailyMap.get(dateKey) || { total: 0, count: 0, profit: 0 };
+            result.push({
+                date: dateKey,
+                total: Math.round(data.total * 100) / 100,
+                count: data.count,
+                profit: Math.round(data.profit * 100) / 100,
+            });
+            currentDate.setDate(currentDate.getDate() + 1);
+        }
+
+        return result;
+    }
+
+    /**
+     * Get profit breakdown by category
+     */
+    async getProfitByCategory(params?: {
+        branchId?: number;
+        startDate?: Date;
+        endDate?: Date;
+    }) {
+        const { branchId, startDate, endDate } = params || {};
+        const lineWhere: any = {};
+
+        if (branchId) lineWhere.salesInvoice = { branchId };
+        if (startDate || endDate) {
+            lineWhere.salesInvoice = {
+                ...lineWhere.salesInvoice,
+                createdAt: {},
+            };
+            if (startDate) lineWhere.salesInvoice.createdAt.gte = startDate;
+            if (endDate) {
+                const endOfDay = new Date(endDate);
+                endOfDay.setHours(23, 59, 59, 999);
+                lineWhere.salesInvoice.createdAt.lte = endOfDay;
+            }
+        }
+
+        const salesLines = await this.prisma.salesLine.findMany({
+            where: lineWhere,
+            include: {
+                product: {
+                    include: { category: true },
+                },
+            },
+        });
+
+        const categoryMap = new Map<string, { revenue: number; cost: number; profit: number; qty: number }>();
+
+        for (const line of salesLines) {
+            const categoryName = line.product.category?.nameAr || line.product.category?.name || 'غير مصنف';
+            const current = categoryMap.get(categoryName) || { revenue: 0, cost: 0, profit: 0, qty: 0 };
+
+            const lineRevenue = Number(line.lineTotal || 0);
+            const lineCost = Number(line.product.cost || 0) * line.qty;
+            const lineProfit = lineRevenue - lineCost;
+
+            current.revenue += lineRevenue;
+            current.cost += lineCost;
+            current.profit += lineProfit;
+            current.qty += line.qty;
+            categoryMap.set(categoryName, current);
+        }
+
+        return Array.from(categoryMap.entries())
+            .map(([name, data]) => ({
+                category: name,
+                revenue: Math.round(data.revenue * 100) / 100,
+                cost: Math.round(data.cost * 100) / 100,
+                profit: Math.round(data.profit * 100) / 100,
+                qty: data.qty,
+                margin: data.revenue > 0 ? Math.round((data.profit / data.revenue) * 10000) / 100 : 0,
+            }))
+            .sort((a, b) => b.profit - a.profit);
+    }
+
+    /**
+     * Get comparison with previous period
+     */
+    async getPeriodComparison(params?: {
+        branchId?: number;
+        startDate?: Date;
+        endDate?: Date;
+    }) {
+        const { branchId, startDate, endDate } = params || {};
+
+        if (!startDate || !endDate) {
+            return null;
+        }
+
+        // Calculate previous period with same duration
+        const periodDuration = endDate.getTime() - startDate.getTime();
+        const prevStart = new Date(startDate.getTime() - periodDuration);
+        const prevEnd = new Date(startDate.getTime() - 1);
+
+        const where: any = {};
+        if (branchId) where.branchId = branchId;
+
+        // Current period
+        const currentPeriod = await this.prisma.salesInvoice.aggregate({
+            where: {
+                ...where,
+                createdAt: { gte: startDate, lte: endDate },
+            },
+            _sum: { total: true, netRevenue: true, grossProfit: true },
+            _count: true,
+        });
+
+        // Previous period
+        const previousPeriod = await this.prisma.salesInvoice.aggregate({
+            where: {
+                ...where,
+                createdAt: { gte: prevStart, lte: prevEnd },
+            },
+            _sum: { total: true, netRevenue: true, grossProfit: true },
+            _count: true,
+        });
+
+        const currentRevenue = Number(currentPeriod._sum.netRevenue || currentPeriod._sum.total || 0);
+        const previousRevenue = Number(previousPeriod._sum.netRevenue || previousPeriod._sum.total || 0);
+        const currentProfit = Number(currentPeriod._sum.grossProfit || 0);
+        const previousProfit = Number(previousPeriod._sum.grossProfit || 0);
+
+        const revenueChange = previousRevenue > 0
+            ? ((currentRevenue - previousRevenue) / previousRevenue) * 100
+            : currentRevenue > 0 ? 100 : 0;
+
+        const profitChange = previousProfit > 0
+            ? ((currentProfit - previousProfit) / previousProfit) * 100
+            : currentProfit > 0 ? 100 : 0;
+
+        const orderChange = previousPeriod._count > 0
+            ? ((currentPeriod._count - previousPeriod._count) / previousPeriod._count) * 100
+            : currentPeriod._count > 0 ? 100 : 0;
+
+        return {
+            current: {
+                revenue: Math.round(currentRevenue * 100) / 100,
+                profit: Math.round(currentProfit * 100) / 100,
+                orders: currentPeriod._count,
+            },
+            previous: {
+                revenue: Math.round(previousRevenue * 100) / 100,
+                profit: Math.round(previousProfit * 100) / 100,
+                orders: previousPeriod._count,
+            },
+            changes: {
+                revenueChange: Math.round(revenueChange * 100) / 100,
+                profitChange: Math.round(profitChange * 100) / 100,
+                orderChange: Math.round(orderChange * 100) / 100,
+                revenueDirection: revenueChange > 0 ? 'up' : revenueChange < 0 ? 'down' : 'same',
+                profitDirection: profitChange > 0 ? 'up' : profitChange < 0 ? 'down' : 'same',
+                orderDirection: orderChange > 0 ? 'up' : orderChange < 0 ? 'down' : 'same',
+            },
+        };
+    }
+
+    /**
+     * Get comprehensive enhanced dashboard metrics
+     */
+    async getEnhancedDashboardMetrics(params?: {
+        branchId?: number;
+        startDate?: Date;
+        endDate?: Date;
+    }) {
+        const { branchId, startDate, endDate } = params || {};
+
+        const [
+            basicMetrics,
+            customerAnalytics,
+            returnsAnalysis,
+            dailyTrend,
+            profitByCategory,
+            periodComparison,
+        ] = await Promise.all([
+            this.getDashboardMetrics({ branchId, startDate, endDate }),
+            this.getCustomerAnalytics({ branchId, startDate, endDate }),
+            this.getReturnsAnalysis({ branchId, startDate, endDate }),
+            this.getDailySalesTrend({ branchId, startDate, endDate }),
+            this.getProfitByCategory({ branchId, startDate, endDate }),
+            this.getPeriodComparison({ branchId, startDate, endDate }),
+        ]);
+
+        return {
+            ...basicMetrics,
+            customers: customerAnalytics,
+            returns: returnsAnalysis,
+            trends: {
+                dailySales: dailyTrend,
+            },
+            profitByCategory,
+            comparison: periodComparison,
+        };
+    }
+}

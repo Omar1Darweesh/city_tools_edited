@@ -1,0 +1,410 @@
+{
+  "impossibleInvoices": [
+    {
+      "id": 32,
+      "invoiceNo": "BR001-20260114-0005",
+      "total": 6986.25,
+      "totalRefunded": 0,
+      "netRevenue": 6986.25
+    },
+    {
+      "id": 37,
+      "invoiceNo": "BR001-20260114-0010",
+      "total": 20958.75,
+      "totalRefunded": 0,
+      "netRevenue": 20958.75
+    },
+    {
+      "id": 36,
+      "invoiceNo": "BR001-20260114-0009",
+      "total": 8711.25,
+      "totalRefunded": 0,
+      "netRevenue": 8711.25
+    },
+    {
+      "id": 39,
+      "invoiceNo": "BR001-20260114-0012",
+      "total": 23287.5,
+      "totalRefunded": 0,
+      "netRevenue": 23287.5
+    },
+    {
+      "id": 43,
+      "invoiceNo": "BR001-20260114-0016",
+      "total": 4657.5,
+      "totalRefunded": 2025,
+      "netRevenue": 2632.5
+    },
+    {
+      "id": 1,
+      "invoiceNo": "BR001-20251217-0001",
+      "total": 125,
+      "totalRefunded": 0,
+      "netRevenue": 125
+    },
+    {
+      "id": 40,
+      "invoiceNo": "BR001-20260114-0013",
+      "total": 9315,
+      "totalRefunded": 0,
+      "netRevenue": 9315
+    },
+    {
+      "id": 2,
+      "invoiceNo": "BR001-20251217-0002",
+      "total": 5,
+      "totalRefunded": 0,
+      "netRevenue": 5
+    },
+    {
+      "id": 3,
+      "invoiceNo": "BR001-20251217-0003",
+      "total": 200,
+      "totalRefunded": 0,
+      "netRevenue": 200
+    },
+    {
+      "id": 4,
+      "invoiceNo": "BR001-20251217-0004",
+      "total": 75,
+      "totalRefunded": 0,
+      "netRevenue": 75
+    },
+    {
+      "id": 5,
+      "invoiceNo": "BR001-20251217-0005",
+      "total": 25,
+      "totalRefunded": 0,
+      "netRevenue": 25
+    },
+    {
+      "id": 6,
+      "invoiceNo": "BR001-20251217-0006",
+      "total": 150,
+      "totalRefunded": 0,
+      "netRevenue": 150
+    },
+    {
+      "id": 7,
+      "invoiceNo": "BR001-20251218-0001",
+      "total": 25,
+      "totalRefunded": 0,
+      "netRevenue": 25
+    },
+    {
+      "id": 8,
+      "invoiceNo": "BR001-20251218-0002",
+      "total": 250,
+      "totalRefunded": 0,
+      "netRevenue": 250
+    },
+    {
+      "id": 9,
+      "invoiceNo": "BR001-20251220-0001",
+      "total": 250,
+      "totalRefunded": 0,
+      "netRevenue": 250
+    },
+    {
+      "id": 12,
+      "invoiceNo": "BR001-20251222-0003",
+      "total": 108.3,
+      "totalRefunded": 0,
+      "netRevenue": 108.3
+    },
+    {
+      "id": 13,
+      "invoiceNo": "BR001-20251222-0004",
+      "total": 114,
+      "totalRefunded": 0,
+      "netRevenue": 114
+    },
+    {
+      "id": 14,
+      "invoiceNo": "BR001-20251223-0001",
+      "total": 125,
+      "totalRefunded": 0,
+      "netRevenue": 125
+    },
+    {
+      "id": 15,
+      "invoiceNo": "BR001-20251223-0002",
+      "total": 29,
+      "totalRefunded": 0,
+      "netRevenue": 29
+    },
+    {
+      "id": 16,
+      "invoiceNo": "BR001-20251223-0003",
+      "total": 79.8,
+      "totalRefunded": 0,
+      "netRevenue": 79.8
+    },
+    {
+      "id": 17,
+      "invoiceNo": "BR001-20251225-0001",
+      "total": 28.5,
+      "totalRefunded": 0,
+      "netRevenue": 28.5
+    },
+    {
+      "id": 45,
+      "invoiceNo": "BR001-20260117-0002",
+      "total": 531.3,
+      "totalRefunded": 462,
+      "netRevenue": 69.3
+    },
+    {
+      "id": 33,
+      "invoiceNo": "BR001-20260114-0006",
+      "total": 11.5,
+      "totalRefunded": 11.5,
+      "netRevenue": 0
+    },
+    {
+      "id": 21,
+      "invoiceNo": "BR001-20260107-0003",
+      "total": 600,
+      "totalRefunded": 0,
+      "netRevenue": 600
+    },
+    {
+      "id": 22,
+      "invoiceNo": "BR001-20260107-0004",
+      "total": 1722,
+      "totalRefunded": 0,
+      "netRevenue": 1722
+    },
+    {
+      "id": 23,
+      "invoiceNo": "BR001-20260107-0005",
+      "total": 297.66,
+      "totalRefunded": 0,
+      "netRevenue": 297.66
+    },
+    {
+      "id": 24,
+      "invoiceNo": "BR001-20260108-0001",
+      "total": 2525,
+      "totalRefunded": 0,
+      "netRevenue": 2525
+    },
+    {
+      "id": 25,
+      "invoiceNo": "BR001-20260111-0001",
+      "total": 30,
+      "totalRefunded": 0,
+      "netRevenue": 30
+    },
+    {
+      "id": 26,
+      "invoiceNo": "BR001-20260111-0002",
+      "total": 2600,
+      "totalRefunded": 0,
+      "netRevenue": 2600
+    },
+    {
+      "id": 27,
+      "invoiceNo": "BR001-20260111-0003",
+      "total": 9315,
+      "totalRefunded": 0,
+      "netRevenue": 9315
+    },
+    {
+      "id": 28,
+      "invoiceNo": "BR001-20260114-0001",
+      "total": 77.05,
+      "totalRefunded": 0,
+      "netRevenue": 77.05
+    },
+    {
+      "id": 29,
+      "invoiceNo": "BR001-20260114-0002",
+      "total": 36.8,
+      "totalRefunded": 0,
+      "netRevenue": 36.8
+    },
+    {
+      "id": 31,
+      "invoiceNo": "BR001-20260114-0004",
+      "total": 4657.5,
+      "totalRefunded": 0,
+      "netRevenue": 4657.5
+    },
+    {
+      "id": 34,
+      "invoiceNo": "BR001-20260114-0007",
+      "total": 36.8,
+      "totalRefunded": 0,
+      "netRevenue": 36.8
+    },
+    {
+      "id": 38,
+      "invoiceNo": "BR001-20260114-0011",
+      "total": 2328.75,
+      "totalRefunded": 0,
+      "netRevenue": 2328.75
+    },
+    {
+      "id": 35,
+      "invoiceNo": "BR001-20260114-0008",
+      "total": 11615,
+      "totalRefunded": 0,
+      "netRevenue": 11615
+    },
+    {
+      "id": 20,
+      "invoiceNo": "BR001-20260107-0002",
+      "total": 2903.75,
+      "totalRefunded": 2525,
+      "netRevenue": 378.75
+    },
+    {
+      "id": 30,
+      "invoiceNo": "BR001-20260114-0003",
+      "total": 9315,
+      "totalRefunded": 0,
+      "netRevenue": 9315
+    },
+    {
+      "id": 41,
+      "invoiceNo": "BR001-20260114-0014",
+      "total": 7003.5,
+      "totalRefunded": 0,
+      "netRevenue": 7003.5
+    },
+    {
+      "id": 42,
+      "invoiceNo": "BR001-20260114-0015",
+      "total": 2328.75,
+      "totalRefunded": 2025,
+      "netRevenue": 303.75
+    },
+    {
+      "id": 56,
+      "invoiceNo": "BR001-20260120-0002",
+      "total": 8633.5,
+      "totalRefunded": 0,
+      "netRevenue": 8633.5
+    },
+    {
+      "id": 57,
+      "invoiceNo": "BR001-20260120-0003",
+      "total": 1860,
+      "totalRefunded": 0,
+      "netRevenue": 1860
+    },
+    {
+      "id": 51,
+      "invoiceNo": "BR001-20260119-0005",
+      "total": 23,
+      "totalRefunded": 23,
+      "netRevenue": 0
+    },
+    {
+      "id": 52,
+      "invoiceNo": "BR001-20260119-0006",
+      "total": 27965,
+      "totalRefunded": 8383.5,
+      "netRevenue": 19581.5
+    },
+    {
+      "id": 44,
+      "invoiceNo": "BR001-20260117-0001",
+      "total": 455.4,
+      "totalRefunded": 303.6,
+      "netRevenue": 151.8
+    },
+    {
+      "id": 48,
+      "invoiceNo": "BR001-20260119-0002",
+      "total": 207,
+      "totalRefunded": 34.5,
+      "netRevenue": 172.5
+    },
+    {
+      "id": 19,
+      "invoiceNo": "BR001-20260107-0001",
+      "total": 2903.75,
+      "totalRefunded": 2525,
+      "netRevenue": 378.75
+    },
+    {
+      "id": 10,
+      "invoiceNo": "BR001-20251222-0001",
+      "total": 313.5,
+      "totalRefunded": 0,
+      "netRevenue": 313.5
+    },
+    {
+      "id": 46,
+      "invoiceNo": "BR001-20260118-0001",
+      "total": 2794.5,
+      "totalRefunded": 0,
+      "netRevenue": 2794.5
+    },
+    {
+      "id": 47,
+      "invoiceNo": "BR001-20260119-0001",
+      "total": 2484,
+      "totalRefunded": 0,
+      "netRevenue": 2484
+    },
+    {
+      "id": 53,
+      "invoiceNo": "BR001-20260119-0007",
+      "total": 48.75,
+      "totalRefunded": 0,
+      "netRevenue": 48.75
+    },
+    {
+      "id": 54,
+      "invoiceNo": "BR001-20260119-0008",
+      "total": 31.5,
+      "totalRefunded": 0,
+      "netRevenue": 31.5
+    },
+    {
+      "id": 11,
+      "invoiceNo": "BR001-20251222-0002",
+      "total": 242.57,
+      "totalRefunded": 0,
+      "netRevenue": 242.57
+    },
+    {
+      "id": 18,
+      "invoiceNo": "BR001-20251225-0002",
+      "total": 20,
+      "totalRefunded": 0,
+      "netRevenue": 20
+    },
+    {
+      "id": 55,
+      "invoiceNo": "BR001-20260120-0001",
+      "total": 8349,
+      "totalRefunded": 0,
+      "netRevenue": 8349
+    },
+    {
+      "id": 50,
+      "invoiceNo": "BR001-20260119-0004",
+      "total": 8444.22,
+      "totalRefunded": 8383.5,
+      "netRevenue": 60.72
+    },
+    {
+      "id": 49,
+      "invoiceNo": "BR001-20260119-0003",
+      "total": 13972.5,
+      "totalRefunded": 13972.5,
+      "netRevenue": 0
+    }
+  ],
+  "globalAggregates": {
+    "totalSales": 212189.4,
+    "totalRefundedOnInvoices": 40674.1,
+    "netRevenueSum": 171515.3,
+    "sumOfSalesReturnTable": 40674.1
+  },
+  "inconsistentNetRevenue": []
+}
