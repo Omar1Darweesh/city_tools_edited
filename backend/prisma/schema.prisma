@@ -155,6 +155,8 @@ model Category {
   active        Boolean       @default(true)
   createdAt     DateTime      @default(now()) @map("created_at")
   updatedAt     DateTime      @updatedAt @map("updated_at")
+  defaultRetailMargin     Float?  @map("default_retail_margin")
+  defaultWholesaleMargin  Float?  @map("default_wholesale_margin")
   products      Product[]
   subcategories Subcategory[]
 
@@ -169,6 +171,8 @@ model Subcategory {
   active     Boolean    @default(true)
   createdAt  DateTime   @default(now()) @map("created_at")
   updatedAt  DateTime   @updatedAt @map("updated_at")
+  defaultRetailMargin     Float?  @map("default_retail_margin")
+  defaultWholesaleMargin  Float?  @map("default_wholesale_margin")
   itemTypes  ItemType[]
   category   Category   @relation(fields: [categoryId], references: [id], onDelete: Cascade)
 
@@ -184,6 +188,8 @@ model ItemType {
   active        Boolean     @default(true)
   createdAt     DateTime    @default(now()) @map("created_at")
   updatedAt     DateTime    @updatedAt @map("updated_at")
+  defaultRetailMargin     Float?  @map("default_retail_margin")
+  defaultWholesaleMargin  Float?  @map("default_wholesale_margin")
   subcategory   Subcategory @relation(fields: [subcategoryId], references: [id], onDelete: Cascade)
   products      Product[]
 
@@ -204,6 +210,8 @@ model Product {
   costAvg          Decimal             @default(0) @map("cost_avg") @db.Decimal(10, 2)
   priceRetail      Decimal             @default(0) @map("price_retail") @db.Decimal(10, 2)
   priceWholesale   Decimal             @default(0) @map("price_wholesale") @db.Decimal(10, 2)
+  retailMargin         Float?          @map("retail_margin")
+  wholesaleMargin      Float?          @map("wholesale_margin")
   minQty           Int?                @map("min_qty")
   maxQty           Int?                @map("max_qty")
   active           Boolean             @default(true)

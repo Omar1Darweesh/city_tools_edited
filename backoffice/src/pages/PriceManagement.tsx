@@ -12,6 +12,7 @@ import {
     Layers,
     Package,
     X,
+    Percent, // ✅ NEW
 } from 'lucide-react';
 
 interface Product {
@@ -22,6 +23,7 @@ interface Product {
     nameAr: string;
     priceRetail: number;
     priceWholesale: number;
+    costAvg?: number; // ✅ NEW
     category?: { id: number; name: string; nameAr: string };
     itemType?: {
         id: number;
@@ -40,6 +42,8 @@ interface Category {
     id: number;
     name: string;
     nameAr: string;
+    defaultRetailMargin?: number; // ✅ NEW
+    defaultWholesaleMargin?: number; // ✅ NEW
     subcategories: Subcategory[];
 }
 
@@ -48,6 +52,8 @@ interface Subcategory {
     name: string;
     nameAr: string;
     categoryId: number;
+    defaultRetailMargin?: number; // ✅ NEW
+    defaultWholesaleMargin?: number; // ✅ NEW
     itemTypes: ItemType[];
 }
 
@@ -56,6 +62,8 @@ interface ItemType {
     name: string;
     nameAr: string;
     subcategoryId: number;
+    defaultRetailMargin?: number; // ✅ NEW
+    defaultWholesaleMargin?: number; // ✅ NEW
 }
 
 type PriceType = 'RETAIL' | 'WHOLESALE' | 'BOTH';
@@ -83,6 +91,19 @@ export default function PriceManagement() {
     const [adjustmentType, setAdjustmentType] = useState<AdjustmentType>('PERCENTAGE');
     const [adjustmentValue, setAdjustmentValue] = useState<number>(0);
     const [reason, setReason] = useState('');
+
+    // ============================================
+    // ✅ NEW: MARGIN MANAGEMENT STATES
+    // ============================================
+    const [showMarginPanel, setShowMarginPanel] = useState(false);
+    const [selectedHierarchyType, setSelectedHierarchyType] = useState<'category' | 'subcategory' | 'itemtype'>('category');
+    const [selectedHierarchyId, setSelectedHierarchyId] = useState<number | null>(null);
+    const [marginRetail, setMarginRetail] = useState('40');
+    const [marginWholesale, setMarginWholesale] = useState('20');
+    const [previewProducts, setPreviewProducts] = useState<any[]>([]);
+    const [showPreview, setShowPreview] = useState(false);
+    const [marginSubcategories, setMarginSubcategories] = useState<Subcategory[]>([]);
+    const [marginItemTypes, setMarginItemTypes] = useState<ItemType[]>([]);
 
     useEffect(() => {
         loadCategories();
@@ -252,6 +273,151 @@ export default function PriceManagement() {
         }
     };
 
+    // ============================================
+    // ✅ NEW: MARGIN MANAGEMENT FUNCTIONS
+    // ============================================
+    const handleHierarchyTypeChange = (type: 'category' | 'subcategory' | 'itemtype') => {
+        setSelectedHierarchyType(type);
+        setSelectedHierarchyId(null);
+        setShowPreview(false);
+        setMarginSubcategories([]);
+        setMarginItemTypes([]);
+    };
+
+    const handleMarginCategoryChange = (categoryId: number) => {
+        setSelectedHierarchyId(categoryId);
+        setShowPreview(false);
+
+        const category = categories.find(c => c.id === categoryId);
+        setMarginSubcategories(category?.subcategories || []);
+
+        if (category?.defaultRetailMargin !== undefined && category?.defaultRetailMargin !== null) {
+            setMarginRetail((category.defaultRetailMargin * 100).toFixed(1));
+            setMarginWholesale((category.defaultWholesaleMargin! * 100).toFixed(1));
+        }
+    };
+
+    const handleMarginSubcategoryChange = (subcategoryId: number) => {
+        setSelectedHierarchyId(subcategoryId);
+        setShowPreview(false);
+
+        const subcategory = marginSubcategories.find(s => s.id === subcategoryId);
+        setMarginItemTypes(subcategory?.itemTypes || []);
+
+        if (subcategory?.defaultRetailMargin !== undefined && subcategory?.defaultRetailMargin !== null) {
+            setMarginRetail((subcategory.defaultRetailMargin * 100).toFixed(1));
+            setMarginWholesale((subcategory.defaultWholesaleMargin! * 100).toFixed(1));
+        }
+    };
+
+    const handleMarginItemTypeChange = (itemTypeId: number) => {
+        setSelectedHierarchyId(itemTypeId);
+        setShowPreview(false);
+
+        const itemType = marginItemTypes.find(it => it.id === itemTypeId);
+        if (itemType?.defaultRetailMargin !== undefined && itemType?.defaultRetailMargin !== null) {
+            setMarginRetail((itemType.defaultRetailMargin * 100).toFixed(1));
+            setMarginWholesale((itemType.defaultWholesaleMargin! * 100).toFixed(1));
+        }
+    };
+
+    const handlePreviewMargins = async () => {
+        if (!selectedHierarchyId) {
+            alert('الرجاء اختيار التصنيف أولاً');
+            return;
+        }
+
+        const retail = parseFloat(marginRetail) / 100;
+        const wholesale = parseFloat(marginWholesale) / 100;
+
+        if (isNaN(retail) || isNaN(wholesale) || retail < 0 || wholesale < 0) {
+            alert('الرجاء إدخال نسب ربح صحيحة');
+            return;
+        }
+
+        try {
+            let endpoint = '';
+            if (selectedHierarchyType === 'category') {
+                endpoint = `/products?categoryId=${selectedHierarchyId}&active=true`;
+            } else if (selectedHierarchyType === 'subcategory') {
+                const subcategory = marginSubcategories.find(s => s.id === selectedHierarchyId);
+                endpoint = `/products?categoryId=${subcategory?.categoryId}&active=true`;
+            } else {
+                endpoint = `/products?itemTypeId=${selectedHierarchyId}&active=true`;
+            }
+
+            const { data } = await apiClient.get(endpoint);
+            let productsData = data.data || data || [];
+
+            // Filter by subcategory if needed
+            if (selectedHierarchyType === 'subcategory') {
+                productsData = productsData.filter((p: any) =>
+                    p.itemType?.subcategory?.id === selectedHierarchyId
+                );
+            }
+
+            const preview = productsData.map((p: any) => ({
+                id: p.id,
+                nameAr: p.nameAr || p.nameEn,
+                nameEn: p.nameEn,
+                costAvg: Number(p.costAvg || 0),
+                oldRetail: Number(p.priceRetail || 0),
+                oldWholesale: Number(p.priceWholesale || 0),
+                newRetail: Number(p.costAvg || 0) * (1 + retail),
+                newWholesale: Number(p.costAvg || 0) * (1 + wholesale),
+            }));
+
+            setPreviewProducts(preview);
+            setShowPreview(true);
+        } catch (error) {
+            console.error('Preview failed:', error);
+            alert('فشل تحميل المعاينة');
+        }
+    };
+
+    const handleApplyMargins = async () => {
+        if (!selectedHierarchyId) {
+            alert('الرجاء اختيار التصنيف أولاً');
+            return;
+        }
+
+        const retail = parseFloat(marginRetail) / 100;
+        const wholesale = parseFloat(marginWholesale) / 100;
+
+        if (isNaN(retail) || isNaN(wholesale) || retail < 0 || wholesale < 0) {
+            alert('الرجاء إدخال نسب ربح صحيحة');
+            return;
+        }
+
+        if (!confirm(`هل أنت متأكد من تطبيق الهوامش على ${previewProducts.length} منتج؟`)) {
+            return;
+        }
+
+        try {
+            let endpoint = '';
+            if (selectedHierarchyType === 'category') {
+                endpoint = `/products/margins/category/${selectedHierarchyId}`;
+            } else if (selectedHierarchyType === 'subcategory') {
+                endpoint = `/products/margins/subcategory/${selectedHierarchyId}`;
+            } else {
+                endpoint = `/products/margins/item-type/${selectedHierarchyId}`;
+            }
+
+            const { data } = await apiClient.post(endpoint, {
+                retailMargin: retail,
+                wholesaleMargin: wholesale,
+            });
+
+            alert(`✅ ${data.message || 'تم تطبيق الهوامش بنجاح'}`);
+            setShowPreview(false);
+            loadProducts();
+            loadCategories();
+        } catch (error: any) {
+            console.error('Apply failed:', error);
+            alert('❌ فشل التطبيق: ' + (error.response?.data?.message || error.message));
+        }
+    };
+
     const activeFiltersCount = (selectedCategoryId ? 1 : 0) + (selectedSubcategoryId ? 1 : 0) + (selectedItemTypeId ? 1 : 0);
 
     return (
@@ -269,6 +435,335 @@ export default function PriceManagement() {
                     ابحث، اختر، وعدّل أسعار المنتجات بسهولة وسرعة
                 </p>
             </div>
+
+            {/* ============================================ */}
+            {/* ✅ NEW: MARGIN MANAGEMENT PANEL */}
+            {/* ============================================ */}
+            <div style={{
+                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                borderRadius: '16px',
+                padding: '24px',
+                marginBottom: '24px',
+                color: 'white',
+                boxShadow: '0 4px 20px rgba(102, 126, 234, 0.3)',
+            }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+                    <h3 style={{ margin: 0, fontSize: '20px', fontWeight: '700', display: 'flex', alignItems: 'center', gap: '12px' }}>
+                        <Percent size={24} />
+                        إدارة هوامش الربح حسب التصنيف
+                    </h3>
+                    <button
+                        onClick={() => setShowMarginPanel(!showMarginPanel)}
+                        style={{
+                            background: 'rgba(255,255,255,0.25)',
+                            border: '2px solid rgba(255,255,255,0.3)',
+                            color: 'white',
+                            padding: '10px 20px',
+                            borderRadius: '10px',
+                            cursor: 'pointer',
+                            fontWeight: '600',
+                            fontSize: '14px',
+                            transition: 'all 0.2s',
+                        }}
+                        onMouseOver={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.35)'}
+                        onMouseOut={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.25)'}
+                    >
+                        {showMarginPanel ? '▲ إخفاء' : '▼ عرض'}
+                    </button>
+                </div>
+
+                {showMarginPanel && (
+                    <>
+                        {/* Hierarchy Type Selector */}
+                        <div style={{ display: 'flex', gap: '12px', marginBottom: '20px' }}>
+                            {[
+                                { value: 'category', label: '📊 تصنيف رئيسي' },
+                                { value: 'subcategory', label: '📂 تصنيف فرعي' },
+                                { value: 'itemtype', label: '🏷️ نوع الصنف' },
+                            ].map(({ value, label }) => (
+                                <button
+                                    key={value}
+                                    onClick={() => handleHierarchyTypeChange(value as any)}
+                                    style={{
+                                        padding: '12px 24px',
+                                        background: selectedHierarchyType === value ? 'white' : 'rgba(255,255,255,0.2)',
+                                        color: selectedHierarchyType === value ? '#764ba2' : 'white',
+                                        border: 'none',
+                                        borderRadius: '12px',
+                                        cursor: 'pointer',
+                                        fontWeight: '700',
+                                        fontSize: '14px',
+                                        flex: 1,
+                                        transition: 'all 0.2s',
+                                    }}
+                                >
+                                    {label}
+                                </button>
+                            ))}
+                        </div>
+
+                        {/* Category/Subcategory/ItemType Selectors */}
+                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '12px', marginBottom: '20px' }}>
+                            {selectedHierarchyType === 'category' && (
+                                <select
+                                    value={selectedHierarchyId || ''}
+                                    onChange={(e) => handleMarginCategoryChange(Number(e.target.value))}
+                                    style={{
+                                        padding: '12px 16px',
+                                        borderRadius: '12px',
+                                        border: 'none',
+                                        fontSize: '15px',
+                                        fontWeight: '600',
+                                        backgroundColor: 'white',
+                                        color: '#374151',
+                                        cursor: 'pointer',
+                                    }}
+                                >
+                                    <option value="">اختر التصنيف الرئيسي...</option>
+                                    {categories.map(cat => (
+                                        <option key={cat.id} value={cat.id}>
+                                            {cat.nameAr || cat.name}
+                                        </option>
+                                    ))}
+                                </select>
+                            )}
+
+                            {selectedHierarchyType === 'subcategory' && (
+                                <>
+                                    <select
+                                        onChange={(e) => handleMarginCategoryChange(Number(e.target.value))}
+                                        style={{ padding: '12px 16px', borderRadius: '12px', border: 'none', fontSize: '15px', fontWeight: '600', backgroundColor: 'white', color: '#374151', cursor: 'pointer' }}
+                                    >
+                                        <option value="">اختر التصنيف الرئيسي...</option>
+                                        {categories.map(cat => (
+                                            <option key={cat.id} value={cat.id}>{cat.nameAr || cat.name}</option>
+                                        ))}
+                                    </select>
+                                    <select
+                                        value={selectedHierarchyId || ''}
+                                        onChange={(e) => handleMarginSubcategoryChange(Number(e.target.value))}
+                                        style={{ padding: '12px 16px', borderRadius: '12px', border: 'none', fontSize: '15px', fontWeight: '600', backgroundColor: 'white', color: '#374151', cursor: 'pointer' }}
+                                        disabled={marginSubcategories.length === 0}
+                                    >
+                                        <option value="">اختر التصنيف الفرعي...</option>
+                                        {marginSubcategories.map(sub => (
+                                            <option key={sub.id} value={sub.id}>{sub.nameAr || sub.name}</option>
+                                        ))}
+                                    </select>
+                                </>
+                            )}
+
+                            {selectedHierarchyType === 'itemtype' && (
+                                <>
+                                    <select
+                                        onChange={(e) => handleMarginCategoryChange(Number(e.target.value))}
+                                        style={{ padding: '12px 16px', borderRadius: '12px', border: 'none', fontSize: '15px', fontWeight: '600', backgroundColor: 'white', color: '#374151', cursor: 'pointer' }}
+                                    >
+                                        <option value="">اختر التصنيف الرئيسي...</option>
+                                        {categories.map(cat => (
+                                            <option key={cat.id} value={cat.id}>{cat.nameAr || cat.name}</option>
+                                        ))}
+                                    </select>
+                                    <select
+                                        onChange={(e) => handleMarginSubcategoryChange(Number(e.target.value))}
+                                        style={{ padding: '12px 16px', borderRadius: '12px', border: 'none', fontSize: '15px', fontWeight: '600', backgroundColor: 'white', color: '#374151', cursor: 'pointer' }}
+                                        disabled={marginSubcategories.length === 0}
+                                    >
+                                        <option value="">اختر التصنيف الفرعي...</option>
+                                        {marginSubcategories.map(sub => (
+                                            <option key={sub.id} value={sub.id}>{sub.nameAr || sub.name}</option>
+                                        ))}
+                                    </select>
+                                    <select
+                                        value={selectedHierarchyId || ''}
+                                        onChange={(e) => handleMarginItemTypeChange(Number(e.target.value))}
+                                        style={{ padding: '12px 16px', borderRadius: '12px', border: 'none', fontSize: '15px', fontWeight: '600', backgroundColor: 'white', color: '#374151', cursor: 'pointer' }}
+                                        disabled={marginItemTypes.length === 0}
+                                    >
+                                        <option value="">اختر نوع الصنف...</option>
+                                        {marginItemTypes.map(it => (
+                                            <option key={it.id} value={it.id}>{it.nameAr || it.name}</option>
+                                        ))}
+                                    </select>
+                                </>
+                            )}
+                        </div>
+
+                        {/* Margin Inputs */}
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr auto auto', gap: '12px', alignItems: 'end' }}>
+                            <div>
+                                <label style={{ display: 'block', marginBottom: '8px', fontSize: '14px', fontWeight: '600' }}>
+                                    نسبة ربح التجزئة (%)
+                                </label>
+                                <input
+                                    type="number"
+                                    step="0.1"
+                                    value={marginRetail}
+                                    onChange={(e) => setMarginRetail(e.target.value)}
+                                    style={{
+                                        width: '100%',
+                                        padding: '12px 16px',
+                                        borderRadius: '12px',
+                                        border: 'none',
+                                        fontSize: '16px',
+                                        fontWeight: '600',
+                                        backgroundColor: 'white',
+                                        color: '#374151',
+                                    }}
+                                    placeholder="40"
+                                />
+                                <small style={{ display: 'block', marginTop: '6px', opacity: 0.9, fontSize: '12px' }}>
+                                    {marginRetail && !isNaN(parseFloat(marginRetail))
+                                        ? `مثال: تكلفة 100 ← سعر ${(100 * (1 + parseFloat(marginRetail) / 100)).toFixed(2)}`
+                                        : 'أدخل نسبة الربح'}
+                                </small>
+                            </div>
+
+                            <div>
+                                <label style={{ display: 'block', marginBottom: '8px', fontSize: '14px', fontWeight: '600' }}>
+                                    نسبة ربح الجملة (%)
+                                </label>
+                                <input
+                                    type="number"
+                                    step="0.1"
+                                    value={marginWholesale}
+                                    onChange={(e) => setMarginWholesale(e.target.value)}
+                                    style={{
+                                        width: '100%',
+                                        padding: '12px 16px',
+                                        borderRadius: '12px',
+                                        border: 'none',
+                                        fontSize: '16px',
+                                        fontWeight: '600',
+                                        backgroundColor: 'white',
+                                        color: '#374151',
+                                    }}
+                                    placeholder="20"
+                                />
+                                <small style={{ display: 'block', marginTop: '6px', opacity: 0.9, fontSize: '12px' }}>
+                                    {marginWholesale && !isNaN(parseFloat(marginWholesale))
+                                        ? `مثال: تكلفة 100 ← سعر ${(100 * (1 + parseFloat(marginWholesale) / 100)).toFixed(2)}`
+                                        : 'أدخل نسبة الربح'}
+                                </small>
+                            </div>
+
+                            <button
+                                onClick={handlePreviewMargins}
+                                disabled={!selectedHierarchyId}
+                                style={{
+                                    padding: '12px 28px',
+                                    background: selectedHierarchyId ? '#10b981' : 'rgba(255,255,255,0.3)',
+                                    color: 'white',
+                                    border: 'none',
+                                    borderRadius: '12px',
+                                    cursor: selectedHierarchyId ? 'pointer' : 'not-allowed',
+                                    fontWeight: '700',
+                                    fontSize: '15px',
+                                    whiteSpace: 'nowrap',
+                                }}
+                            >
+                                👁️ معاينة
+                            </button>
+
+                            <button
+                                onClick={handleApplyMargins}
+                                disabled={!showPreview || previewProducts.length === 0}
+                                style={{
+                                    padding: '12px 28px',
+                                    background: showPreview && previewProducts.length > 0 ? '#f59e0b' : 'rgba(255,255,255,0.3)',
+                                    color: 'white',
+                                    border: 'none',
+                                    borderRadius: '12px',
+                                    cursor: showPreview && previewProducts.length > 0 ? 'pointer' : 'not-allowed',
+                                    fontWeight: '700',
+                                    fontSize: '15px',
+                                    whiteSpace: 'nowrap',
+                                }}
+                            >
+                                ✅ تطبيق
+                            </button>
+                        </div>
+
+                        {/* Preview Table */}
+                        {showPreview && previewProducts.length > 0 && (
+                            <div style={{
+                                marginTop: '24px',
+                                background: 'white',
+                                borderRadius: '16px',
+                                padding: '20px',
+                                color: '#1e293b',
+                                maxHeight: '450px',
+                                overflowY: 'auto',
+                                boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+                            }}>
+                                <h4 style={{ margin: '0 0 16px 0', fontSize: '16px', fontWeight: '700', color: '#111827' }}>
+                                    📋 معاينة التغييرات ({previewProducts.length} منتج)
+                                </h4>
+                                <div style={{ overflowX: 'auto' }}>
+                                    <table style={{ width: '100%', fontSize: '13px', borderCollapse: 'collapse' }}>
+                                        <thead>
+                                            <tr style={{ background: '#f9fafb', borderBottom: '2px solid #e5e7eb' }}>
+                                                <th style={{ padding: '12px', textAlign: 'right', fontWeight: '700' }}>المنتج</th>
+                                                <th style={{ padding: '12px', textAlign: 'center', fontWeight: '700' }}>التكلفة</th>
+                                                <th style={{ padding: '12px', textAlign: 'center', fontWeight: '700' }}>تجزئة قديم</th>
+                                                <th style={{ padding: '12px', textAlign: 'center', fontWeight: '700', color: '#10b981' }}>تجزئة جديد</th>
+                                                <th style={{ padding: '12px', textAlign: 'center', fontWeight: '700' }}>فرق</th>
+                                                <th style={{ padding: '12px', textAlign: 'center', fontWeight: '700' }}>جملة قديم</th>
+                                                <th style={{ padding: '12px', textAlign: 'center', fontWeight: '700', color: '#10b981' }}>جملة جديد</th>
+                                                <th style={{ padding: '12px', textAlign: 'center', fontWeight: '700' }}>فرق</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {previewProducts.slice(0, 20).map(p => {
+                                                const retailDiff = p.newRetail - p.oldRetail;
+                                                const wholesaleDiff = p.newWholesale - p.oldWholesale;
+                                                return (
+                                                    <tr key={p.id} style={{ borderBottom: '1px solid #f3f4f6' }}>
+                                                        <td style={{ padding: '12px', fontWeight: '600' }}>{p.nameAr}</td>
+                                                        <td style={{ padding: '12px', textAlign: 'center', color: '#6b7280' }}>{p.costAvg.toFixed(2)}</td>
+                                                        <td style={{ padding: '12px', textAlign: 'center' }}>{p.oldRetail.toFixed(2)}</td>
+                                                        <td style={{ padding: '12px', textAlign: 'center', fontWeight: '700', color: '#10b981' }}>
+                                                            {p.newRetail.toFixed(2)}
+                                                        </td>
+                                                        <td style={{
+                                                            padding: '12px',
+                                                            textAlign: 'center',
+                                                            color: retailDiff > 0 ? '#10b981' : retailDiff < 0 ? '#ef4444' : '#64748b',
+                                                            fontWeight: '700',
+                                                        }}>
+                                                            {retailDiff > 0 ? '+' : ''}{retailDiff.toFixed(2)}
+                                                        </td>
+                                                        <td style={{ padding: '12px', textAlign: 'center' }}>{p.oldWholesale.toFixed(2)}</td>
+                                                        <td style={{ padding: '12px', textAlign: 'center', fontWeight: '700', color: '#10b981' }}>
+                                                            {p.newWholesale.toFixed(2)}
+                                                        </td>
+                                                        <td style={{
+                                                            padding: '12px',
+                                                            textAlign: 'center',
+                                                            color: wholesaleDiff > 0 ? '#10b981' : wholesaleDiff < 0 ? '#ef4444' : '#64748b',
+                                                            fontWeight: '700',
+                                                        }}>
+                                                            {wholesaleDiff > 0 ? '+' : ''}{wholesaleDiff.toFixed(2)}
+                                                        </td>
+                                                    </tr>
+                                                );
+                                            })}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                {previewProducts.length > 20 && (
+                                    <p style={{ marginTop: '16px', color: '#6b7280', fontSize: '13px', textAlign: 'center' }}>
+                                        عرض 20 من {previewProducts.length} منتج
+                                    </p>
+                                )}
+                            </div>
+                        )}
+                    </>
+                )}
+            </div>
+            {/* ============================================ */}
+            {/* END: MARGIN MANAGEMENT PANEL */}
+            {/* ============================================ */}
 
             {/* Top Bar */}
             <div style={{
@@ -734,7 +1229,7 @@ export default function PriceManagement() {
                     </div>
                 </div>
 
-                {/* Price Adjustment Panel - Same as before */}
+                {/* Price Adjustment Panel */}
                 <div>
                     <div style={{
                         backgroundColor: '#fff',

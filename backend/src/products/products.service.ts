@@ -320,6 +320,7 @@ export class ProductsService {
       brand: productData.brand,
       unit: productData.unit,
       cost: productData.cost,
+      costAvg: productData.cost, // ✅ Initialize costAvg with cost
       priceRetail: productData.priceRetail,
       priceWholesale: productData.priceWholesale,
       minQty: productData.minQty,
@@ -660,7 +661,10 @@ export class ProductsService {
     if (updateProductDto.nameAr !== undefined) updateData.nameAr = updateProductDto.nameAr;
     if (updateProductDto.brand !== undefined) updateData.brand = updateProductDto.brand;
     if (updateProductDto.unit !== undefined) updateData.unit = updateProductDto.unit;
-    if (updateProductDto.cost !== undefined) updateData.cost = updateProductDto.cost;
+    if (updateProductDto.cost !== undefined) {
+      updateData.cost = updateProductDto.cost;
+      updateData.costAvg = updateProductDto.cost; // ✅ Also update costAvg when cost is manually changed
+    }
     if (updateProductDto.priceRetail !== undefined) updateData.priceRetail = updateProductDto.priceRetail;
     if (updateProductDto.priceWholesale !== undefined) updateData.priceWholesale = updateProductDto.priceWholesale;
     if (updateProductDto.minQty !== undefined) updateData.minQty = updateProductDto.minQty;

@@ -6,6 +6,8 @@ interface Category {
     id: number;
     name: string;
     nameAr: string;
+    defaultRetailMargin?: number;
+    defaultWholesaleMargin?: number;
 }
 
 interface Subcategory {
@@ -13,6 +15,8 @@ interface Subcategory {
     name: string;
     nameAr: string;
     categoryId: number;
+    defaultRetailMargin?: number;
+    defaultWholesaleMargin?: number;
 }
 
 interface ItemType {
@@ -20,6 +24,8 @@ interface ItemType {
     name: string;
     nameAr: string;
     subcategoryId: number;
+    defaultRetailMargin?: number;
+    defaultWholesaleMargin?: number;
 }
 
 interface ProductFormProps {
@@ -77,7 +83,7 @@ export default function ProductForm({ product, onClose, onSave }: ProductFormPro
                 nameAr: product.nameAr || '',
                 brand: product.brand || '',
                 unit: product.unit || 'PCS',
-                cost: Number(product.cost) || 0,
+                cost: Number(product.costAvg || product.cost) || 0,
                 priceRetail: Number(product.priceRetail) || 0,
                 priceWholesale: Number(product.priceWholesale) || 0,
                 minQty: product.minQty || 10,
@@ -123,6 +129,71 @@ export default function ProductForm({ product, onClose, onSave }: ProductFormPro
 
         }
     }, [product]);
+
+    // ✅ AUTO-CALCULATE PRICES EFFECT
+    useEffect(() => {
+        // Only auto-calc if NOT editing an existing product (user intent might be to keep old prices)
+        // OR if the user is actively changing cost/category on a new product.
+        // Actually, even for existing products, if they change the cost, they MIGHT want auto-update?
+        // Let's stick to: if Cost changes or Hierarchy changes, we update prices.
+
+        recalculatePrices();
+    }, [formData.cost, selectedCategoryId, selectedSubcategoryId, selectedItemTypeId, categories, subcategories, itemTypes]);
+
+    const recalculatePrices = () => {
+        const cost = Number(formData.cost) || 0;
+        if (cost <= 0) return;
+
+        let retailMargin = 0;
+        let wholesaleMargin = 0;
+        let foundMargin = false;
+
+        // 1. Try Item Type
+        if (selectedItemTypeId) {
+            const it = itemTypes.find(t => t.id === selectedItemTypeId);
+            if (it?.defaultRetailMargin != null) {
+                retailMargin = it.defaultRetailMargin;
+                wholesaleMargin = it.defaultWholesaleMargin || 0;
+                foundMargin = true;
+            }
+        }
+
+        // 2. Try Subcategory
+        if (!foundMargin && selectedSubcategoryId) {
+            const sub = subcategories.find(s => s.id === selectedSubcategoryId);
+            if (sub?.defaultRetailMargin != null) {
+                retailMargin = sub.defaultRetailMargin;
+                wholesaleMargin = sub.defaultWholesaleMargin || 0;
+                foundMargin = true;
+            }
+        }
+
+        // 3. Try Category
+        if (!foundMargin && selectedCategoryId) {
+            const cat = categories.find(c => c.id === selectedCategoryId);
+            if (cat?.defaultRetailMargin != null) {
+                retailMargin = cat.defaultRetailMargin;
+                wholesaleMargin = cat.defaultWholesaleMargin || 0;
+                foundMargin = true;
+            }
+        }
+
+        // Apply margins if found
+        if (foundMargin) {
+            const newRetail = cost * (1 + retailMargin);
+            const newWholesale = cost * (1 + wholesaleMargin);
+
+            // Only update if different to avoid infinite loops if we were also listening to price
+            if (Math.abs(newRetail - formData.priceRetail) > 0.01 || Math.abs(newWholesale - formData.priceWholesale) > 0.01) {
+                setFormData(prev => ({
+                    ...prev,
+                    priceRetail: parseFloat(newRetail.toFixed(2)),
+                    priceWholesale: parseFloat(newWholesale.toFixed(2))
+                }));
+            }
+        }
+    };
+
 
     const fetchCategories = async () => {
         try {
@@ -174,6 +245,7 @@ export default function ProductForm({ product, onClose, onSave }: ProductFormPro
             setIsSpecialCategory(false);
             setSpecialCategoryType(null);
         }
+        // Recalc will trigger via useEffect
     };
 
 
@@ -184,6 +256,7 @@ export default function ProductForm({ product, onClose, onSave }: ProductFormPro
         if (subcategoryId) {
             loadItemTypes(subcategoryId);
         }
+        // Recalc will trigger via useEffect
     };
 
     const handleSubmit = async (e: React.FormEvent) => {

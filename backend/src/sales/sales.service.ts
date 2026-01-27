@@ -85,10 +85,10 @@ export class SalesService {
     for (const line of enrichedLines) {
       const product = await this.prisma.product.findUnique({
         where: { id: line.productId },
-        select: { cost: true },
+        select: { costAvg: true },
       });
-      if (product && product.cost) {
-        costOfGoods += Number(product.cost) * line.qty;
+      if (product && product.costAvg) {
+        costOfGoods += Number(product.costAvg) * line.qty;
       }
     }
 
@@ -813,8 +813,8 @@ export class SalesService {
     for (const returnRecord of invoice.returns) {
       for (const returnLine of returnRecord.lines) {
         const product = returnLine.product;
-        if (product && product.cost) {
-          returnedCost += Number(product.cost) * returnLine.qtyReturned;
+        if (product && product.costAvg) {
+          returnedCost += Number(product.costAvg) * returnLine.qtyReturned;
         }
       }
     }

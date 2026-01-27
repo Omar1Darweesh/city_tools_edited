@@ -3,12 +3,15 @@ import { PrismaService } from '../prisma.service';
 
 @Injectable()
 export class CostAccountingService {
-  constructor(private prisma: PrismaService) {}
+  constructor(
+    private prisma: PrismaService,
+    // ❌ REMOVE THIS - Don't inject ProfitMarginService here
+    // private profitMarginService: ProfitMarginService,
+  ) { }
 
   /**
-   * Updates the Weighted Average Cost (WAC) for a product.
-   * Formula: ((CurrentQty * CurrentAvgCost) + (NewBatchQty * NewBatchCost)) / (CurrentQty + NewBatchQty)
-   * Note: CurrentQty refers to the quantity BEFORE the new batch is added.
+   * Update Weighted Average Cost when receiving new stock
+   * Price recalculation happens separately outside transaction
    */
   async updateWeightedAverageCost(
     productId: number,
@@ -16,50 +19,70 @@ export class CostAccountingService {
     newBatchCost: number,
     tx: any = this.prisma,
   ) {
-    if (newBatchQty <= 0) return;
-
-    const product = await tx.product.findUnique({
-      where: { id: productId },
-      select: { costAvg: true, id: true, cost: true },
-    });
-
-    if (!product) return;
-
-    // Get current total valid stock across all locations
-    // Get current total valid stock across all locations (logic below uses movements directly)
-
-    // Calculate current total qty
-    const movements = await tx.stockMovement.aggregate({
-      where: { productId },
-      _sum: { qtyChange: true },
-    });
-
-    const currentTotalQty = movements._sum.qtyChange || 0;
-
-    // If current qty is negative (oversold), we just assume 0 for WAC purposes to avoid weird math
-    // Or we just strictly apply the formula. Standard is: if qty <= 0, new cost becomes the WAC.
-
-    const currentAvgCost = Number(product.costAvg);
-    const batchCost = Number(newBatchCost);
-    const batchQty = Number(newBatchQty);
-
-    let newAvgCost = batchCost;
-
-    if (currentTotalQty > 0) {
-      const oldTotalValue = currentTotalQty * currentAvgCost;
-      const newBatchValue = batchQty * batchCost;
-      const newTotalQty = currentTotalQty + batchQty;
-
-      newAvgCost = (oldTotalValue + newBatchValue) / newTotalQty;
+    if (newBatchQty <= 0) {
+      console.log(`⚠️ Skipping WAC update: quantity is zero or negative`);
+      return;
     }
 
-    // Update Product
+    // Get current product data
+    const product = await tx.product.findUnique({
+      where: { id: productId },
+      select: {
+        id: true,
+        nameEn: true,
+        costAvg: true,
+      },
+    });
+
+    if (!product) {
+      throw new Error(`Product ${productId} not found`);
+    }
+
+    // Calculate current stock from stock_movements
+    const stockData = await tx.stockMovement.aggregate({
+      where: {
+        productId: productId,
+      },
+      _sum: {
+        qtyChange: true,
+      },
+    });
+
+    const currentStock = Number(stockData._sum.qtyChange) || 0;
+    const currentAvgCost = Number(product.costAvg) || 0;
+
+    // Calculate new weighted average cost
+    const currentValue = currentStock * currentAvgCost;
+    const newBatchValue = newBatchQty * newBatchCost;
+    const totalValue = currentValue + newBatchValue;
+    const totalQty = currentStock + newBatchQty;
+    const newAvgCost = totalQty > 0 ? totalValue / totalQty : newBatchCost;
+
+    console.log(
+      `📊 WAC Calculation for Product ${productId} (${product.nameEn}):\n` +
+      `   Current: ${currentStock} units @ ${currentAvgCost.toFixed(2)} = ${currentValue.toFixed(2)}\n` +
+      `   New Batch: ${newBatchQty} units @ ${newBatchCost.toFixed(2)} = ${newBatchValue.toFixed(2)}\n` +
+      `   Total: ${totalQty} units = ${totalValue.toFixed(2)}\n` +
+      `   New Avg Cost: ${newAvgCost.toFixed(2)}`
+    );
+
+    // Update product cost
     await tx.product.update({
       where: { id: productId },
       data: {
         costAvg: newAvgCost,
-        cost: newAvgCost,
+        cost: newBatchCost, // Last purchase cost
       },
     });
+
+    // ❌ REMOVED: Price recalculation from here - too slow for transaction
+    console.log(`✅ Cost updated for product ${productId}. Prices will be recalculated after transaction.`);
+
+    return {
+      oldAvgCost: currentAvgCost,
+      newAvgCost: newAvgCost,
+      currentStock: currentStock,
+      newStock: totalQty,
+    };
   }
 }

@@ -50,8 +50,8 @@ async function fixData() {
         for (const returnRecord of invoice.returns) {
             for (const returnLine of returnRecord.lines) {
                 const product = returnLine.product;
-                if (product && product.cost) {
-                    returnedCost += Number(product.cost) * returnLine.qtyReturned;
+                if (product && product.costAvg) {
+                    returnedCost += Number(product.costAvg) * returnLine.qtyReturned;
                 }
             }
         }

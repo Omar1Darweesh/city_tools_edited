@@ -7,6 +7,8 @@ interface ItemType {
     name: string;
     nameAr: string;
     subcategoryId: number;
+    defaultRetailMargin?: number;
+    defaultWholesaleMargin?: number;
     _count?: { products: number };
 }
 
@@ -15,6 +17,8 @@ interface Subcategory {
     name: string;
     nameAr: string;
     categoryId: number;
+    defaultRetailMargin?: number;
+    defaultWholesaleMargin?: number;
     itemTypes: ItemType[];
     _count?: { itemTypes: number };
 }
@@ -23,6 +27,8 @@ interface Category {
     id: number;
     name: string;
     nameAr: string;
+    defaultRetailMargin?: number;
+    defaultWholesaleMargin?: number;
     subcategories: Subcategory[];
     _count?: { products: number };
 }
@@ -56,9 +62,9 @@ export default function Categories() {
     const [editingItemType, setEditingItemType] = useState<ItemType | null>(null);
     const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(null);
     const [selectedSubcategoryId, setSelectedSubcategoryId] = useState<number | null>(null);
-    const [categoryForm, setCategoryForm] = useState({ name: '', nameAr: '' });
-    const [subcategoryForm, setSubcategoryForm] = useState({ name: '', nameAr: '', categoryId: 0 });
-    const [itemTypeForm, setItemTypeForm] = useState({ name: '', nameAr: '', subcategoryId: 0 });
+    const [categoryForm, setCategoryForm] = useState({ name: '', nameAr: '', defaultRetailMargin: 0, defaultWholesaleMargin: 0 });
+    const [subcategoryForm, setSubcategoryForm] = useState({ name: '', nameAr: '', categoryId: 0, defaultRetailMargin: 0, defaultWholesaleMargin: 0 });
+    const [itemTypeForm, setItemTypeForm] = useState({ name: '', nameAr: '', subcategoryId: 0, defaultRetailMargin: 0, defaultWholesaleMargin: 0 });
 
     // New states for products
     const [expandedItemTypes, setExpandedItemTypes] = useState<Set<number>>(new Set());
@@ -149,13 +155,18 @@ export default function Categories() {
     // CATEGORY OPERATIONS
     // ============================================
     const handleAddCategory = () => {
-        setCategoryForm({ name: '', nameAr: '' });
+        setCategoryForm({ name: '', nameAr: '', defaultRetailMargin: 0, defaultWholesaleMargin: 0 });
         setEditingCategory(null);
         setShowCategoryModal(true);
     };
 
     const handleEditCategory = (category: Category) => {
-        setCategoryForm({ name: category.name, nameAr: category.nameAr || '' });
+        setCategoryForm({
+            name: category.name,
+            nameAr: category.nameAr || '',
+            defaultRetailMargin: category.defaultRetailMargin || 0,
+            defaultWholesaleMargin: category.defaultWholesaleMargin || 0
+        });
         setEditingCategory(category);
         setShowCategoryModal(true);
     };
@@ -189,7 +200,7 @@ export default function Categories() {
     // SUBCATEGORY OPERATIONS
     // ============================================
     const handleAddSubcategory = (categoryId: number) => {
-        setSubcategoryForm({ name: '', nameAr: '', categoryId });
+        setSubcategoryForm({ name: '', nameAr: '', categoryId, defaultRetailMargin: 0, defaultWholesaleMargin: 0 });
         setEditingSubcategory(null);
         setSelectedCategoryId(categoryId);
         setShowSubcategoryModal(true);
@@ -200,6 +211,8 @@ export default function Categories() {
             name: subcategory.name,
             nameAr: subcategory.nameAr || '',
             categoryId: subcategory.categoryId,
+            defaultRetailMargin: subcategory.defaultRetailMargin || 0,
+            defaultWholesaleMargin: subcategory.defaultWholesaleMargin || 0
         });
         setEditingSubcategory(subcategory);
         setShowSubcategoryModal(true);
@@ -234,7 +247,7 @@ export default function Categories() {
     // ITEM TYPE OPERATIONS
     // ============================================
     const handleAddItemType = (subcategoryId: number) => {
-        setItemTypeForm({ name: '', nameAr: '', subcategoryId });
+        setItemTypeForm({ name: '', nameAr: '', subcategoryId, defaultRetailMargin: 0, defaultWholesaleMargin: 0 });
         setEditingItemType(null);
         setSelectedSubcategoryId(subcategoryId);
         setShowItemTypeModal(true);
@@ -245,6 +258,8 @@ export default function Categories() {
             name: itemType.name,
             nameAr: itemType.nameAr || '',
             subcategoryId: itemType.subcategoryId,
+            defaultRetailMargin: itemType.defaultRetailMargin || 0,
+            defaultWholesaleMargin: itemType.defaultWholesaleMargin || 0
         });
         setEditingItemType(itemType);
         setShowItemTypeModal(true);
@@ -390,6 +405,40 @@ export default function Categories() {
                                 }}
                             />
                         </div>
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                            <div>
+                                <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '500' }}>هامش التجزئة (%)</label>
+                                <input
+                                    type="number"
+                                    step="0.01"
+                                    value={categoryForm.defaultRetailMargin * 100}
+                                    onChange={(e) => setCategoryForm({ ...categoryForm, defaultRetailMargin: Number(e.target.value) / 100 })}
+                                    style={{
+                                        width: '100%',
+                                        padding: '0.75rem',
+                                        border: '1px solid #d1d5db',
+                                        borderRadius: '0.5rem',
+                                        fontSize: '1rem',
+                                    }}
+                                />
+                            </div>
+                            <div>
+                                <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '500' }}>هامش الجملة (%)</label>
+                                <input
+                                    type="number"
+                                    step="0.01"
+                                    value={categoryForm.defaultWholesaleMargin * 100}
+                                    onChange={(e) => setCategoryForm({ ...categoryForm, defaultWholesaleMargin: Number(e.target.value) / 100 })}
+                                    style={{
+                                        width: '100%',
+                                        padding: '0.75rem',
+                                        border: '1px solid #d1d5db',
+                                        borderRadius: '0.5rem',
+                                        fontSize: '1rem',
+                                    }}
+                                />
+                            </div>
+                        </div>
                         <div style={{ display: 'flex', gap: '1rem' }}>
                             <button
                                 type="submit"
@@ -460,6 +509,40 @@ export default function Categories() {
                                 }}
                             />
                         </div>
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                            <div>
+                                <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '500' }}>هامش التجزئة (%)</label>
+                                <input
+                                    type="number"
+                                    step="0.01"
+                                    value={subcategoryForm.defaultRetailMargin * 100}
+                                    onChange={(e) => setSubcategoryForm({ ...subcategoryForm, defaultRetailMargin: Number(e.target.value) / 100 })}
+                                    style={{
+                                        width: '100%',
+                                        padding: '0.75rem',
+                                        border: '1px solid #d1d5db',
+                                        borderRadius: '0.5rem',
+                                        fontSize: '1rem',
+                                    }}
+                                />
+                            </div>
+                            <div>
+                                <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '500' }}>هامش الجملة (%)</label>
+                                <input
+                                    type="number"
+                                    step="0.01"
+                                    value={subcategoryForm.defaultWholesaleMargin * 100}
+                                    onChange={(e) => setSubcategoryForm({ ...subcategoryForm, defaultWholesaleMargin: Number(e.target.value) / 100 })}
+                                    style={{
+                                        width: '100%',
+                                        padding: '0.75rem',
+                                        border: '1px solid #d1d5db',
+                                        borderRadius: '0.5rem',
+                                        fontSize: '1rem',
+                                    }}
+                                />
+                            </div>
+                        </div>
                         <div style={{ display: 'flex', gap: '1rem' }}>
                             <button
                                 type="submit"
@@ -529,6 +612,40 @@ export default function Categories() {
                                     textAlign: 'right',
                                 }}
                             />
+                        </div>
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                            <div>
+                                <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '500' }}>هامش التجزئة (%)</label>
+                                <input
+                                    type="number"
+                                    step="0.01"
+                                    value={itemTypeForm.defaultRetailMargin * 100}
+                                    onChange={(e) => setItemTypeForm({ ...itemTypeForm, defaultRetailMargin: Number(e.target.value) / 100 })}
+                                    style={{
+                                        width: '100%',
+                                        padding: '0.75rem',
+                                        border: '1px solid #d1d5db',
+                                        borderRadius: '0.5rem',
+                                        fontSize: '1rem',
+                                    }}
+                                />
+                            </div>
+                            <div>
+                                <label style={{ display: 'block', marginBottom: '0.5rem', fontWeight: '500' }}>هامش الجملة (%)</label>
+                                <input
+                                    type="number"
+                                    step="0.01"
+                                    value={itemTypeForm.defaultWholesaleMargin * 100}
+                                    onChange={(e) => setItemTypeForm({ ...itemTypeForm, defaultWholesaleMargin: Number(e.target.value) / 100 })}
+                                    style={{
+                                        width: '100%',
+                                        padding: '0.75rem',
+                                        border: '1px solid #d1d5db',
+                                        borderRadius: '0.5rem',
+                                        fontSize: '1rem',
+                                    }}
+                                />
+                            </div>
                         </div>
                         <div style={{ display: 'flex', gap: '1rem' }}>
                             <button
@@ -641,8 +758,32 @@ function CategoryCard({ category, isExpanded, onToggle, onEdit, onDelete, onAddS
                             <div style={{ fontSize: '1.25rem', fontWeight: 'bold' }}>
                                 {category.nameAr || category.name}
                             </div>
-                            <div style={{ fontSize: '0.875rem', opacity: 0.9 }}>
-                                {category.name}
+                            <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                                <div style={{ fontSize: '0.875rem', opacity: 0.9 }}>
+                                    {category.name}
+                                </div>
+                                {category.defaultRetailMargin != null && (
+                                    <div style={{
+                                        fontSize: '0.75rem',
+                                        background: 'rgba(255,255,255,0.2)',
+                                        padding: '2px 6px',
+                                        borderRadius: '4px',
+                                        fontWeight: '600'
+                                    }}>
+                                        R: {(category.defaultRetailMargin * 100).toFixed(0)}%
+                                    </div>
+                                )}
+                                {category.defaultWholesaleMargin != null && (
+                                    <div style={{
+                                        fontSize: '0.75rem',
+                                        background: 'rgba(255,255,255,0.2)',
+                                        padding: '2px 6px',
+                                        borderRadius: '4px',
+                                        fontWeight: '600'
+                                    }}>
+                                        W: {(category.defaultWholesaleMargin * 100).toFixed(0)}%
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </div>
@@ -920,7 +1061,31 @@ function SubcategoryCard({ subcategory, isExpanded, onToggle, onEdit, onDelete, 
                     {isExpanded ? <ChevronDown size={20} /> : <ChevronRight size={20} />}
                     <div>
                         <div style={{ fontSize: '1.1rem', fontWeight: '600' }}>{subcategory.nameAr || subcategory.name}</div>
-                        <div style={{ fontSize: '0.85rem', opacity: 0.9 }}>{subcategory.name}</div>
+                        <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                            <div style={{ fontSize: '0.85rem', opacity: 0.9 }}>{subcategory.name}</div>
+                            {subcategory.defaultRetailMargin != null && (
+                                <div style={{
+                                    fontSize: '0.7rem',
+                                    background: 'rgba(255,255,255,0.2)',
+                                    padding: '1px 4px',
+                                    borderRadius: '3px',
+                                    fontWeight: '600'
+                                }}>
+                                    R: {(subcategory.defaultRetailMargin * 100).toFixed(0)}%
+                                </div>
+                            )}
+                            {subcategory.defaultWholesaleMargin != null && (
+                                <div style={{
+                                    fontSize: '0.7rem',
+                                    background: 'rgba(255,255,255,0.2)',
+                                    padding: '1px 4px',
+                                    borderRadius: '3px',
+                                    fontWeight: '600'
+                                }}>
+                                    W: {(subcategory.defaultWholesaleMargin * 100).toFixed(0)}%
+                                </div>
+                            )}
+                        </div>
                     </div>
                 </div>
                 <div style={{ display: 'flex', gap: '0.5rem' }}>
@@ -1029,8 +1194,36 @@ function ItemTypeCard({ itemType, onEdit, onDelete, isExpanded, onToggle, produc
                         <div style={{ fontWeight: 500, fontSize: '0.95rem', color: '#1f2937' }}>
                             {itemType.nameAr || itemType.name}
                         </div>
-                        <div style={{ fontSize: '0.85rem', color: '#6b7280' }}>
-                            {itemType.name}
+                        <div style={{ display: 'flex', gap: '6px', alignItems: 'center' }}>
+                            <div style={{ fontSize: '0.85rem', color: '#6b7280' }}>
+                                {itemType.name}
+                            </div>
+                            {itemType.defaultRetailMargin != null && (
+                                <div style={{
+                                    fontSize: '0.7rem',
+                                    background: '#f3f4f6',
+                                    color: '#6b7280',
+                                    padding: '1px 4px',
+                                    borderRadius: '3px',
+                                    fontWeight: '600',
+                                    border: '1px solid #e5e7eb'
+                                }}>
+                                    R: {(itemType.defaultRetailMargin * 100).toFixed(0)}%
+                                </div>
+                            )}
+                            {itemType.defaultWholesaleMargin != null && (
+                                <div style={{
+                                    fontSize: '0.7rem',
+                                    background: '#f3f4f6',
+                                    color: '#6b7280',
+                                    padding: '1px 4px',
+                                    borderRadius: '3px',
+                                    fontWeight: '600',
+                                    border: '1px solid #e5e7eb'
+                                }}>
+                                    W: {(itemType.defaultWholesaleMargin * 100).toFixed(0)}%
+                                </div>
+                            )}
                         </div>
                     </div>
                 </div>

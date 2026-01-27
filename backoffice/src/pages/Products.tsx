@@ -13,6 +13,7 @@ interface Product {
     nameAr: string;
     brand: string;
     unit: string;
+    costAvg?: number;
     cost: number;
     priceRetail: number;
     priceWholesale: number;
@@ -633,10 +634,14 @@ export default function Products() {
                                                 </div>
                                             </td>
                                             <td style={{ padding: '1rem', textAlign: 'center' }}>
-                                                <div style={{ color: '#6b7280' }}>
-                                                    {Number(product.cost).toFixed(2)} ر.س
+                                                <div style={{ fontWeight: '600', color: '#111827' }}>
+                                                    {Number(product.costAvg || product.cost || 0).toFixed(2)} ر.س
+                                                </div>
+                                                <div style={{ fontSize: '0.75rem', color: '#9ca3af', marginTop: '0.25rem' }}>
+                                                    آخر شراء: {Number(product.cost || 0).toFixed(2)}
                                                 </div>
                                             </td>
+
                                             <td style={{ padding: '1rem', textAlign: 'center' }}>
                                                 <div style={{
                                                     display: 'inline-flex',

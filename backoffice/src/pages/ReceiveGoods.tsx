@@ -64,7 +64,7 @@ export default function ReceiveGoods() {
             productId: product.id,
             productName: product.nameEn || product.nameAr,
             qty: 1,
-            cost: product.cost || 0,
+            cost: product.costAvg || product.cost || 0,
             lineTotal: 0
         }]);
     };
@@ -84,7 +84,7 @@ export default function ReceiveGoods() {
             const prod = products.find(p => p.id === parseInt(value));
             if (prod) {
                 line.productName = prod.nameEn;
-                line.cost = prod.cost; // Default to last cost
+                line.cost = prod.costAvg || prod.cost || 0;
             }
         }
 
@@ -213,7 +213,7 @@ export default function ReceiveGoods() {
                                                     onChange={e => updateLine(index, 'productId', e.target.value)}
                                                 >
                                                     {products.map(p => (
-                                                        <option key={p.id} value={p.id}>{p.nameEn} ({p.barcode})</option>
+                                                        <option key={p.id} value={p.id}>{p.nameAr || p.nameEn} ({p.barcode})</option>
                                                     ))}
                                                 </select>
                                             </td>
@@ -378,7 +378,9 @@ export default function ReceiveGoods() {
                                         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                                             <div style={{ textAlign: 'left' }}>
                                                 <div style={{ fontSize: '12px', color: '#64748b' }}>التكلفة</div>
-                                                <div style={{ fontWeight: 'bold', color: '#16a34a' }}>{product.cost}</div>
+                                                <div style={{ fontWeight: 'bold', color: '#16a34a' }}>
+                                                    {product.costAvg || product.cost || 0} <span style={{ fontSize: '10px', color: '#64748b' }}>(Last: {product.cost})</span>
+                                                </div>
                                             </div>
                                             <div style={{ backgroundColor: '#f5f3ff', color: '#4f46e5', padding: '6px 12px', borderRadius: '6px', fontSize: '13px', fontWeight: 'bold' }}>
                                                 + إضافة

@@ -6,14 +6,15 @@ import {
 import { PrismaService } from '../prisma.service';
 import { CreateGRNDto, CreateSupplierDto } from './dto/purchasing.dto';
 import { MovementType } from '@prisma/client';
-
 import { CostAccountingService } from '../stock/cost-accounting.service';
+import { ProfitMarginService } from '../products/profit-margin.service'; // ✅ ADDED
 
 @Injectable()
 export class PurchasingService {
   constructor(
     private prisma: PrismaService,
     private costAccountingService: CostAccountingService,
+    private profitMarginService: ProfitMarginService, // ✅ ADDED
   ) { }
 
   // ============= Suppliers =============
@@ -120,85 +121,103 @@ export class PurchasingService {
     // Generate GRN number
     const grnNo = await this.generateGRNNo(branchId);
 
-    // Create GRN in transaction
-    return this.prisma.$transaction(async (tx) => {
-      // Calculate totals
-      let subtotal = 0;
-      const taxRateVal =
-        createGRNDto.taxRate !== undefined ? createGRNDto.taxRate : 14;
+    // ✅ Track products for price update
+    const productIds: number[] = [];
 
-      lines.forEach((l) => {
-        subtotal += l.qty * l.cost;
-      });
+    // ✅ Create GRN in transaction (FAST - no price recalculation inside)
+    const grn = await this.prisma.$transaction(
+      async (tx) => {
+        // Calculate totals
+        let subtotal = 0;
+        const taxRateVal =
+          createGRNDto.taxRate !== undefined ? createGRNDto.taxRate : 14;
 
-      const taxAmount = (subtotal * taxRateVal) / 100;
-      const total = subtotal + taxAmount;
+        lines.forEach((l) => {
+          subtotal += l.qty * l.cost;
+        });
 
-      // Create goods receipt
-      const grn = await tx.goodsReceipt.create({
-        data: {
-          grnNo,
-          supplierId,
-          branchId,
-          relatedPoId,
-          notes,
-          createdBy: userId,
-          paymentTerm: createGRNDto.paymentTerm || 'CASH',
-          taxRate: taxRateVal,
-          subtotal,
-          taxAmount,
-          total,
-          lines: {
-            create: lines.map((line) => ({
-              productId: line.productId,
-              qty: line.qty,
-              cost: line.cost,
-            })),
-          },
-        },
-        include: {
-          lines: {
-            include: {
-              product: true,
+        const taxAmount = (subtotal * taxRateVal) / 100;
+        const total = subtotal + taxAmount;
+
+        // Create goods receipt
+        const grn = await tx.goodsReceipt.create({
+          data: {
+            grnNo,
+            supplierId,
+            branchId,
+            relatedPoId,
+            notes,
+            createdBy: userId,
+            paymentTerm: createGRNDto.paymentTerm || 'CASH',
+            taxRate: taxRateVal,
+            subtotal,
+            taxAmount,
+            total,
+            lines: {
+              create: lines.map((line) => ({
+                productId: line.productId,
+                qty: line.qty,
+                cost: line.cost,
+              })),
             },
           },
-          supplier: true,
-        },
-      });
-
-      // Create stock movements & Update Cost
-      for (const line of lines) {
-        // Update WAC first (using current stock before adding this GRN? No, usually after.
-        // But my service logic assumes adding NEW batch to OLD stock. So call it.
-        // Note: The service uses `stockMovement.aggregate` which reads DB.
-        // Since we are in a transaction and haven't written movements yet,
-        // the `aggregate` will return OLD stock quantity. This is EXACTLY what we want for the formula:
-        // (OldQty * OldCost + NewQty * NewCost) / (OldQty + NewQty)
-        await this.costAccountingService.updateWeightedAverageCost(
-          line.productId,
-          line.qty,
-          line.cost,
-          tx,
-        );
-
-        await tx.stockMovement.create({
-          data: {
-            productId: line.productId,
-            stockLocationId: locationId,
-            qtyChange: line.qty, // positive for receipt
-            movementType: MovementType.GRN,
-            refTable: 'goods_receipts',
-            refId: grn.id,
-            createdBy: userId,
+          include: {
+            lines: {
+              include: {
+                product: true,
+              },
+            },
+            supplier: true,
           },
         });
 
-        // We don't need to manually update product.cost here because WAC service does it.
-        // However, if we want to also track "Last Cost" explicitly as `product.cost`, the service does that too.
-      }
+        // Create stock movements & Update Cost
+        for (const line of lines) {
+          // Update WAC (cost calculation only - no price recalculation)
+          await this.costAccountingService.updateWeightedAverageCost(
+            line.productId,
+            line.qty,
+            line.cost,
+            tx,
+          );
 
-      return grn;
-    });
+          await tx.stockMovement.create({
+            data: {
+              productId: line.productId,
+              stockLocationId: locationId,
+              qtyChange: line.qty, // positive for receipt
+              movementType: MovementType.GRN,
+              refTable: 'goods_receipts',
+              refId: grn.id,
+              createdBy: userId,
+            },
+          });
+
+          // ✅ Track product for later price update
+          productIds.push(line.productId);
+        }
+
+        return grn;
+      },
+      {
+        timeout: 15000, // ✅ 15 seconds is enough now (much faster without price recalc)
+      }
+    );
+
+    // ✅ Update prices AFTER transaction completes (outside transaction)
+    console.log('💰 Transaction complete. Now updating prices asynchronously...');
+    for (const productId of productIds) {
+      try {
+        await this.profitMarginService.updateProductPrices(productId, userId);
+        console.log(`   ✅ Prices updated for product ${productId}`);
+      } catch (error) {
+        console.error(`   ❌ Failed to update prices for product ${productId}:`, error.message);
+        // Don't throw - GRN was already created successfully
+      }
+    }
+
+    console.log('✅ GRN creation and price updates complete!');
+    return grn;
   }
 
   async findOneGRN(id: number) {

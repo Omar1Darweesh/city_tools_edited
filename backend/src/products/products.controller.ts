@@ -26,6 +26,8 @@ import { BulkPriceUpdateDto, CategoryPriceUpdateDto } from './dto/price-manageme
 import { PriceManagementService } from './price-management.service';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { HierarchyPriceUpdateDto } from './dto/price-management.dto';
+import { ProfitMarginService } from './profit-margin.service';
+
 
 @Controller('products')
 @UseGuards(JwtAuthGuard)
@@ -33,6 +35,7 @@ export class ProductsController {
   constructor(
     private readonly productsService: ProductsService,
     private readonly priceManagementService: PriceManagementService,
+    private readonly profitMarginService: ProfitMarginService,
   ) { }
 
   // ============================================
@@ -266,4 +269,60 @@ export class ProductsController {
   async getAuditHistory(@Param('id', ParseIntPipe) id: number) {
     return this.productsService.getAuditHistory(id);
   }
+  // ========================================
+  // ✅ NEW: PROFIT MARGIN ENDPOINTS
+  // ========================================
+
+  @Post('margins/category/:id')
+  async setCategoryMargins(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() body: { retailMargin: number; wholesaleMargin: number },
+    @Request() req: any,
+  ) {
+    return this.profitMarginService.setCategoryMargins({
+      categoryId: id,
+      retailMargin: body.retailMargin,
+      wholesaleMargin: body.wholesaleMargin,
+      userId: req.user?.id || 1,
+    });
+  }
+
+  @Post('margins/subcategory/:id')
+  async setSubcategoryMargins(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() body: { retailMargin: number; wholesaleMargin: number },
+    @Request() req: any,
+  ) {
+    return this.profitMarginService.setSubcategoryMargins({
+      subcategoryId: id,
+      retailMargin: body.retailMargin,
+      wholesaleMargin: body.wholesaleMargin,
+      userId: req.user?.id || 1,
+    });
+  }
+
+  @Post('margins/item-type/:id')
+  async setItemTypeMargins(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() body: { retailMargin: number; wholesaleMargin: number },
+    @Request() req: any,
+  ) {
+    return this.profitMarginService.setItemTypeMargins({
+      itemTypeId: id,
+      retailMargin: body.retailMargin,
+      wholesaleMargin: body.wholesaleMargin,
+      userId: req.user?.id || 1,
+    });
+  }
+
+  @Get(':id/effective-margins')
+  async getProductEffectiveMargins(@Param('id', ParseIntPipe) id: number) {
+    return this.profitMarginService.getEffectiveMargins(id);
+  }
+
+  @Post('recalculate-all-prices')
+  async recalculateAllPrices(@Request() req: any) {
+    return this.profitMarginService.recalculateAllPrices(req.user?.id || 1);
+  }
+
 }

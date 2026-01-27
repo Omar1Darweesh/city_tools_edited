@@ -38,6 +38,7 @@ export class PriceManagementService {
                     brand: product.brand,
                     unit: product.unit,
                     cost: Number(product.cost),
+                    costAvg: Number(product.costAvg),
                     priceRetail: Number(product.priceRetail),
                     priceWholesale: Number(product.priceWholesale),
                     minQty: product.minQty,

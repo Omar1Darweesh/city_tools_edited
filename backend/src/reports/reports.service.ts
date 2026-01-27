@@ -112,7 +112,7 @@ export class ReportsService {
 
                 const totalRevenue = Number(item._sum.lineTotal || 0);
                 const totalQty = item._sum.qty || 0;
-                const cost = product ? Number(product.cost) * totalQty : 0;
+                const cost = product ? Number(product.costAvg) * totalQty : 0;
                 const profit = totalRevenue - cost;
 
                 return {
@@ -214,7 +214,7 @@ export class ReportsService {
                 (s, mov) => s + mov.qtyChange,
                 0,
             );
-            return sum + stock * Number(product.cost);
+            return sum + stock * Number(product.costAvg);
         }, 0);
 
         const outOfStock = allProducts.filter((p) => {
@@ -402,7 +402,7 @@ export class ReportsService {
 
         return salesLines.map((line) => ({
             qty: line.qty,
-            cost: Number(line.product.cost),
+            cost: Number(line.product.costAvg),
             revenue: Number(line.lineTotal),
         }));
     }
@@ -516,7 +516,7 @@ export class ReportsService {
 
             const todayCost = todaySalesLines.reduce(
                 (sum, line) =>
-                    sum + Number(line.product?.cost || 0) * (line.qty || 0),
+                    sum + Number(line.product?.costAvg || 0) * (line.qty || 0),
                 0,
             );
 
@@ -548,7 +548,7 @@ export class ReportsService {
                     (s, mov) => s + mov.qtyChange,
                     0,
                 );
-                return sum + stock * Number(product.cost || 0);
+                return sum + stock * Number(product.costAvg || 0);
             }, 0);
 
             const outOfStock = allProducts.filter((p) => {
@@ -881,7 +881,7 @@ export class ReportsService {
             const current = categoryMap.get(categoryName) || { revenue: 0, cost: 0, profit: 0, qty: 0 };
 
             const lineRevenue = Number(line.lineTotal || 0);
-            const lineCost = Number(line.product.cost || 0) * line.qty;
+            const lineCost = Number(line.product.costAvg || 0) * line.qty;
             const lineProfit = lineRevenue - lineCost;
 
             current.revenue += lineRevenue;

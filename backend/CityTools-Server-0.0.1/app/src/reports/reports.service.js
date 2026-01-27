@@ -96,7 +96,7 @@ let ReportsService = class ReportsService {
             });
             const totalRevenue = Number(item._sum.lineTotal || 0);
             const totalQty = item._sum.qty || 0;
-            const cost = product ? Number(product.cost) * totalQty : 0;
+            const cost = product ? Number(product.costAvg) * totalQty : 0;
             const profit = totalRevenue - cost;
             return {
                 productId: item.productId,
@@ -130,16 +130,16 @@ let ReportsService = class ReportsService {
         });
         const lowStockProducts = products
             .map((product) => {
-            const stock = product.stockMovements.reduce((sum, mov) => sum + mov.qtyChange, 0);
-            return {
-                id: product.id,
-                nameEn: product.nameEn,
-                nameAr: product.nameAr,
-                code: product.code,
-                barcode: product.barcode,
-                stock,
-            };
-        })
+                const stock = product.stockMovements.reduce((sum, mov) => sum + mov.qtyChange, 0);
+                return {
+                    id: product.id,
+                    nameEn: product.nameEn,
+                    nameAr: product.nameAr,
+                    code: product.code,
+                    barcode: product.barcode,
+                    stock,
+                };
+            })
             .filter((p) => p.stock < threshold)
             .sort((a, b) => a.stock - b.stock);
         return lowStockProducts;
@@ -164,7 +164,7 @@ let ReportsService = class ReportsService {
         });
         const totalStockValue = allProducts.reduce((sum, product) => {
             const stock = product.stockMovements.reduce((s, mov) => s + mov.qtyChange, 0);
-            return sum + (stock * Number(product.cost));
+            return sum + (stock * Number(product.costAvg));
         }, 0);
         const outOfStock = allProducts.filter(p => {
             const stock = p.stockMovements.reduce((s, mov) => s + mov.qtyChange, 0);
@@ -229,7 +229,7 @@ let ReportsService = class ReportsService {
         });
         return salesLines.map(line => ({
             qty: line.qty,
-            cost: Number(line.product.cost),
+            cost: Number(line.product.costAvg),
             revenue: Number(line.lineTotal),
         }));
     }
@@ -320,7 +320,7 @@ let ReportsService = class ReportsService {
             });
             const stockValue = allProducts.reduce((sum, product) => {
                 const stock = product.stockMovements.reduce((s, mov) => s + mov.qtyChange, 0);
-                return sum + (stock * Number(product.cost || 0));
+                return sum + (stock * Number(product.costAvg || 0));
             }, 0);
             const outOfStock = allProducts.filter(p => {
                 const stock = p.stockMovements.reduce((s, mov) => s + mov.qtyChange, 0);

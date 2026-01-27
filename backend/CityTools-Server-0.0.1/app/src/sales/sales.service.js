@@ -64,10 +64,10 @@ let SalesService = class SalesService {
         for (const line of enrichedLines) {
             const product = await this.prisma.product.findUnique({
                 where: { id: line.productId },
-                select: { cost: true },
+                select: { costAvg: true },
             });
-            if (product && product.cost) {
-                costOfGoods += Number(product.cost) * line.qty;
+            if (product && product.costAvg) {
+                costOfGoods += Number(product.costAvg) * line.qty;
             }
         }
         const grossProfit = total - totalTax - costOfGoods;

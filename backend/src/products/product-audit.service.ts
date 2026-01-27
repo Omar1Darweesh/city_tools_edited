@@ -51,7 +51,7 @@ export class ProductAuditService {
     const changes = [];
     const fieldsToTrack = [
       'nameEn', 'nameAr', 'barcode', 'code',
-      'priceRetail', 'priceWholesale', 'cost',
+      'priceRetail', 'priceWholesale', 'cost', 'costAvg',
       'brand', 'unit', 'active', 'minQty', 'maxQty'
     ];
 
@@ -136,6 +136,7 @@ export class ProductAuditService {
       brand: data.brand,
       unit: data.unit,
       cost: Number(data.cost),
+      costAvg: Number(data.costAvg),
       priceRetail: Number(data.priceRetail),
       priceWholesale: Number(data.priceWholesale),
       minQty: data.minQty,
