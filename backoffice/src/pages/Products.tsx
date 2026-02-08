@@ -86,30 +86,15 @@ export default function Products() {
 
             if (!showInactive) params.active = true;
 
+            // ✅ NEW: Pass stock filter to backend
+            if (stockFilter) {
+                params.stockStatus = stockFilter;
+            }
+
             const response = await apiClient.get('/products', { params });
 
-            let filteredProducts = response.data.data;
-            if (stockFilter) {
-                filteredProducts = filteredProducts.filter((product: Product) => {
-                    const stock = product.stock || 0;
-                    const minQty = product.minQty || 0;
-                    const maxQty = product.maxQty || 0;
-
-                    switch (stockFilter) {
-                        case 'empty':
-                            return stock === 0;
-                        case 'low':
-                            return stock > 0 && stock <= minQty;
-                        case 'enough':
-                            return stock > minQty && stock < maxQty;
-                        case 'high':
-                            return stock >= maxQty;
-                        default:
-                            return true;
-                    }
-                });
-            }
-            setProducts(filteredProducts);
+            // ✅ FIXED: Use backend results directly (no client-side filtering)
+            setProducts(response.data.data);
             setTotalPages(Math.ceil(response.data.total / 50));
         } catch (error) {
             console.error('Failed to fetch products:', error);

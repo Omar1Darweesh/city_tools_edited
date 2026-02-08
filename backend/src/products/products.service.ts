@@ -308,6 +308,17 @@ export class ProductsService {
       await this.findItemTypeById(createProductDto.itemTypeId);
     }
 
+    // ✅ Validate minQty vs maxQty
+    if (
+      createProductDto.minQty !== undefined &&
+      createProductDto.maxQty !== undefined &&
+      createProductDto.minQty > createProductDto.maxQty
+    ) {
+      throw new BadRequestException(
+        'الحد الأدنى لا يمكن أن يتجاوز الحد الأقصى (Minimum quantity cannot exceed maximum quantity)'
+      );
+    }
+
     // Extract initialStock from DTO
     const { initialStock, ...productData } = createProductDto as any;
 
@@ -426,8 +437,15 @@ export class ProductsService {
     itemTypeId?: number;
     active?: boolean;
     branchId?: number;
+    stockStatus?: 'empty' | 'low' | 'enough' | 'high';
   }) {
-    const { skip = 0, take = 50, search, categoryId, subcategoryId, itemTypeId, active, branchId } = params || {};
+    const MAX_TAKE = 500;
+    const MAX_SKIP = 100000;
+    const { skip = 0, take = 50, search, categoryId, subcategoryId, itemTypeId, active, branchId, stockStatus } = params || {};
+
+    // ✅ FIXED: Add max limits to prevent resource exhaustion
+    const validatedTake = Math.min(Math.max(1, Number(take) || 50), MAX_TAKE);
+    const validatedSkip = Math.min(Math.max(0, Number(skip) || 0), MAX_SKIP);
 
     const where: any = {};
 
@@ -459,12 +477,55 @@ export class ProductsService {
       where.active = active;
     }
 
+    // ✅ NEW: Server-side Stock Filtering
+    if (stockStatus) {
+      let havingClause = '';
+
+      switch (stockStatus) {
+        case 'empty':
+          havingClause = 'HAVING COALESCE(SUM(sm.qty_change), 0) <= 0';
+          break;
+        case 'low':
+          havingClause = 'HAVING COALESCE(SUM(sm.qty_change), 0) > 0 AND COALESCE(SUM(sm.qty_change), 0) <= COALESCE(p.min_qty, 0)';
+          break;
+        case 'enough':
+          havingClause = 'HAVING COALESCE(SUM(sm.qty_change), 0) > COALESCE(p.min_qty, 0) AND COALESCE(SUM(sm.qty_change), 0) < COALESCE(p.max_qty, 999999)';
+          break;
+        case 'high':
+          havingClause = 'HAVING COALESCE(SUM(sm.qty_change), 0) >= COALESCE(p.max_qty, 999999)';
+          break;
+      }
+
+      if (havingClause) {
+        // We must use raw SQL to filter by aggregated stock
+        // Be careful with table names matching your Prisma @map definitions
+        const matchingIds = await this.prisma.$queryRawUnsafe<{ id: number }[]>(`
+          SELECT p.id
+          FROM products p
+          LEFT JOIN stock_movements sm ON p.id = sm.product_id
+          ${branchId ? `AND sm.stock_location_id IN (SELECT id FROM stock_locations WHERE branch_id = ${branchId})` : ''}
+          GROUP BY p.id
+          ${havingClause}
+        `);
+
+        // If no products match, force empty result
+        if (!matchingIds || matchingIds.length === 0) {
+          where.id = -1;
+        } else {
+          // Filter main query by these IDs
+          const ids = matchingIds.map((row: any) => row.id);
+          // Combine with existing ID filter if any (unlikely in this context, but safe)
+          where.id = { in: ids };
+        }
+      }
+    }
+
     const [total, products] = await Promise.all([
       this.prisma.product.count({ where }),
       this.prisma.product.findMany({
         where,
-        skip,
-        take,
+        skip: validatedSkip,
+        take: validatedTake,
         include: {
           category: true,
           itemType: {
@@ -652,6 +713,20 @@ export class ProductsService {
       await this.findItemTypeById(updateProductDto.itemTypeId);
     }
 
+    // ✅ Validate minQty vs maxQty (both in update or combined with existing)
+    const finalMinQty = updateProductDto.minQty !== undefined ? updateProductDto.minQty : existingProduct.minQty;
+    const finalMaxQty = updateProductDto.maxQty !== undefined ? updateProductDto.maxQty : existingProduct.maxQty;
+
+    if (
+      finalMinQty !== null &&
+      finalMaxQty !== null &&
+      finalMinQty > finalMaxQty
+    ) {
+      throw new BadRequestException(
+        'الحد الأدنى لا يمكن أن يتجاوز الحد الأقصى (Minimum quantity cannot exceed maximum quantity)'
+      );
+    }
+
     // Construct update data properly (remove undefined fields)
     const updateData: any = {};
 
@@ -662,8 +737,19 @@ export class ProductsService {
     if (updateProductDto.brand !== undefined) updateData.brand = updateProductDto.brand;
     if (updateProductDto.unit !== undefined) updateData.unit = updateProductDto.unit;
     if (updateProductDto.cost !== undefined) {
+      // ✅ Check if product has sales history before allowing cost change
+      const salesCount = await this.prisma.salesLine.count({
+        where: { productId: id },
+      });
+
+      if (salesCount > 0) {
+        throw new BadRequestException(
+          `لا يمكن تعديل التكلفة بعد البيع - تم بيع المنتج ${salesCount} مرة (Cannot change cost after product has been sold - ${salesCount} sales recorded. This would corrupt profit calculations.)`
+        );
+      }
+
       updateData.cost = updateProductDto.cost;
-      updateData.costAvg = updateProductDto.cost; // ✅ Also update costAvg when cost is manually changed
+      // ❌ DO NOT update costAvg here - it's calculated via weighted average in CostAccountingService
     }
     if (updateProductDto.priceRetail !== undefined) updateData.priceRetail = updateProductDto.priceRetail;
     if (updateProductDto.priceWholesale !== undefined) updateData.priceWholesale = updateProductDto.priceWholesale;

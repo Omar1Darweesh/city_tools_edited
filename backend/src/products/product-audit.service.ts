@@ -124,6 +124,38 @@ export class ProductAuditService {
     }
   }
 
+  async createManyAudits(
+    audits: Array<{
+      productId: number;
+      action: AuditAction;
+      newData: any;
+      oldData: any;
+      userId: number;
+    }>,
+  ) {
+    try {
+      const cleanedAudits = audits.map((audit) => ({
+        productId: audit.productId,
+        action: audit.action,
+        newData: this.cleanDataForAudit(audit.newData) as Prisma.InputJsonValue,
+        oldData: this.cleanDataForAudit(audit.oldData) as Prisma.InputJsonValue,
+        userId: audit.userId,
+      }));
+
+      console.log(`📝 Creating ${cleanedAudits.length} audit logs (batch operation)...`);
+
+      const result = await this.prisma.productAudit.createMany({
+        data: cleanedAudits,
+      });
+
+      console.log(`✅ ${result.count} audit logs created successfully in batch`);
+      return result;
+    } catch (error) {
+      console.error('❌ Failed to create batch audit logs:', error);
+      throw error;
+    }
+  }
+
   private cleanDataForAudit(data: any) {
     if (!data) return undefined;
 

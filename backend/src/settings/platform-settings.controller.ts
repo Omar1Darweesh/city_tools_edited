@@ -1,5 +1,6 @@
 import { Controller, Get, Put, Post, Delete, Body, Param } from '@nestjs/common';
 import { PlatformSettingsService } from './platform-settings.service';
+import { CreatePlatformDto, UpdatePlatformDto } from './dto/platform-settings.dto';
 
 @Controller('settings/platforms')
 export class PlatformSettingsController {
@@ -16,33 +17,14 @@ export class PlatformSettingsController {
     }
 
     @Post()
-    createPlatform(
-        @Body()
-        body: {
-            platform: string;
-            name: string;
-            icon?: string;
-            taxRate: number;
-            commission: number;
-            shippingFee: number; // ✅ ADD THIS
-            active: boolean;
-        },
-    ) {
+    createPlatform(@Body() body: CreatePlatformDto) {
         return this.platformSettingsService.upsertPlatform(body);
     }
 
     @Put(':platform')
     updatePlatform(
         @Param('platform') platform: string,
-        @Body()
-        body: {
-            name?: string;
-            icon?: string;
-            taxRate: number;
-            commission: number;
-            shippingFee: number; // ✅ ADD THIS
-            active: boolean;
-        },
+        @Body() body: UpdatePlatformDto,
     ) {
         return this.platformSettingsService.upsertPlatform({
             platform,

@@ -162,6 +162,22 @@ export class RolesService {
     }
 
     async remove(id: number) {
+
+        // ✅ Check if role exists
+        const role = await this.prisma.role.findUnique({
+            where: { id },
+        });
+
+        if (!role) {
+            throw new NotFoundException('Role not found');
+        }
+
+        // ✅ PREVENT deletion of system roles
+        if (role.isSystem) {
+            throw new BadRequestException(
+                `Cannot delete system role "${role.name}". System roles are protected.`
+            );
+        }
         // Check if any user has this role
         const userRole = await this.prisma.userRole.findFirst({
             where: { roleId: id },

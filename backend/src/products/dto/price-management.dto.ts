@@ -1,4 +1,4 @@
-import { IsNumber, IsOptional, IsString, IsArray, ValidateNested, IsEnum } from 'class-validator';
+import { IsNumber, IsOptional, IsString, IsArray, ValidateNested, IsEnum, Min, Max } from 'class-validator';
 import { Type } from 'class-transformer';
 
 export class PriceUpdateDto {
@@ -40,6 +40,8 @@ export class HierarchyPriceUpdateDto {
     itemTypeId?: number;
 
     @IsNumber()
+    @Min(-99, { message: 'Adjustment cannot be less than -99% (would make prices negative)' })
+    @Max(1000, { message: 'Adjustment cannot exceed 1000% (10x increase limit)' })
     adjustment: number;
 
     @IsEnum(['PERCENTAGE', 'FIXED'])
@@ -62,6 +64,8 @@ export class CategoryPriceUpdateDto {
     categoryId: number;
 
     @IsNumber()
+    @Min(-99, { message: 'Adjustment cannot be less than -99% (would make prices negative)' })
+    @Max(1000, { message: 'Adjustment cannot exceed 1000% (10x increase limit)' })
     adjustment: number;
 
     @IsEnum(['PERCENTAGE', 'FIXED'])

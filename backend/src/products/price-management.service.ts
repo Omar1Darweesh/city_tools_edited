@@ -100,17 +100,20 @@ export class PriceManagementService {
 
             return results;
         }).then(async (results) => {
-            for (const result of results) {
+            // ✅ FIXED: Batch audit inserts instead of N+1 queries
+            if (results.length > 0) {
                 try {
-                    await this.productAudit.logChange(
-                        result.updated.id,
-                        'UPDATE' as AuditAction,
-                        result.newData,
-                        result.oldData,
-                        data.userId,
+                    await this.productAudit.createManyAudits(
+                        results.map((result) => ({
+                            productId: result.updated.id,
+                            action: 'UPDATE' as AuditAction,
+                            newData: result.newData,
+                            oldData: result.oldData,
+                            userId: data.userId,
+                        })),
                     );
                 } catch (error) {
-                    console.error(`Failed to log audit for product ${result.updated.id}:`, error);
+                    console.error(`Failed to log batch audits:`, error);
                 }
             }
             return results.map(r => r.updated);

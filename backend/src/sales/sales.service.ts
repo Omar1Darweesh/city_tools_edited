@@ -40,10 +40,14 @@ export class SalesService {
     const enrichedLines: any[] = [];
 
     // Step 1: Calculate raw subtotal and validate products
+    const productIds = lines.map((l) => l.productId);
+    const products = await this.prisma.product.findMany({
+      where: { id: { in: productIds } },
+    });
+    const productMap = new Map(products.map((p) => [p.id, p]));
+
     for (const line of lines) {
-      const product = await this.prisma.product.findUnique({
-        where: { id: line.productId },
-      });
+      const product = productMap.get(line.productId);
 
       if (!product) {
         throw new NotFoundException(`Product ${line.productId} not found`);
@@ -83,10 +87,9 @@ export class SalesService {
     // Step 5: Calculate Profit
     let costOfGoods = 0;
     for (const line of enrichedLines) {
-      const product = await this.prisma.product.findUnique({
-        where: { id: line.productId },
-        select: { costAvg: true },
-      });
+      const product = productMap.get(line.productId);
+      // product is guaranteed to exist here due to earlier validation (unless deleted mid-request, which we assume transactional integrity or don't care for read)
+
       if (product && product.costAvg) {
         costOfGoods += Number(product.costAvg) * line.qty;
       }
@@ -215,44 +218,53 @@ export class SalesService {
       }
 
       // ✅ MODIFIED: Only deduct stock if delivered
-      if (delivered) {
-        for (const line of enrichedLines) {
-          await tx.stockMovement.create({
-            data: {
-              productId: line.productId,
-              stockLocationId: locationId,
-              qtyChange: -line.qty,
-              movementType: MovementType.SALE,
-              refTable: 'sales_invoices',
-              refId: invoice.id,
-              createdBy: userId,
-            },
-          });
-        }
+      if (delivered && enrichedLines.length > 0) {
+        await tx.stockMovement.createMany({
+          data: enrichedLines.map((line) => ({
+            productId: line.productId,
+            stockLocationId: locationId,
+            qtyChange: -line.qty,
+            movementType: MovementType.SALE,
+            refTable: 'sales_invoices',
+            refId: invoice.id,
+            createdBy: userId,
+          })),
+        });
       }
 
       return invoice;
     });
   }
 
-  // ✅ NEW: Add additional payment
-  // ✅ UPDATED: Add additional payment and auto-deliver if paid in full
+  // NEW: Add additional payment UPDATED: Add additional payment and auto-deliver if paid in full
   async addPayment(
     salesInvoiceId: number,
     amount: number,
     paymentMethod: PaymentMethod,
     userId: number,
-    notes?: string
+    notes?: string,
   ) {
     return this.prisma.$transaction(async (tx) => {
-      const invoice = await tx.salesInvoice.findUnique({
-        where: { id: salesInvoiceId },
-        include: { lines: true },
-      });
+      // 🔒 Lock the invoice row to prevent race conditions
+      const invoices = await tx.$queryRaw<any[]>`
+  SELECT * FROM "SalesInvoice" 
+  WHERE id = ${salesInvoiceId}
+  FOR UPDATE
+`;
 
-      if (!invoice) {
+      if (!invoices || invoices.length === 0) {
         throw new NotFoundException('Invoice not found');
       }
+
+      const invoice = invoices[0];
+
+      // Load lines separately (already inside transaction)
+      const lines = await tx.salesLine.findMany({
+        where: { salesInvoiceId },
+      });
+
+      invoice.lines = lines;
+
 
       if (invoice.paymentStatus === PaymentStatus.PAID) {
         throw new BadRequestException('Invoice already fully paid');
@@ -262,10 +274,13 @@ export class SalesService {
       const newRemainingAmount = Number(invoice.total) - newPaidAmount;
 
       if (newPaidAmount > Number(invoice.total)) {
-        throw new BadRequestException('Payment amount exceeds remaining balance');
+        throw new BadRequestException(
+          'Payment amount exceeds remaining balance',
+        );
       }
 
-      const newPaymentStatus = newRemainingAmount <= 0 ? PaymentStatus.PAID : PaymentStatus.PARTIAL;
+      const newPaymentStatus =
+        newRemainingAmount <= 0 ? PaymentStatus.PAID : PaymentStatus.PARTIAL;
 
       // Update invoice
       const updatedInvoice = await tx.salesInvoice.update({
@@ -288,26 +303,29 @@ export class SalesService {
         },
       });
 
-      // ✅ NEW: Auto-deliver if fully paid and not yet delivered
+      // NEW: Auto-deliver if fully paid and not yet delivered
       if (newPaymentStatus === PaymentStatus.PAID && !invoice.delivered) {
         // Find stock location
         const stockLocation = await tx.stockLocation.findFirst({
-          where: { branchId: invoice.branchId, active: true },
+          where: {
+            branchId: invoice.branchId,
+            active: true,
+          },
         });
 
         if (stockLocation) {
           // Deduct stock
-          for (const line of invoice.lines) {
-            await tx.stockMovement.create({
-              data: {
+          if (lines.length > 0) {
+            await tx.stockMovement.createMany({
+              data: lines.map((line) => ({
                 productId: line.productId,
                 stockLocationId: stockLocation.id,
                 qtyChange: -line.qty,
                 movementType: MovementType.SALE,
-                refTable: 'sales_invoices',
+                refTable: 'sales_invoices', // Standardized to sales_invoices
                 refId: invoice.id,
                 createdBy: userId,
-              },
+              })),
             });
           }
 
@@ -325,6 +343,7 @@ export class SalesService {
       return { invoice: updatedInvoice, payment };
     });
   }
+
 
 
   // ✅ NEW: Deliver products (after full payment)
@@ -357,9 +376,9 @@ export class SalesService {
       }
 
       // Deduct stock
-      for (const line of invoice.lines) {
-        await tx.stockMovement.create({
-          data: {
+      if (invoice.lines.length > 0) {
+        await tx.stockMovement.createMany({
+          data: invoice.lines.map((line) => ({
             productId: line.productId,
             stockLocationId: stockLocation.id,
             qtyChange: -line.qty,
@@ -367,7 +386,7 @@ export class SalesService {
             refTable: 'sales_invoices',
             refId: invoice.id,
             createdBy: userId,
-          },
+          })),
         });
       }
 

@@ -215,61 +215,65 @@ export class ReturnsService {
         });
         console.log(`   Found ${existingReturns.length} existing returns`);
 
-        // ✅ STEP 5: Validate return quantities
-        console.log('\n🔍 STEP 5: Validating return quantities...');
+        // STEP 5: Validate return quantities
+        console.log('STEP 5: Validating return quantities...');
         for (const item of items) {
-            const salesLine = salesInvoice.lines.find(
-                (line) => line.productId === item.productId,
-            );
-
+            const salesLine = salesInvoice.lines.find(line => line.productId === item.productId);
             if (!salesLine) {
-                console.log(`   ❌ ERROR: Product ${item.productId} not in invoice`);
-                throw new BadRequestException(
-                    `Product ${item.productId} not found in sales invoice`,
-                );
+                console.log(`❌ ERROR: Product ${item.productId} not in invoice`);
+                throw new BadRequestException(`Product ${item.productId} not found in sales invoice`);
             }
 
             const alreadyReturned = returnedQuantities.get(item.productId) || 0;
             const availableToReturn = salesLine.qty - alreadyReturned;
 
-            console.log(`   Product ${item.productId}: sold=${salesLine.qty}, returned=${alreadyReturned}, available=${availableToReturn}, requesting=${item.qtyReturned}`);
+            console.log(`Product ${item.productId}: sold=${salesLine.qty}, returned=${alreadyReturned}, available=${availableToReturn}, requesting=${item.qtyReturned}`);
 
             if (item.qtyReturned > availableToReturn) {
-                console.log(`   ❌ ERROR: Quantity exceeds available`);
+                console.log('❌ ERROR: Quantity exceeds available');
                 throw new BadRequestException(
-                    `Cannot return ${item.qtyReturned} of product ${salesLine.product.nameAr}. ` +
-                    `Already returned: ${alreadyReturned}, Available: ${availableToReturn}`,
+                    `Cannot return ${item.qtyReturned} of product ${salesLine.product.nameAr}. Already returned: ${alreadyReturned}, Available: ${availableToReturn}`
                 );
             }
-        }
-        console.log(`   ✅ All quantities valid`);
 
-        // ✅ STEP 6: Calculate total refund
+            // ✅ FIXED: Validate refund amount INCLUDING TAX (what customer actually paid)
+            const unitPrice = salesLine.unitPrice.toNumber(); // Price before tax (e.g., 450)
+            const subtotalForItem = unitPrice * item.qtyReturned; // e.g., 450
+
+            // Calculate tax rate from invoice
+            const invoiceSubtotal = salesInvoice.subtotal.toNumber();
+            const invoiceTax = salesInvoice.totalTax.toNumber();
+            const taxRate = invoiceSubtotal > 0 ? invoiceTax / invoiceSubtotal : 0;
+
+            // Calculate tax for this item
+            const taxForItem = subtotalForItem * taxRate; // e.g., 450 × 0.15 = 67.50
+            const maxRefundForItem = subtotalForItem + taxForItem; // e.g., 450 + 67.50 = 517.50
+
+            if (item.refundAmount > maxRefundForItem) {
+                console.log(`❌ ERROR: Refund amount exceeds original price + tax`);
+                throw new BadRequestException(
+                    `Refund amount (${item.refundAmount.toFixed(2)}) for product ${salesLine.product.nameAr} cannot exceed original price (${subtotalForItem.toFixed(2)}) + tax (${taxForItem.toFixed(2)}) = ${maxRefundForItem.toFixed(2)}`
+                );
+            }
+
+            console.log(`✅ Refund amount valid for product ${item.productId}: ${item.refundAmount} <= ${maxRefundForItem.toFixed(2)} (base: ${subtotalForItem.toFixed(2)} + tax: ${taxForItem.toFixed(2)})`);
+        }
+        console.log('✅ All quantities and refund amounts valid');
+
+        // STEP 6: Calculate total refund
         const totalRefund = items.reduce((sum, item) => sum + item.refundAmount, 0);
-        console.log(`\n💰 STEP 6: Total refund calculated: ${totalRefund.toFixed(2)}`);
+        console.log(`STEP 6: Total refund calculated: ${totalRefund.toFixed(2)}`);
 
-        // ✅ STEP 7: Generate return number
-        const today = new Date();
-        const dateStr = today.toISOString().split('T')[0].replace(/-/g, '');
-        const branchCode = salesInvoice.branch.code;
-
-        const lastReturn = await this.prisma.salesReturn.findFirst({
-            where: {
-                returnNo: {
-                    startsWith: `RET-${branchCode}-${dateStr}`,
-                },
-            },
-            orderBy: { createdAt: 'desc' },
-        });
-
-        let sequence = 1;
-        if (lastReturn) {
-            const lastSequence = parseInt(lastReturn.returnNo.split('-').pop() || '0');
-            sequence = lastSequence + 1;
+        // STEP 6.5: Validate refund doesn't exceed invoice total
+        console.log(`STEP 6.5: Validating refund amount...`);
+        const invoiceTotal = salesInvoice.total.toNumber(); // Convert Decimal to number
+        if (totalRefund > invoiceTotal) {
+            console.log(`❌ ERROR: Refund exceeds invoice total`);
+            throw new BadRequestException(
+                `Refund amount (${totalRefund.toFixed(2)}) cannot exceed invoice total (${invoiceTotal.toFixed(2)})`
+            );
         }
-
-        const returnNo = `RET-${branchCode}-${dateStr}-${sequence.toString().padStart(4, '0')}`;
-        console.log(`\n📋 STEP 7: Generated return number: ${returnNo}`);
+        console.log(`✅ Refund validation passed`);
 
         // ✅ STEP 8: Get stock location BEFORE transaction
         console.log('\n🔍 STEP 8: Validating stock location...');
@@ -294,6 +298,29 @@ export class ReturnsService {
 
         try {
             const salesReturn = await this.prisma.$transaction(async (tx) => {
+                // ✅ FIXED: Generate return number INSIDE transaction to prevent race condition
+                const today = new Date();
+                const dateStr = today.toISOString().split('T')[0].replace(/-/g, '');
+                const branchCode = salesInvoice.branch.code;
+
+                const lastReturn = await tx.salesReturn.findFirst({
+                    where: {
+                        returnNo: {
+                            startsWith: `RET-${branchCode}-${dateStr}`,
+                        },
+                    },
+                    orderBy: { createdAt: 'desc' },
+                });
+
+                let sequence = 1;
+                if (lastReturn) {
+                    const lastSequence = parseInt(lastReturn.returnNo.split('-').pop() || '0');
+                    sequence = lastSequence + 1;
+                }
+
+                const returnNo = `RET-${branchCode}-${dateStr}-${sequence.toString().padStart(4, '0')}`;
+                console.log(`\n📋 STEP 7: Generated return number: ${returnNo}`);
+
                 console.log('\n   📝 Creating return record...');
                 const createdReturn = await tx.salesReturn.create({
                     data: {
@@ -366,7 +393,7 @@ export class ReturnsService {
             }
 
             console.log(`\n🎉 ===== RETURN PROCESS COMPLETED =====`);
-            console.log(`✅ Return ${returnNo} processed with ${items.length} items\n`);
+            console.log(`✅ Return ${salesReturn.returnNo} processed with ${items.length} items\n`);
             return salesReturn;
 
         } catch (error) {
@@ -681,7 +708,6 @@ export class ReturnsService {
         });
     }
 
-    // ✅ NEW: Transaction version of handleDefectiveReturn
     private async handleDefectiveReturnTx(
         tx: any,
         item: any,
@@ -706,13 +732,14 @@ export class ReturnsService {
         const isAlreadyDefective = await this.isDefectiveProduct(item.productId);
 
         if (isAlreadyDefective) {
+            // Product is already defective - just return to stock
             await tx.stockMovement.create({
                 data: {
                     productId: item.productId,
                     stockLocationId,
                     qtyChange: item.qtyReturned,
                     movementType: 'RETURN',
-                    refTable: 'sales_returns',
+                    refTable: 'salesreturns',
                     refId: salesReturn.id,
                     notes: `Defective product returned from invoice ${salesInvoice.invoiceNo}`,
                     createdBy: userId,
@@ -720,7 +747,7 @@ export class ReturnsService {
             });
 
             console.log(
-                `✅ DEFECTIVE RETURN: Product ${originalProduct.code} (already defective) returned to stock, Qty: +${item.qtyReturned}`,
+                `DEFECTIVE RETURN: Product ${originalProduct.code} (already defective) returned to stock, Qty: ${item.qtyReturned}`,
             );
 
             return tx.productAudit.create({
@@ -752,7 +779,7 @@ export class ReturnsService {
             where: {
                 OR: [
                     { name: { equals: 'Defective', mode: 'insensitive' } },
-                    { nameAr: 'تلافيات' },
+                    { nameAr: 'معيب' },
                 ],
             },
         });
@@ -761,80 +788,71 @@ export class ReturnsService {
             defectiveCategory = await tx.category.create({
                 data: {
                     name: 'Defective',
-                    nameAr: 'تلافيات',
+                    nameAr: 'معيب',
                     active: true,
                 },
             });
         }
 
-        const defectiveBarcode = `${originalProduct.barcode}_DEF`;
-        let defectiveProduct = await tx.product.findUnique({
+        const defectiveBarcode = originalProduct.barcode + '_DEF';
+
+        // ✅ FIXED: Generate code BEFORE upsert
+        const lastProduct = await tx.product.findFirst({
+            orderBy: { id: 'desc' },
+        });
+        const nextId = (lastProduct?.id || 0) + 1;
+        const defectiveCode = `DEF${String(nextId).padStart(6, '0')}`;
+
+        // Prepare pricing
+        const priceRetail =
+            item.defectedProductPricing?.priceRetail || originalProduct.priceRetail;
+        const priceWholesale =
+            item.defectedProductPricing?.priceWholesale ||
+            originalProduct.priceWholesale;
+
+        // ✅ ATOMIC UPSERT - Solves the race condition!
+        const defectiveProduct = await tx.product.upsert({
             where: {
                 barcode: defectiveBarcode,
             },
+            update: {
+                // If product exists, update prices if provided
+                ...(item.defectedProductPricing && {
+                    priceRetail: item.defectedProductPricing.priceRetail,
+                    priceWholesale: item.defectedProductPricing.priceWholesale,
+                }),
+            },
+            create: {
+                // If product doesn't exist, create it
+                code: defectiveCode,
+                barcode: defectiveBarcode,
+                nameEn: `${originalProduct.nameEn} (Defective)`,
+                nameAr: `${originalProduct.nameAr || originalProduct.nameEn} (معيب)`,
+                categoryId: defectiveCategory.id,
+                itemTypeId: null,
+                brand: originalProduct.brand,
+                unit: originalProduct.unit,
+                cost: originalProduct.costAvg,
+                priceRetail: priceRetail,
+                priceWholesale: priceWholesale,
+                minQty: 0,
+                maxQty: null,
+                active: true,
+            },
         });
 
-        if (defectiveProduct) {
-            console.log(
-                `♻️ Reusing existing defective product: ${defectiveProduct.code}`,
-            );
+        console.log(
+            `DEFECTIVE PRODUCT: ${defectiveProduct.code} (Barcode: ${defectiveBarcode})`,
+        );
 
-            // Update prices if provided
-            if (item.defectedProductPricing) {
-                const { priceRetail, priceWholesale } = item.defectedProductPricing;
-                defectiveProduct = await tx.product.update({
-                    where: { id: defectiveProduct.id },
-                    data: {
-                        priceRetail,
-                        priceWholesale,
-                    },
-                });
-                console.log(
-                    `📝 Updated prices: Retail ${priceRetail}, Wholesale ${priceWholesale}`,
-                );
-            }
-        } else {
-            // Create new defective product
-            const { priceRetail, priceWholesale } = item.defectedProductPricing;
-
-            const lastProduct = await tx.product.findFirst({
-                orderBy: { id: 'desc' },
-            });
-
-            const nextId = (lastProduct?.id || 0) + 1;
-            const defectiveCode = `DEF${String(nextId).padStart(6, '0')}`;
-
-            defectiveProduct = await tx.product.create({
-                data: {
-                    code: defectiveCode,
-                    barcode: defectiveBarcode,
-                    nameEn: `${originalProduct.nameEn} (Defective)`,
-                    nameAr: `${originalProduct.nameAr || originalProduct.nameEn} (تالف)`,
-                    categoryId: defectiveCategory.id,
-                    itemTypeId: null,
-                    brand: originalProduct.brand,
-                    unit: originalProduct.unit,
-                    cost: originalProduct.costAvg,
-                    priceRetail: priceRetail,
-                    priceWholesale: priceWholesale,
-                    minQty: 0,
-                    maxQty: null,
-                    active: true,
-                },
-            });
-
-            console.log(
-                `✅ Created NEW defective product: ${defectiveProduct.code}`,
-            );
-        }
-
+        // Add stock movement
         await tx.stockMovement.create({
             data: {
                 productId: defectiveProduct.id,
                 stockLocationId,
                 qtyChange: item.qtyReturned,
                 movementType: 'RETURN',
-                refTable: 'sales_returns',
+                refTable: 'salesreturns',
                 refId: salesReturn.id,
                 notes: `Defective return from invoice ${salesInvoice.invoiceNo} (Original: ${originalProduct.code})`,
                 createdBy: userId,
@@ -842,7 +860,7 @@ export class ReturnsService {
         });
 
         console.log(
-            `⚠️ DEFECTIVE RETURN: Product ${originalProduct.code} → ${defectiveProduct.code}, Qty: +${item.qtyReturned}`,
+            `DEFECTIVE RETURN: Product ${originalProduct.code} → ${defectiveProduct.code}, Qty: ${item.qtyReturned}`,
         );
 
         return tx.productAudit.create({
@@ -874,6 +892,7 @@ export class ReturnsService {
             },
         });
     }
+
 
 
     async isDefectiveProduct(productId: number): Promise<boolean> {

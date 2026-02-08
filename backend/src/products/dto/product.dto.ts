@@ -55,14 +55,17 @@ export class CreateProductDto {
   priceWholesale: number;
 
   @IsNumber()
+  @Min(0, { message: 'Minimum quantity cannot be negative' })
   @IsOptional()
   minQty?: number;
 
   @IsNumber()
+  @Min(0, { message: 'Maximum quantity cannot be negative' })
   @IsOptional()
   maxQty?: number;
 
   @IsNumber()
+  @Min(0, { message: 'Initial stock cannot be negative' })
   @IsOptional()
   initialStock?: number;  // ✅ ADD THIS
 
@@ -120,10 +123,12 @@ export class UpdateProductDto {
   priceWholesale?: number;
 
   @IsNumber()
+  @Min(0, { message: 'Minimum quantity cannot be negative' })
   @IsOptional()
   minQty?: number;
 
   @IsNumber()
+  @Min(0, { message: 'Maximum quantity cannot be negative' })
   @IsOptional()
   maxQty?: number;
 

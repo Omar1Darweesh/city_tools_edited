@@ -123,25 +123,41 @@ async function main() {
     const adminRole = await prisma.role.upsert({
         where: { name: 'ADMIN' },
         update: {},
-        create: { name: 'ADMIN', description: 'Full system access' },
+        create: {
+            name: 'ADMIN',
+            description: 'Full system access',
+            isSystem: true  // ✅ Mark as system role
+        },
     });
 
     await prisma.role.upsert({
         where: { name: 'MANAGER' },
         update: {},
-        create: { name: 'MANAGER', description: 'Branch manager' },
+        create: {
+            name: 'MANAGER',
+            description: 'Branch manager',
+            isSystem: true  // ✅ Mark as system role
+        },
     });
 
     await prisma.role.upsert({
         where: { name: 'STOREKEEPER' },
         update: {},
-        create: { name: 'STOREKEEPER', description: 'Inventory management' },
+        create: {
+            name: 'STOREKEEPER',
+            description: 'Inventory management',
+            isSystem: false  // Not a system role
+        },
     });
 
     await prisma.role.upsert({
         where: { name: 'CASHIER' },
         update: {},
-        create: { name: 'CASHIER', description: 'POS operations' },
+        create: {
+            name: 'CASHIER',
+            description: 'POS operations',
+            isSystem: false  // Not a system role
+        },
     });
     console.log('✅ 4 roles created\n');
 
@@ -232,15 +248,50 @@ async function main() {
 
 
     // ========================================
-    // 8. CREATE DEFAULT CASHIER USER
+    // 7. ASSIGN PAGES TO CASHIER ROLE
     // ========================================
-    console.log('👤 Creating default cashier user...');
-    const cashierPasswordHash = await bcrypt.hash('123456', 10);
+    console.log('🔗 Assigning pages to CASHIER role...');
 
     // Get the CASHIER role
     const cashierRole = await prisma.role.findUnique({
         where: { name: 'CASHIER' }
     });
+
+    if (cashierRole) {
+        // Pages that CASHIER can access
+        const cashierPageKeys = ['sales', 'customers', 'products'];
+
+        for (const pageKey of cashierPageKeys) {
+            const page = await prisma.page.findUnique({
+                where: { key: pageKey }
+            });
+
+            if (page) {
+                await prisma.rolePage.upsert({
+                    where: {
+                        roleId_pageId: {
+                            roleId: cashierRole.id,
+                            pageId: page.id,
+                        },
+                    },
+                    update: {},
+                    create: {
+                        roleId: cashierRole.id,
+                        pageId: page.id,
+                    },
+                });
+            }
+        }
+
+        console.log(`✅ Assigned ${cashierPageKeys.length} pages to CASHIER\n`);
+    }
+
+    // ========================================
+    // 8. CREATE DEFAULT CASHIER USER
+    // ========================================
+    console.log('👤 Creating default cashier user...');
+    const cashierPasswordHash = await bcrypt.hash('123456', 10);
+
 
     const cashierUser = await prisma.user.upsert({
         where: { username: 'cashier' },

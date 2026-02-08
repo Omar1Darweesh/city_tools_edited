@@ -107,6 +107,8 @@ export class StockService {
     skip?: number;
     take?: number;
   }) {
+    const MAX_TAKE = 500;
+    const MAX_SKIP = 100000;
     const {
       productId,
       stockLocationId,
@@ -114,6 +116,10 @@ export class StockService {
       skip = 0,
       take = 50,
     } = params;
+
+    // ✅ FIXED: Add max limits to prevent resource exhaustion
+    const validatedTake = Math.min(Math.max(1, Number(take) || 50), MAX_TAKE);
+    const validatedSkip = Math.min(Math.max(0, Number(skip) || 0), MAX_SKIP);
 
     const where: any = {};
     if (productId) where.productId = productId;
@@ -124,8 +130,8 @@ export class StockService {
       this.prisma.stockMovement.count({ where }),
       this.prisma.stockMovement.findMany({
         where,
-        skip,
-        take,
+        skip: validatedSkip,
+        take: validatedTake,
         include: {
           product: true,
           stockLocation: true,

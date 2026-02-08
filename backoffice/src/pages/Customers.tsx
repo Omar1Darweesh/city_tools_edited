@@ -44,6 +44,7 @@ export default function Customers() {
             } else {
                 await apiClient.post('/customers', formData);
             }
+
             setShowModal(false);
             setEditingId(null);
             setFormData({ name: '', phone: '', type: 'RETAIL', taxNumber: '', active: true });
@@ -55,7 +56,14 @@ export default function Customers() {
 
     const handleEdit = (customer: Customer) => {
         setEditingId(customer.id);
-        setFormData(customer);
+        // ✅ Only copy editable fields
+        setFormData({
+            name: customer.name,
+            phone: customer.phone || '',
+            type: customer.type,
+            taxNumber: customer.taxNumber || '',
+            active: customer.active,
+        });
         setShowModal(true);
     };
 

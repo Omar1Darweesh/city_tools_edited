@@ -30,7 +30,14 @@ export class PurchasingService {
     active?: boolean;
     search?: string;
   }) {
+    const MAX_TAKE = 500;
+    const MAX_SKIP = 100000;
     const { skip = 0, take = 50, active, search } = params || {};
+
+    // ✅ FIXED: Add max limits to prevent resource exhaustion
+    const validatedTake = Math.min(Math.max(1, Number(take) || 50), MAX_TAKE);
+    const validatedSkip = Math.min(Math.max(0, Number(skip) || 0), MAX_SKIP);
+
     const where: any = {};
     if (active !== undefined) where.active = active;
     if (search) {
@@ -45,8 +52,8 @@ export class PurchasingService {
       this.prisma.supplier.count({ where }),
       this.prisma.supplier.findMany({
         where,
-        skip,
-        take,
+        skip: validatedSkip,
+        take: validatedTake,
         orderBy: { createdAt: 'desc' },
       }),
     ]);
@@ -54,8 +61,8 @@ export class PurchasingService {
     return {
       data: suppliers,
       total,
-      page: Math.floor(skip / take) + 1,
-      pageSize: take,
+      page: Math.floor(validatedSkip / validatedTake) + 1,
+      pageSize: validatedTake,
     };
   }
 
@@ -118,15 +125,15 @@ export class PurchasingService {
       }
     }
 
-    // Generate GRN number
-    const grnNo = await this.generateGRNNo(branchId);
-
     // ✅ Track products for price update
     const productIds: number[] = [];
 
-    // ✅ Create GRN in transaction (FAST - no price recalculation inside)
+    // ✅ FIXED: Generate GRN number INSIDE transaction to prevent race condition
     const grn = await this.prisma.$transaction(
       async (tx) => {
+        // Generate GRN number with database lock to ensure uniqueness
+        const grnNo = await this.generateGRNNoTx(tx, branchId);
+
         // Calculate totals
         let subtotal = 0;
         const taxRateVal =
@@ -253,7 +260,14 @@ export class PurchasingService {
     take?: number;
     branchId?: number;
   }) {
+    const MAX_TAKE = 500;
+    const MAX_SKIP = 100000;
     const { skip = 0, take = 50, branchId } = params || {};
+
+    // ✅ FIXED: Add max limits to prevent resource exhaustion
+    const validatedTake = Math.min(Math.max(1, Number(take) || 50), MAX_TAKE);
+    const validatedSkip = Math.min(Math.max(0, Number(skip) || 0), MAX_SKIP);
+
     const where: any = {};
     if (branchId !== undefined) where.branchId = branchId;
 
@@ -261,8 +275,8 @@ export class PurchasingService {
       this.prisma.goodsReceipt.count({ where }),
       this.prisma.goodsReceipt.findMany({
         where,
-        skip,
-        take,
+        skip: validatedSkip,
+        take: validatedTake,
         include: {
           supplier: true,
           branch: true,
@@ -292,6 +306,41 @@ export class PurchasingService {
     const datePrefix = `${today.getFullYear()}${String(today.getMonth() + 1).padStart(2, '0')}${String(today.getDate()).padStart(2, '0')}`;
 
     const lastGRN = await this.prisma.goodsReceipt.findFirst({
+      where: {
+        branchId,
+        grnNo: {
+          startsWith: `GRN-${branch.code}-${datePrefix}`,
+        },
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
+    });
+
+    let sequence = 1;
+    if (lastGRN) {
+      const lastSeq = parseInt(lastGRN.grnNo.split('-').pop() || '0');
+      sequence = lastSeq + 1;
+    }
+
+    return `GRN-${branch.code}-${datePrefix}-${String(sequence).padStart(4, '0')}`;
+  }
+
+  // ✅ FIXED: Transaction-based GRN generation to prevent race condition
+  private async generateGRNNoTx(tx: any, branchId: number): Promise<string> {
+    const branch = await tx.branch.findUnique({
+      where: { id: branchId },
+    });
+
+    if (!branch) {
+      throw new Error('Branch not found');
+    }
+
+    const today = new Date();
+    const datePrefix = `${today.getFullYear()}${String(today.getMonth() + 1).padStart(2, '0')}${String(today.getDate()).padStart(2, '0')}`;
+
+    // ✅ Lock: Read within transaction to prevent concurrent access
+    const lastGRN = await tx.goodsReceipt.findFirst({
       where: {
         branchId,
         grnNo: {

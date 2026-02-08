@@ -9,7 +9,7 @@ export class AuthService {
   constructor(
     private prisma: PrismaService,
     private jwtService: JwtService,
-  ) {}
+  ) { }
 
   async validateUser(username: string, password: string): Promise<any> {
     const user = await this.prisma.user.findUnique({
@@ -80,21 +80,71 @@ export class AuthService {
 
   async refreshToken(refreshToken: string) {
     try {
+      // ✅ Step 1: Verify JWT signature
       const payload = this.jwtService.verify(refreshToken);
+
+      // ✅ Step 2: Lookup user in database
+      const user = await this.prisma.user.findUnique({
+        where: { id: payload.sub },
+        include: {
+          branch: true,
+          roles: {
+            include: {
+              role: {
+                include: {
+                  permissions: {
+                    include: {
+                      permission: true,
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
+      });
+
+      // ✅ Step 3: Check if user exists
+      if (!user) {
+        throw new UnauthorizedException('User not found');
+      }
+
+      // ✅ Step 4: Check if user is active
+      if (!user.active) {
+        throw new UnauthorizedException('User account is deactivated');
+      }
+
+      // ✅ Step 5: Create new tokens with fresh data
       const newPayload = {
-        sub: payload.sub,
-        username: payload.username,
-        branchId: payload.branchId,
+        sub: user.id,
+        username: user.username,
+        branchId: user.branchId,
       };
+
+      // ✅ Step 6: Return new tokens with updated user info
+      const permissions = user.roles.flatMap((ur: any) =>
+        ur.role.permissions.map((rp: any) => rp.permission.name),
+      );
+
+      const roles = user.roles.map((ur: any) => ur.role.name);
 
       return {
         accessToken: this.jwtService.sign(newPayload),
         refreshToken: this.jwtService.sign(newPayload, { expiresIn: '7d' }),
+        user: {
+          id: user.id,
+          username: user.username,
+          fullName: user.fullName,
+          branch: user.branch,
+          roles,
+          permissions,
+        },
       };
     } catch (error) {
       throw new UnauthorizedException('Invalid refresh token');
     }
   }
+
 
   async getProfile(userId: number) {
     const user = await this.prisma.user.findUnique({

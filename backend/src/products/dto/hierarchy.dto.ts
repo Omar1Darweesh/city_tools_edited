@@ -1,4 +1,4 @@
-import { IsString, IsNotEmpty, IsOptional, IsNumber, IsBoolean } from 'class-validator';
+import { IsString, IsNotEmpty, IsOptional, IsNumber, IsBoolean, Min, Max } from 'class-validator';
 
 // ============================================
 // CATEGORY DTOs
@@ -15,7 +15,21 @@ export class CreateCategoryDto {
     @IsBoolean()
     @IsOptional()
     active?: boolean;
+
+    // ✅ ADD THESE TWO FIELDS:
+    @IsNumber()
+    @Min(0, { message: 'Retail margin cannot be negative' })
+    @Max(500, { message: 'Retail margin cannot exceed 500 (50000%)' })
+    @IsOptional()
+    defaultRetailMargin?: number;
+
+    @IsNumber()
+    @Min(0, { message: 'Wholesale margin cannot be negative' })
+    @Max(500, { message: 'Wholesale margin cannot exceed 500 (50000%)' })
+    @IsOptional()
+    defaultWholesaleMargin?: number;
 }
+
 
 export class UpdateCategoryDto {
     @IsString()
@@ -29,7 +43,21 @@ export class UpdateCategoryDto {
     @IsBoolean()
     @IsOptional()
     active?: boolean;
+
+    // ✅ ADD THESE TWO FIELDS:
+    @IsNumber()
+    @Min(0, { message: 'Retail margin cannot be negative' })
+    @Max(500, { message: 'Retail margin cannot exceed 500 (50000%)' })
+    @IsOptional()
+    defaultRetailMargin?: number;
+
+    @IsNumber()
+    @Min(0, { message: 'Wholesale margin cannot be negative' })
+    @Max(500, { message: 'Wholesale margin cannot exceed 500 (50000%)' })
+    @IsOptional()
+    defaultWholesaleMargin?: number;
 }
+
 
 // ============================================
 // SUBCATEGORY DTOs
@@ -50,6 +78,19 @@ export class CreateSubcategoryDto {
     @IsBoolean()
     @IsOptional()
     active?: boolean;
+
+    @IsNumber()
+    @Min(0, { message: 'Retail margin cannot be negative' })
+    @Max(500, { message: 'Retail margin cannot exceed 500 (50000%)' })
+    @IsOptional()
+    defaultRetailMargin?: number;
+
+    @IsNumber()
+    @Min(0, { message: 'Wholesale margin cannot be negative' })
+    @Max(500, { message: 'Wholesale margin cannot exceed 500 (50000%)' })
+    @IsOptional()
+    defaultWholesaleMargin?: number;
+
 }
 
 export class UpdateSubcategoryDto {
@@ -68,6 +109,19 @@ export class UpdateSubcategoryDto {
     @IsBoolean()
     @IsOptional()
     active?: boolean;
+
+    @IsNumber()
+    @Min(0, { message: 'Retail margin cannot be negative' })
+    @Max(500, { message: 'Retail margin cannot exceed 500 (50000%)' })
+    @IsOptional()
+    defaultRetailMargin?: number;
+
+    @IsNumber()
+    @Min(0, { message: 'Wholesale margin cannot be negative' })
+    @Max(500, { message: 'Wholesale margin cannot exceed 500 (50000%)' })
+    @IsOptional()
+    defaultWholesaleMargin?: number;
+
 }
 
 // ============================================
@@ -89,6 +143,19 @@ export class CreateItemTypeDto {
     @IsBoolean()
     @IsOptional()
     active?: boolean;
+
+    @IsNumber()
+    @Min(0, { message: 'Retail margin cannot be negative' })
+    @Max(500, { message: 'Retail margin cannot exceed 500 (50000%)' })
+    @IsOptional()
+    defaultRetailMargin?: number;
+
+    @IsNumber()
+    @Min(0, { message: 'Wholesale margin cannot be negative' })
+    @Max(500, { message: 'Wholesale margin cannot exceed 500 (50000%)' })
+    @IsOptional()
+    defaultWholesaleMargin?: number;
+
 }
 
 export class UpdateItemTypeDto {
@@ -107,4 +174,17 @@ export class UpdateItemTypeDto {
     @IsBoolean()
     @IsOptional()
     active?: boolean;
+
+    @IsNumber()
+    @Min(0, { message: 'Retail margin cannot be negative' })
+    @Max(500, { message: 'Retail margin cannot exceed 500 (50000%)' })
+    @IsOptional()
+    defaultRetailMargin?: number;
+
+    @IsNumber()
+    @Min(0, { message: 'Wholesale margin cannot be negative' })
+    @Max(500, { message: 'Wholesale margin cannot exceed 500 (50000%)' })
+    @IsOptional()
+    defaultWholesaleMargin?: number;
+
 }

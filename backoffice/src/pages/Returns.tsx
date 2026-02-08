@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Minus, Plus, Filter, X } from 'lucide-react'; // ✅ Add Filter, X
 import apiClient from '../api/client';
 
@@ -85,6 +85,13 @@ export default function Returns() {
     const [users, setUsers] = useState<User[]>([]);
     const [customers, setCustomers] = useState<Customer[]>([]);
     const [channels, setChannels] = useState<string[]>([]);
+    const isMounted = useRef(true);
+
+    useEffect(() => {
+        return () => {
+            isMounted.current = false;
+        };
+    }, []);
 
 
     // ✅ NEW: Fetch filter data
@@ -95,9 +102,9 @@ export default function Returns() {
     const fetchFilterData = async () => {
         try {
             const [usersRes, customersRes, channelsRes] = await Promise.all([
-                apiClient.get('/users'),
-                apiClient.get('/pos/customers'),
-                apiClient.get('/pos/channels'),
+                apiClient.get('users'),
+                apiClient.get('pos/customers'),
+                apiClient.get('pos/channels'),
             ]);
 
             setUsers(usersRes.data.data || usersRes.data || []);
@@ -260,51 +267,51 @@ export default function Returns() {
 
             console.log('✅ Returned quantities:', returnedQty);
 
-            // ✅ CHECK DEFECTIVE STATUS BEFORE CREATING ITEMS
-            if (!fullInvoice.lines || !Array.isArray(fullInvoice.lines)) {
-                console.error('❌ Invalid invoice lines:', fullInvoice.lines);
-                throw new Error('Invoice has no valid lines');
-            }
-
+            // ✅ 1. CHECK DEFECTIVE STATUS & PRICING FOR ALL ITEMS UPFRONT
             console.log('🔍 Checking defective status for', fullInvoice.lines.length, 'products');
 
-            const defectiveChecks = await Promise.all(
+            const statusResults = await Promise.all(
                 fullInvoice.lines.map(async (line: any) => {
-                    // ✅ FIX: Declare productId OUTSIDE try block so it's accessible in catch
                     const productId = line.productId || line.product?.id;
                     const barcode = line.barcode || line.product?.barcode || '';
 
                     try {
-                        console.log('🔍 Checking product:', productId);
+                        // Fetch both simplified status and full details (pricing, etc)
+                        const [isDefectiveRes, checkStatusRes] = await Promise.all([
+                            apiClient.get(`pos/returns/is-defective/${productId}`),
+                            apiClient.get(`pos/returns/check-defective/${productId}`)
+                        ]);
 
-                        // ✅ USE apiClient - it uses the correct backend URL (port 3000)
-                        const response = await apiClient.get(`pos/returns/is-defective/${productId}`);
-                        const data = response.data || response;
-
-                        console.log('✅ Product', productId, 'isDefective:', data.isDefective);
-                        return { productId, isDefective: data.isDefective || false };
+                        return {
+                            productId,
+                            isDefective: isDefectiveRes.data.isDefective || false,
+                            status: checkStatusRes.data
+                        };
                     } catch (error: any) {
-                        console.error('❌ Error checking defective status:', error);
-
-                        // Fallback: Check barcode for _DEF suffix
-                        const isFallbackDefective = barcode.endsWith('_DEF');
-
-                        console.warn('⚠️ Using barcode fallback for product', productId, '- isDefective:', isFallbackDefective);
-                        return { productId, isDefective: isFallbackDefective };
+                        console.error(`❌ Error checking product ${productId}:`, error);
+                        return {
+                            productId,
+                            isDefective: barcode.endsWith('_DEF'),
+                            status: { exists: false, error: true }
+                        };
                     }
                 })
             );
 
-            // Create defective map
+            // Create maps
             const defectiveMap: Record<number, boolean> = {};
-            defectiveChecks.forEach(({ productId, isDefective }) => {
+            const statusMap: Record<string, any> = {};
+
+            statusResults.forEach(({ productId, isDefective, status }, index) => {
+                const lineId = `${productId}-${index}`;
                 defectiveMap[productId] = isDefective;
+                statusMap[lineId] = status;
             });
 
-            console.log('✅ Defective products map:', defectiveMap);
+            console.log('✅ Defective status map:', statusMap);
 
-            // ✅ SET DEFECTIVE PRODUCTS STATE IMMEDIATELY
             setDefectiveProducts(defectiveMap);
+            setDefectiveStatus(statusMap);
 
 
             // ✅ Calculate tax rate from invoice
@@ -398,25 +405,27 @@ export default function Returns() {
 
 
     const checkDefectiveStatus = async (productId: number, lineId: string) => {
+        // No longer needed as we fetch upfront, but keeping for safety/fallback
+        if (defectiveStatus[lineId]) return;
+
         try {
-            const response = await apiClient.get(`/pos/returns/check-defective/${productId}`);
-            setDefectiveStatus(prev => ({
-                ...prev,
-                [lineId]: response.data
-            }));
+            const response = await apiClient.get(`pos/returns/check-defective/${productId}`);
+            if (isMounted.current) {
+                setDefectiveStatus(prev => ({
+                    ...prev,
+                    [lineId]: response.data
+                }));
+            }
         } catch (error) {
             console.error('Failed to check defective status:', error);
         }
     };
+
     // ✅ FIXED: Properly update only the specific product's return type
     const updateReturnType = (lineId: string, type: 'STOCK' | 'DEFECTIVE') => {
         setReturnItems(prevItems =>
             prevItems.map(item => {
                 if (item.lineId === lineId) {
-                    // Check defective status when switching to DEFECTIVE
-                    if (type === 'DEFECTIVE') {
-                        checkDefectiveStatus(item.productId, lineId);
-                    }
                     return { ...item, returnType: type };
                 }
                 return item;
@@ -457,12 +466,19 @@ export default function Returns() {
 
         // Check if any defective items need pricing
         for (const item of itemsToReturn) {
+            // Only validate pricing if:
+            // 1. User selected DEFECTIVE return type
+            // 2. The original product is NOT already a defective product
             if (item.returnType === "DEFECTIVE" && !defectiveProducts[item.productId]) {
                 const pricing = getDefectedPricing(item.lineId);
                 const status = defectiveStatus[item.lineId];
 
-                // If creating new defective product, pricing is required
-                if (!status?.exists) {
+                // If check-defective status is still loading, only block if we don't have prices entered
+                // If the user has typed prices, let them proceed (as we'll use those prices anyway)
+                if (!status && !pricing.priceRetail && !pricing.priceWholesale) return false;
+
+                // If status exists and it's a NEW defective product, pricing is REQUIRED
+                if (status && !status.exists) {
                     if (!pricing.priceRetail || !pricing.priceWholesale) {
                         return false; // ❌ Missing pricing
                     }
@@ -535,7 +551,7 @@ export default function Returns() {
                 }
             }
 
-            await apiClient.post("/pos/returns", {
+            await apiClient.post("pos/returns", {
                 salesInvoiceId: selectedInvoice.id,
                 items: returnLines,
                 reason,

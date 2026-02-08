@@ -7,7 +7,14 @@ export class UsersService {
   constructor(private prisma: PrismaService) { }
 
   async findAll(params?: { skip?: number; take?: number; branchId?: number }) {
+    const MAX_TAKE = 500;
+    const MAX_SKIP = 100000;
     const { skip = 0, take = 50, branchId } = params || {};
+
+    // ✅ FIXED: Add max limits to prevent resource exhaustion
+    const validatedTake = Math.min(Math.max(1, Number(take) || 50), MAX_TAKE);
+    const validatedSkip = Math.min(Math.max(0, Number(skip) || 0), MAX_SKIP);
+
     const where: any = {};
     if (branchId) where.branchId = branchId;
 
@@ -15,8 +22,8 @@ export class UsersService {
       this.prisma.user.count({ where }),
       this.prisma.user.findMany({
         where,
-        skip,
-        take,
+        skip: validatedSkip,
+        take: validatedTake,
         include: {
           branch: true,
           roles: {
@@ -46,6 +53,11 @@ export class UsersService {
       throw new ConflictException('Username already exists');
     }
 
+    // Validate password is not empty or whitespace
+    if (!data.password || data.password.trim() === '') {
+      throw new ConflictException('Password cannot be empty');
+    }
+
     const passwordHash = await bcrypt.hash(data.password, 10);
 
     return this.prisma.user.create({
@@ -67,9 +79,13 @@ export class UsersService {
 
   async update(id: number, data: any) {
     // Handle password hashing if provided and not empty
-    if (data.password && data.password.trim() !== '') {
+    if (data.password) {
+      if (data.password.trim() === '') {
+        throw new ConflictException('Password cannot be empty');
+      }
       data.passwordHash = await bcrypt.hash(data.password, 10);
     }
+
     // Always remove password field as it's not in Prisma schema (or not to be updated directly)
     delete data.password;
 

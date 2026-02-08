@@ -95,15 +95,17 @@ export class ProfitMarginService {
         }
 
         // Priority 4: Category-level margins
+        // ✅ FIXED: Check itemType hierarchy category first, then fallback to product.category
+        const categoryToCheck = product.itemType?.subcategory?.category || product.category;
         if (
-            product.category?.defaultRetailMargin !== null &&
-            product.category?.defaultRetailMargin !== undefined &&
-            product.category?.defaultWholesaleMargin !== null &&
-            product.category?.defaultWholesaleMargin !== undefined
+            categoryToCheck?.defaultRetailMargin !== null &&
+            categoryToCheck?.defaultRetailMargin !== undefined &&
+            categoryToCheck?.defaultWholesaleMargin !== null &&
+            categoryToCheck?.defaultWholesaleMargin !== undefined
         ) {
             return {
-                retailMargin: Number(product.category.defaultRetailMargin),
-                wholesaleMargin: Number(product.category.defaultWholesaleMargin),
+                retailMargin: Number(categoryToCheck.defaultRetailMargin),
+                wholesaleMargin: Number(categoryToCheck.defaultWholesaleMargin),
                 source: 'CATEGORY',
             };
         }
@@ -225,21 +227,24 @@ export class ProfitMarginService {
             },
         });
 
-        console.log(`🔄 Updating ${products.length} products in category ${categoryId}...`);
+        console.log(`🔄 Updating ${products.length} products in category ${categoryId} in parallel...`);
 
-        let updated = 0;
-        for (const product of products) {
-            try {
-                await this.updateProductPrices(product.id, userId);
-                updated++;
-            } catch (error) {
-                console.error(`❌ Failed to update product ${product.id}:`, error.message);
-            }
+        // ✅ Parallel execution instead of sequential
+        const results = await Promise.allSettled(
+            products.map(product => this.updateProductPrices(product.id, userId))
+        );
+
+        const updated = results.filter(r => r.status === 'fulfilled').length;
+        const failed = results.filter(r => r.status === 'rejected').length;
+
+        if (failed > 0) {
+            console.warn(`⚠️ ${failed} products failed to update`);
         }
 
         return {
-            message: `Updated margins for category and ${updated} products`,
+            message: `Updated margins for category and ${updated}/${products.length} products`,
             productsUpdated: updated,
+            productsFailed: failed,
         };
     }
 
@@ -278,21 +283,24 @@ export class ProfitMarginService {
             },
         });
 
-        console.log(`🔄 Updating ${products.length} products in subcategory ${subcategoryId}...`);
+        console.log(`🔄 Updating ${products.length} products in subcategory ${subcategoryId} in parallel...`);
 
-        let updated = 0;
-        for (const product of products) {
-            try {
-                await this.updateProductPrices(product.id, userId);
-                updated++;
-            } catch (error) {
-                console.error(`❌ Failed to update product ${product.id}:`, error.message);
-            }
+        // ✅ Parallel execution instead of sequential
+        const results = await Promise.allSettled(
+            products.map(product => this.updateProductPrices(product.id, userId))
+        );
+
+        const updated = results.filter(r => r.status === 'fulfilled').length;
+        const failed = results.filter(r => r.status === 'rejected').length;
+
+        if (failed > 0) {
+            console.warn(`⚠️ ${failed} products failed to update`);
         }
 
         return {
-            message: `Updated margins for subcategory and ${updated} products`,
+            message: `Updated margins for subcategory and ${updated}/${products.length} products`,
             productsUpdated: updated,
+            productsFailed: failed,
         };
     }
 
@@ -325,21 +333,24 @@ export class ProfitMarginService {
             where: { itemTypeId: itemTypeId, active: true },
         });
 
-        console.log(`🔄 Updating ${products.length} products in item type ${itemTypeId}...`);
+        console.log(`🔄 Updating ${products.length} products in item type ${itemTypeId} in parallel...`);
 
-        let updated = 0;
-        for (const product of products) {
-            try {
-                await this.updateProductPrices(product.id, userId);
-                updated++;
-            } catch (error) {
-                console.error(`❌ Failed to update product ${product.id}:`, error.message);
-            }
+        // ✅ Parallel execution instead of sequential
+        const results = await Promise.allSettled(
+            products.map(product => this.updateProductPrices(product.id, userId))
+        );
+
+        const updated = results.filter(r => r.status === 'fulfilled').length;
+        const failed = results.filter(r => r.status === 'rejected').length;
+
+        if (failed > 0) {
+            console.warn(`⚠️ ${failed} products failed to update`);
         }
 
         return {
-            message: `Updated margins for item type and ${updated} products`,
+            message: `Updated margins for item type and ${updated}/${products.length} products`,
             productsUpdated: updated,
+            productsFailed: failed,
         };
     }
 
@@ -351,21 +362,24 @@ export class ProfitMarginService {
             where: { active: true },
         });
 
-        console.log(`🔄 Recalculating prices for ${products.length} products...`);
+        console.log(`🔄 Recalculating prices for ${products.length} products in parallel...`);
 
-        let updated = 0;
-        for (const product of products) {
-            try {
-                await this.updateProductPrices(product.id, userId);
-                updated++;
-            } catch (error) {
-                console.error(`❌ Failed to update product ${product.id}:`, error.message);
-            }
+        // ✅ Parallel execution instead of sequential
+        const results = await Promise.allSettled(
+            products.map(product => this.updateProductPrices(product.id, userId))
+        );
+
+        const updated = results.filter(r => r.status === 'fulfilled').length;
+        const failed = results.filter(r => r.status === 'rejected').length;
+
+        if (failed > 0) {
+            console.warn(`⚠️ ${failed} products failed to update`);
         }
 
         return {
-            message: `Recalculated prices for ${updated} products`,
+            message: `Recalculated prices for ${updated}/${products.length} products`,
             productsUpdated: updated,
+            productsFailed: failed,
         };
     }
 }

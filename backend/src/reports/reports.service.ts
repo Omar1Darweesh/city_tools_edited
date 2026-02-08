@@ -5,6 +5,26 @@ import { PrismaService } from '../prisma.service';
 export class ReportsService {
     constructor(private prisma: PrismaService) { }
 
+    private async getProductStockMap(branchId?: number) {
+        const where: any = {};
+        if (branchId) {
+            where.stockLocation = { branchId };
+        }
+
+        const stockAgg = await this.prisma.stockMovement.groupBy({
+            by: ['productId'],
+            where,
+            _sum: { qtyChange: true },
+        });
+
+        const stockMap = new Map<number, number>();
+        stockAgg.forEach((item) => {
+            stockMap.set(item.productId, item._sum.qtyChange || 0);
+        });
+
+        return stockMap;
+    }
+
     // ✅ FIXED: Proper returns calculation using netRevenue from invoices
     async getSalesSummary(params?: {
         startDate?: Date;
@@ -104,26 +124,27 @@ export class ReportsService {
             take: limit,
         });
 
-        const productsWithDetails = await Promise.all(
-            topProducts.map(async (item) => {
-                const product = await this.prisma.product.findUnique({
-                    where: { id: item.productId },
-                });
+        const productIds = topProducts.map((item) => item.productId);
+        const products = await this.prisma.product.findMany({
+            where: { id: { in: productIds } },
+        });
 
-                const totalRevenue = Number(item._sum.lineTotal || 0);
-                const totalQty = item._sum.qty || 0;
-                const cost = product ? Number(product.costAvg) * totalQty : 0;
-                const profit = totalRevenue - cost;
+        const productsWithDetails = topProducts.map((item) => {
+            const product = products.find((p) => p.id === item.productId);
 
-                return {
-                    productId: item.productId,
-                    productName: product?.nameAr || product?.nameEn || 'Unknown',
-                    quantity: totalQty,
-                    revenue: totalRevenue,
-                    profit: profit,
-                };
-            }),
-        );
+            const totalRevenue = Number(item._sum.lineTotal || 0);
+            const totalQty = item._sum.qty || 0;
+            const cost = product ? Number(product.costAvg) * totalQty : 0;
+            const profit = totalRevenue - cost;
+
+            return {
+                productId: item.productId,
+                productName: product?.nameAr || product?.nameEn || 'Unknown',
+                quantity: totalQty,
+                revenue: totalRevenue,
+                profit: profit,
+            };
+        });
 
         return productsWithDetails;
     }
@@ -206,19 +227,18 @@ export class ReportsService {
 
         const allProducts = await this.prisma.product.findMany({
             where: { active: true },
-            include: { stockMovements: true },
+            select: { id: true, costAvg: true },
         });
 
+        const stockMap = await this.getProductStockMap();
+
         const totalStockValue = allProducts.reduce((sum, product) => {
-            const stock = product.stockMovements.reduce(
-                (s, mov) => s + mov.qtyChange,
-                0,
-            );
+            const stock = stockMap.get(product.id) || 0;
             return sum + stock * Number(product.costAvg);
         }, 0);
 
         const outOfStock = allProducts.filter((p) => {
-            const stock = p.stockMovements.reduce((s, mov) => s + mov.qtyChange, 0);
+            const stock = stockMap.get(p.id) || 0;
             return stock <= 0;
         });
 
@@ -540,19 +560,18 @@ export class ReportsService {
 
             const allProducts = await this.prisma.product.findMany({
                 where: { active: true },
-                include: { stockMovements: true },
+                select: { id: true, costAvg: true },
             });
 
+            const stockMap = await this.getProductStockMap();
+
             const stockValue = allProducts.reduce((sum, product) => {
-                const stock = product.stockMovements.reduce(
-                    (s, mov) => s + mov.qtyChange,
-                    0,
-                );
+                const stock = stockMap.get(product.id) || 0;
                 return sum + stock * Number(product.costAvg || 0);
             }, 0);
 
             const outOfStock = allProducts.filter((p) => {
-                const stock = p.stockMovements.reduce((s, mov) => s + mov.qtyChange, 0);
+                const stock = stockMap.get(p.id) || 0;
                 return stock <= 0;
             }).length;
 
