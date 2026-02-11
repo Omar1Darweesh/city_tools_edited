@@ -1,0 +1,399 @@
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+WADFFO - COMPREHENSIVE DATA REPORT
+Generated: 2/11/2026, 10:27:23 PM
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+📊 SUMMARY
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+Total Rows Processed:                           60
+✅ Successfully Inserted:                        58
+❌ Insertion Errors:                             2
+❌ Skipped (No Name):                            0
+❌ Removed (Duplicate Codes in Excel):           0 products
+⭐ Auto-Generated Codes:                         1 products
+⭐ Barcodes Set to NULL (Duplicate in Excel):    2 products
+⭐ Barcodes Auto-Generated (Empty in Excel):     16 products
+⚠️  Barcodes Modified (Cross-Brand Conflict):    0 products (added DUPL suffix)
+📁 Empty ItemTypes Created:                      43
+
+📐 CALCULATION:
+  60 (total rows)
+  - 0 (no name)
+  - 0 (duplicate codes removed)
+  ───────────
+  = 60 (expected to insert)
+  - 2 (insertion errors)
+  ───────────
+  = 58 (actually inserted)
+
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+PRODUCT COUNTS BY HIERARCHY
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+📦 CATEGORIES:
+  WADFFO: 60 products
+
+📂 SUBCATEGORIES:
+  WADFFO > كهرباء: 2 products
+  WADFFO > يدوي: 38 products
+  WADFFO > اكسسوارات: 17 products
+  WADFFO > بطاررية: 3 products
+
+📁 ITEM TYPES (All):
+  WADFFO > اكسسوارات > بنط: 15 products
+  WADFFO > يدوي > لقم ويد سيستم: 14 products
+  WADFFO > يدوي > بنس: 10 products
+  WADFFO > يدوي > مفكات: 4 products
+  WADFFO > يدوي > شاكوش ومطرقة: 4 products
+  WADFFO > يدوي > قطرات: 3 products
+  WADFFO > يدوي > مفاتيح: 2 products
+  WADFFO > بطاررية > شنيور وهيلتي: 2 products
+  WADFFO > كهرباء > شنيور: 1 products
+  WADFFO > كهرباء > صاروخ: 1 products
+  WADFFO > يدوي > اجنة ومسمار يدوي: 1 products
+  WADFFO > اكسسوارات > صنفرة: 1 products
+  WADFFO > اكسسوارات > فرش: 1 products
+  WADFFO > بطاررية > بلاور وتسخين: 1 products
+  WADFFO > كهرباء > وهيلتي: 0 products ⭐ EMPTY
+  WADFFO > كهرباء > بلاور: 0 products ⭐ EMPTY
+  WADFFO > كهرباء > تسخين هوت جن: 0 products ⭐ EMPTY
+  WADFFO > كهرباء > اركت: 0 products ⭐ EMPTY
+  WADFFO > كهرباء > راوتر: 0 products ⭐ EMPTY
+  WADFFO > كهرباء > صنية: 0 products ⭐ EMPTY
+  WADFFO > كهرباء > ديسك: 0 products ⭐ EMPTY
+  WADFFO > كهرباء > فارة: 0 products ⭐ EMPTY
+  WADFFO > كهرباء > صنفرة: 0 products ⭐ EMPTY
+  WADFFO > كهرباء > ماكن جلخ: 0 products ⭐ EMPTY
+  WADFFO > كهرباء > ماكن لحام  قصدير: 0 products ⭐ EMPTY
+  WADFFO > كهرباء > ماكن لحام  بولي: 0 products ⭐ EMPTY
+  WADFFO > كهرباء > ماكن لحام حديد: 0 products ⭐ EMPTY
+  WADFFO > يدوي > اطقم عده: 0 products ⭐ EMPTY
+  WADFFO > يدوي > اطقم الن: 0 products ⭐ EMPTY
+  WADFFO > يدوي > شنط عده: 0 products ⭐ EMPTY
+  WADFFO > يدوي > قمطة وزرجينة: 0 products ⭐ EMPTY
+  WADFFO > يدوي > منشار خشابي وحدادي: 0 products ⭐ EMPTY
+  WADFFO > يدوي > بوكليز: 0 products ⭐ EMPTY
+  WADFFO > يدوي > جوانتي: 0 products ⭐ EMPTY
+  WADFFO > يدوي > ادوات سيارات: 0 products ⭐ EMPTY
+  WADFFO > يدوي > ازميل: 0 products ⭐ EMPTY
+  WADFFO > يدوي > مقصات: 0 products ⭐ EMPTY
+  WADFFO > يدوي > دباسة خشب: 0 products ⭐ EMPTY
+  WADFFO > يدوي > ادوات دهانات: 0 products ⭐ EMPTY
+  WADFFO > اكسسوارات > قطع غيار: 0 products ⭐ EMPTY
+  WADFFO > اكسسوارات > صنية والماظة: 0 products ⭐ EMPTY
+  WADFFO > اكسسوارات > احجار: 0 products ⭐ EMPTY
+  WADFFO > بطاررية > صاروخ: 0 products ⭐ EMPTY
+  WADFFO > بطاررية > صنية: 0 products ⭐ EMPTY
+  WADFFO > جاردن > رشاشات: 0 products ⭐ EMPTY
+  WADFFO > جاردن > خراطيم: 0 products ⭐ EMPTY
+  WADFFO > جاردن > مقصات زرع: 0 products ⭐ EMPTY
+  WADFFO > جاردن > ماكن قص نجيلة: 0 products ⭐ EMPTY
+  WADFFO > جاردن > ماكن غسيل: 0 products ⭐ EMPTY
+  WADFFO > جاردن > مناشير زراعية: 0 products ⭐ EMPTY
+  WADFFO > وحدات قياس > امتار يدوي: 0 products ⭐ EMPTY
+  WADFFO > وحدات قياس > امتار ليزر: 0 products ⭐ EMPTY
+  WADFFO > وحدات قياس > ميزان مياه: 0 products ⭐ EMPTY
+  WADFFO > وحدات قياس > ميزان ليزر: 0 products ⭐ EMPTY
+  WADFFO > وحدات قياس > زاوية علام: 0 products ⭐ EMPTY
+  WADFFO > هواء > دباسات: 0 products ⭐ EMPTY
+  WADFFO > هواء > دريل: 0 products ⭐ EMPTY
+
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+⭐ EMPTY ITEM TYPES CREATED - 43
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+NOTE: These ItemTypes were found in Excel but have NO products.
+They were created in the database structure.
+
+1. WADFFO > كهرباء > وهيلتي
+2. WADFFO > كهرباء > بلاور
+3. WADFFO > كهرباء > تسخين هوت جن
+4. WADFFO > كهرباء > اركت
+5. WADFFO > كهرباء > راوتر
+6. WADFFO > كهرباء > صنية
+7. WADFFO > كهرباء > ديسك
+8. WADFFO > كهرباء > فارة
+9. WADFFO > كهرباء > صنفرة
+10. WADFFO > كهرباء > ماكن جلخ
+11. WADFFO > كهرباء > ماكن لحام  قصدير
+12. WADFFO > كهرباء > ماكن لحام  بولي
+13. WADFFO > كهرباء > ماكن لحام حديد
+14. WADFFO > يدوي > اطقم عده
+15. WADFFO > يدوي > اطقم الن
+16. WADFFO > يدوي > شنط عده
+17. WADFFO > يدوي > قمطة وزرجينة
+18. WADFFO > يدوي > منشار خشابي وحدادي
+19. WADFFO > يدوي > بوكليز
+20. WADFFO > يدوي > جوانتي
+21. WADFFO > يدوي > ادوات سيارات
+22. WADFFO > يدوي > ازميل
+23. WADFFO > يدوي > مقصات
+24. WADFFO > يدوي > دباسة خشب
+25. WADFFO > يدوي > ادوات دهانات
+26. WADFFO > اكسسوارات > قطع غيار
+27. WADFFO > اكسسوارات > صنية والماظة
+28. WADFFO > اكسسوارات > احجار
+29. WADFFO > بطاررية > صاروخ
+30. WADFFO > بطاررية > صنية
+31. WADFFO > جاردن > رشاشات
+32. WADFFO > جاردن > خراطيم
+33. WADFFO > جاردن > مقصات زرع
+34. WADFFO > جاردن > ماكن قص نجيلة
+35. WADFFO > جاردن > ماكن غسيل
+36. WADFFO > جاردن > مناشير زراعية
+37. WADFFO > وحدات قياس > امتار يدوي
+38. WADFFO > وحدات قياس > امتار ليزر
+39. WADFFO > وحدات قياس > ميزان مياه
+40. WADFFO > وحدات قياس > ميزان ليزر
+41. WADFFO > وحدات قياس > زاوية علام
+42. WADFFO > هواء > دباسات
+43. WADFFO > هواء > دريل
+
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+MISSING FIELDS SUMMARY
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+⭐ Products with AUTO-GENERATED CODE:             8
+⭐ Products with AUTO-GENERATED BARCODE:          16
+ℹ️  Products with ZERO quantity:                  14
+
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+⭐ AUTO-GENERATED CODES - 1 PRODUCTS
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+NOTE: These products had NO CODE in Excel. Test codes were auto-generated.
+
+1. Row 40: يدكوريك سيسيتم
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Original Code: EMPTY
+  Generated Code: TEST-1770841643535-D5P4F1
+  Barcode: 8150980060166
+  Location: يدوي / لقم ويد سيستم
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED CODE
+
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+❌ INSERTION ERRORS - 2 PRODUCTS FAILED TO INSERT
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+NOTE: These products passed validation but failed during database insertion.
+
+1. Row 85: بنطه فديه 8*120
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: WMZ1K04
+  Barcode: 6941786803871
+  Location: اكسسوارات / بنط
+  ❌ ERROR: 
+Invalid `prisma.product.create()` invocation in
+C:\Users\123om\Downloads\final-city\backend\prisma\seed-all-with-validation.js:395:62
+
+  392 
+  393 // ⭐ If barcode is null, keep it null (no generation)
+  394 
+→ 395 const product = await prisma.product.create({
+        data: {
+          code: "WMZ1K04",
+          nameAr: "بنطه فديه 8*120",
+          nameEn: "",
+          categoryId: 8,
+          itemTypeId: 366,
+          brand: "WADFFO",
+          cost: 39,
+          costAvg: 39,
+          priceRetail: 39,
+          priceWholesale: 39,
+          unit: "PCS",
+          active: true,
+      +   barcode: String
+        }
+      })
+
+Argument `barcode` must not be null.
+
+2. Row 95: بنطه فديه 6*100
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: WMJ1K04
+  Barcode: 6941786803871
+  Location: اكسسوارات / بنط
+  ❌ ERROR: 
+Invalid `prisma.product.create()` invocation in
+C:\Users\123om\Downloads\final-city\backend\prisma\seed-all-with-validation.js:395:62
+
+  392 
+  393 // ⭐ If barcode is null, keep it null (no generation)
+  394 
+→ 395 const product = await prisma.product.create({
+        data: {
+          code: "WMJ1K04",
+          nameAr: "بنطه فديه 6*100",
+          nameEn: "",
+          categoryId: 8,
+          itemTypeId: 366,
+          brand: "WADFFO",
+          cost: 14,
+          costAvg: 14,
+          priceRetail: 14,
+          priceWholesale: 14,
+          unit: "PCS",
+          active: true,
+      +   barcode: String
+        }
+      })
+
+Argument `barcode` must not be null.
+
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+⭐ DUPLICATE BARCODES IN EXCEL - 1 FOUND
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+NOTE: When BARCODE is duplicated within the Excel sheet, barcode is SET TO NULL.
+Products are inserted WITHOUT barcode.
+
+⭐ BARCODE: 6941786803871 (used 2 times)
+  1. Row 85: بنطه فديه 8*120
+     Code: WMZ1K04
+     Original Barcode: 6941786803871
+     Modified Barcode: NULL
+     Location: اكسسوارات / بنط
+     Status: ✅ PRODUCT INSERTED WITHOUT BARCODE
+  2. Row 95: بنطه فديه 6*100
+     Code: WMJ1K04
+     Original Barcode: 6941786803871
+     Modified Barcode: NULL
+     Location: اكسسوارات / بنط
+     Status: ✅ PRODUCT INSERTED WITHOUT BARCODE
+
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+⭐ PRODUCTS WITH AUTO-GENERATED BARCODE (16)
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+NOTE: These products had NO barcode in Excel. Barcode was auto-generated from hierarchy.
+
+1. Row 5: شنيور 650وات عاده ودقاق 13مم
+  Code: WMD15651
+  Generated Barcode: WADFFO
+  Location: كهرباء / شنيور
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+2. Row 10: صاروخ 9 "2000
+  Code: wag852001
+  Generated Barcode: WADFFODUPL1
+  Location: كهرباء / صاروخ
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+3. Row 24: طقم مفك 6قطع كاوتشه
+  Code: WSS1206
+  Generated Barcode: WADFFODUPL2
+  Location: يدوي / مفكات
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+4. Row 28: طقم لقم 1/4 بوصه 45 قطعه
+  Code: WST4D45
+  Generated Barcode: WADFFODUPL3
+  Location: يدوي / لقم ويد سيستم
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+5. Row 37: لقمه رباط 2\1 ب 22مم
+  Code: WSC1222
+  Generated Barcode: WADFFODUPL4
+  Location: يدوي / لقم ويد سيستم
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+6. Row 43: بنسه برشام صاموله
+  Code: WHR5710
+  Generated Barcode: WADFFODUPL5
+  Location: يدوي / بنس
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+7. Row 44: مفتاح فرنساوي 8بوصه
+  Code: WAW1108
+  Generated Barcode: WADFFODUPL6
+  Location: يدوي / بنس
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+8. Row 46: بنسه 7
+  Code: WPL1C07
+  Generated Barcode: WADFFODUPL7
+  Location: يدوي / بنس
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+9. Row 55: مطرقه 1500
+  Code: WHM2315
+  Generated Barcode: WADFFODUPL8
+  Location: يدوي / شاكوش ومطرقة
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+10. Row 57: شاكوش 300 جرام
+  Code: whm1303
+  Generated Barcode: WADFFODUPL9
+  Location: يدوي / شاكوش ومطرقة
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+11. Row 58: شاكوش خلاعه
+  Code: whm33d8
+  Generated Barcode: WADFFODUPL10
+  Location: يدوي / شاكوش ومطرقة
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+12. Row 66: كتر 150 مم
+  Code: WSK29189
+  Generated Barcode: WADFFODUPL11
+  Location: يدوي / قطرات
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+13. Row 67: كتر 153مم
+  Code: WSK39189
+  Generated Barcode: WADFFODUPL12
+  Location: يدوي / قطرات
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+14. Row 87: بنطه سمسمه6 مم
+  Code: WSJ1K01
+  Generated Barcode: WADFFODUPL13
+  Location: اكسسوارات / بنط
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+15. Row 88: بنطه سمسمه8مم
+  Code: WSJ1K02
+  Generated Barcode: WADFFODUPL14
+  Location: اكسسوارات / بنط
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+16. Row 90: بنطه سمسمه10مم
+  Code: WSJ1K03
+  Generated Barcode: WADFFODUPL15
+  Location: اكسسوارات / بنط
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+⚠️ PRODUCTS WITH MISSING COST (8)
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+1. Row 28: طقم لقم 1/4 بوصه 45 قطعه
+  Code: WST4D45
+  Location: يدوي / لقم ويد سيستم
+
+2. Row 47: قصافه 6"
+  Code: WPL3C06
+  Location: يدوي / بنس
+
+3. Row 51: بنسه برشام 9.5"
+  Code: WHR1609
+  Location: يدوي / بنس
+
+4. Row 56: شاكوش 500 جرام
+  Code: whm1305
+  Location: يدوي / شاكوش ومطرقة
+
+5. Row 57: شاكوش 300 جرام
+  Code: whm1303
+  Location: يدوي / شاكوش ومطرقة
+
+6. Row 63: اجنه مسمار يدوي 250*16*4
+  Code: WCC1303
+  Location: يدوي / اجنة ومسمار يدوي
+
+7. Row 102: فرشة مجدولة
+  Code: wce2402
+  Location: اكسسوارات / فرش
+
+8. Row 106: شنيور 12 فولت
+  Code: WCDS510
+  Location: بطاررية / شنيور وهيلتي
+
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+END OF REPORT
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════

@@ -1,0 +1,350 @@
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+BOSCH - COMPREHENSIVE DATA REPORT
+Generated: 2/11/2026, 10:27:23 PM
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+📊 SUMMARY
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+Total Rows Processed:                           65
+✅ Successfully Inserted:                        63
+❌ Insertion Errors:                             0
+❌ Skipped (No Name):                            0
+❌ Removed (Duplicate Codes in Excel):           2 products
+⭐ Auto-Generated Codes:                         0 products
+⭐ Barcodes Set to NULL (Duplicate in Excel):    0 products
+⭐ Barcodes Auto-Generated (Empty in Excel):     22 products
+⚠️  Barcodes Modified (Cross-Brand Conflict):    0 products (added DUPL suffix)
+📁 Empty ItemTypes Created:                      41
+
+📐 CALCULATION:
+  65 (total rows)
+  - 0 (no name)
+  - 2 (duplicate codes removed)
+  ───────────
+  = 63 (expected to insert)
+  - 0 (insertion errors)
+  ───────────
+  = 63 (actually inserted)
+
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+PRODUCT COUNTS BY HIERARCHY
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+📦 CATEGORIES:
+  BOSCH: 63 products
+
+📂 SUBCATEGORIES:
+  BOSCH > كهرباء: 15 products
+  BOSCH > اكسسوارات: 39 products
+  BOSCH > بطاررية: 1 products
+  BOSCH > جاردن: 2 products
+  BOSCH > وحدات قياس: 6 products
+
+📁 ITEM TYPES (All):
+  BOSCH > اكسسوارات > بنط: 20 products
+  BOSCH > اكسسوارات > احجار: 12 products
+  BOSCH > اكسسوارات > صنية والماظة: 6 products
+  BOSCH > كهرباء > صاروخ: 4 products
+  BOSCH > كهرباء > وهيلتي: 3 products
+  BOSCH > وحدات قياس > امتار ليزر: 3 products
+  BOSCH > وحدات قياس > ميزان ليزر: 3 products
+  BOSCH > كهرباء > شنيور: 2 products
+  BOSCH > كهرباء > بلاور: 2 products
+  BOSCH > جاردن > ماكن غسيل: 2 products
+  BOSCH > كهرباء > تسخين هوت جن: 1 products
+  BOSCH > كهرباء > اركت: 1 products
+  BOSCH > كهرباء > ديسك: 1 products
+  BOSCH > كهرباء > صنفرة: 1 products
+  BOSCH > اكسسوارات > صنفرة: 1 products
+  BOSCH > بطاررية > شنيور وهيلتي: 1 products
+  BOSCH > كهرباء > راوتر: 0 products ⭐ EMPTY
+  BOSCH > كهرباء > صنية: 0 products ⭐ EMPTY
+  BOSCH > كهرباء > فارة: 0 products ⭐ EMPTY
+  BOSCH > كهرباء > ماكن جلخ: 0 products ⭐ EMPTY
+  BOSCH > كهرباء > ماكن لحام  قصدير: 0 products ⭐ EMPTY
+  BOSCH > كهرباء > ماكن لحام  بولي: 0 products ⭐ EMPTY
+  BOSCH > كهرباء > ماكن لحام حديد: 0 products ⭐ EMPTY
+  BOSCH > يدوي > مفكات: 0 products ⭐ EMPTY
+  BOSCH > يدوي > لقم ويد سيستم: 0 products ⭐ EMPTY
+  BOSCH > يدوي > بنس: 0 products ⭐ EMPTY
+  BOSCH > يدوي > اطقم عده: 0 products ⭐ EMPTY
+  BOSCH > يدوي > شاكوش ومطرقة: 0 products ⭐ EMPTY
+  BOSCH > يدوي > اطقم الن: 0 products ⭐ EMPTY
+  BOSCH > يدوي > شنط عده: 0 products ⭐ EMPTY
+  BOSCH > يدوي > قمطة وزرجينة: 0 products ⭐ EMPTY
+  BOSCH > يدوي > اجنة ومسمار يدوي: 0 products ⭐ EMPTY
+  BOSCH > يدوي > منشار خشابي وحدادي: 0 products ⭐ EMPTY
+  BOSCH > يدوي > قطرات: 0 products ⭐ EMPTY
+  BOSCH > يدوي > مفاتيح: 0 products ⭐ EMPTY
+  BOSCH > يدوي > بوكليز: 0 products ⭐ EMPTY
+  BOSCH > يدوي > جوانتي: 0 products ⭐ EMPTY
+  BOSCH > يدوي > ادوات سيارات: 0 products ⭐ EMPTY
+  BOSCH > يدوي > ازميل: 0 products ⭐ EMPTY
+  BOSCH > يدوي > مقصات: 0 products ⭐ EMPTY
+  BOSCH > يدوي > دباسة خشب: 0 products ⭐ EMPTY
+  BOSCH > يدوي > ادوات دهانات: 0 products ⭐ EMPTY
+  BOSCH > اكسسوارات > قطع غيار: 0 products ⭐ EMPTY
+  BOSCH > اكسسوارات > فرش: 0 products ⭐ EMPTY
+  BOSCH > بطاررية > بلاور وتسخين: 0 products ⭐ EMPTY
+  BOSCH > بطاررية > صاروخ: 0 products ⭐ EMPTY
+  BOSCH > بطاررية > صنية: 0 products ⭐ EMPTY
+  BOSCH > جاردن > رشاشات: 0 products ⭐ EMPTY
+  BOSCH > جاردن > خراطيم: 0 products ⭐ EMPTY
+  BOSCH > جاردن > مقصات زرع: 0 products ⭐ EMPTY
+  BOSCH > جاردن > ماكن قص نجيلة: 0 products ⭐ EMPTY
+  BOSCH > جاردن > مناشير زراعية: 0 products ⭐ EMPTY
+  BOSCH > وحدات قياس > امتار يدوي: 0 products ⭐ EMPTY
+  BOSCH > وحدات قياس > ميزان مياه: 0 products ⭐ EMPTY
+  BOSCH > وحدات قياس > زاوية علام: 0 products ⭐ EMPTY
+  BOSCH > هواء > دباسات: 0 products ⭐ EMPTY
+  BOSCH > هواء > دريل: 0 products ⭐ EMPTY
+
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+⭐ EMPTY ITEM TYPES CREATED - 41
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+NOTE: These ItemTypes were found in Excel but have NO products.
+They were created in the database structure.
+
+1. BOSCH > كهرباء > راوتر
+2. BOSCH > كهرباء > صنية
+3. BOSCH > كهرباء > فارة
+4. BOSCH > كهرباء > ماكن جلخ
+5. BOSCH > كهرباء > ماكن لحام  قصدير
+6. BOSCH > كهرباء > ماكن لحام  بولي
+7. BOSCH > كهرباء > ماكن لحام حديد
+8. BOSCH > يدوي > مفكات
+9. BOSCH > يدوي > لقم ويد سيستم
+10. BOSCH > يدوي > بنس
+11. BOSCH > يدوي > اطقم عده
+12. BOSCH > يدوي > شاكوش ومطرقة
+13. BOSCH > يدوي > اطقم الن
+14. BOSCH > يدوي > شنط عده
+15. BOSCH > يدوي > قمطة وزرجينة
+16. BOSCH > يدوي > اجنة ومسمار يدوي
+17. BOSCH > يدوي > منشار خشابي وحدادي
+18. BOSCH > يدوي > قطرات
+19. BOSCH > يدوي > مفاتيح
+20. BOSCH > يدوي > بوكليز
+21. BOSCH > يدوي > جوانتي
+22. BOSCH > يدوي > ادوات سيارات
+23. BOSCH > يدوي > ازميل
+24. BOSCH > يدوي > مقصات
+25. BOSCH > يدوي > دباسة خشب
+26. BOSCH > يدوي > ادوات دهانات
+27. BOSCH > اكسسوارات > قطع غيار
+28. BOSCH > اكسسوارات > فرش
+29. BOSCH > بطاررية > بلاور وتسخين
+30. BOSCH > بطاررية > صاروخ
+31. BOSCH > بطاررية > صنية
+32. BOSCH > جاردن > رشاشات
+33. BOSCH > جاردن > خراطيم
+34. BOSCH > جاردن > مقصات زرع
+35. BOSCH > جاردن > ماكن قص نجيلة
+36. BOSCH > جاردن > مناشير زراعية
+37. BOSCH > وحدات قياس > امتار يدوي
+38. BOSCH > وحدات قياس > ميزان مياه
+39. BOSCH > وحدات قياس > زاوية علام
+40. BOSCH > هواء > دباسات
+41. BOSCH > هواء > دريل
+
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+MISSING FIELDS SUMMARY
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+⭐ Products with AUTO-GENERATED CODE:             9
+⭐ Products with AUTO-GENERATED BARCODE:          22
+ℹ️  Products with ZERO quantity:                  10
+
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+❌ DUPLICATE CODES IN EXCEL - 1 FOUND (ALL PRODUCTS REMOVED)
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+NOTE: When CODE is duplicated within the Excel sheet, ALL products with that code are REMOVED.
+CODE must be unique - it is the primary identifier.
+
+❌ CODE: 2608619768 (used 2 times - ALL 2 PRODUCTS REMOVED)
+  1. Row 85: حجر بسكوته 5" صيني فلات
+     Barcode: 4059952631356
+     Location: اكسسوارات / احجار
+  2. Row 98: حجربسكونه 5بوصه
+     Barcode: EMPTY
+     Location: اكسسوارات / احجار
+
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+⭐ PRODUCTS WITH AUTO-GENERATED BARCODE (22)
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+NOTE: These products had NO barcode in Excel. Barcode was auto-generated from hierarchy.
+
+1. Row 26: ديسك
+  Code: gco220
+  Generated Barcode: BOSCH
+  Location: كهرباء / ديسك
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+2. Row 57: علبه بنط شنيور
+  Code: 2608522186
+  Generated Barcode: BOSCHDUPL1
+  Location: اكسسوارات / بنط
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+3. Row 58: علبه بنط شنيور 2 كارت
+  Code: 2608521042
+  Generated Barcode: BOSCHDUPL2
+  Location: اكسسوارات / بنط
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+4. Row 59: بنط10مم
+  Code: 260359106S7
+  Generated Barcode: BOSCHDUPL3
+  Location: اكسسوارات / بنط
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+5. Row 67: بنط 4 مم
+  Code: 2608585880
+  Generated Barcode: BOSCHDUPL4
+  Location: اكسسوارات / بنط
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+6. Row 70: بنطه هيلتي 10 مم بلس 1
+  Code: 2608579430
+  Generated Barcode: BOSCHDUPL5
+  Location: اكسسوارات / بنط
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+7. Row 72: بنط م6لي
+  Code: 2608577228
+  Generated Barcode: BOSCHDUPL6
+  Location: اكسسوارات / بنط
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+8. Row 73: بنط 3 ملي
+  Code: 2608577198
+  Generated Barcode: BOSCHDUPL7
+  Location: اكسسوارات / بنط
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+9. Row 78: الماظه خشب 5"
+  Code: F03FS02470
+  Generated Barcode: BOSCHDUPL8
+  Location: اكسسوارات / صنية والماظة
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+10. Row 79: سلاح اركت حدادي x5 T118
+  Code: 2608631013
+  Generated Barcode: BOSCHDUPL9
+  Location: اكسسوارات / صنية والماظة
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+11. Row 80: سلاح اركت خشابي
+  Code: 2608630040
+  Generated Barcode: BOSCHDUPL10
+  Location: اكسسوارات / صنية والماظة
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+12. Row 82: فرويد 96 سنه
+  Code: F03FS05093-30
+  Generated Barcode: BOSCHDUPL11
+  Location: اكسسوارات / صنية والماظة
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+13. Row 83: الماظه 7وربع
+  Code: 2608644400
+  Generated Barcode: BOSCHDUPL12
+  Location: اكسسوارات / صنية والماظة
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+14. Row 88: حجر قطعيه 5"صيني
+  Code: 2608603160
+  Generated Barcode: BOSCHDUPL13
+  Location: اكسسوارات / احجار
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+15. Row 91: حجر قطعيه 7" بمباي صيني
+  Code: 2608603161
+  Generated Barcode: BOSCHDUPL14
+  Location: اكسسوارات / احجار
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+16. Row 95: حجر بسكوته بمباي 9 بوصه
+  Code: 2608601514
+  Generated Barcode: BOSCHDUPL15
+  Location: اكسسوارات / احجار
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+17. Row 96: حجر قطعيه سلفاني بمباي5 بوصه
+  Code: 2601113765
+  Generated Barcode: BOSCHDUPL16
+  Location: اكسسوارات / احجار
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+18. Row 97: حجر بسكوته
+  Code: 2608600549
+  Generated Barcode: BOSCHDUPL17
+  Location: اكسسوارات / احجار
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+19. Row 114: ماكينه غسيل 1500 بار 125
+  Code: 06008A7A00
+  Generated Barcode: BOSCHDUPL19
+  Location: جاردن / ماكن غسيل
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+20. Row 115: ماكينه غسيل 1100بار 100
+  Code: 06008A7E01
+  Generated Barcode: BOSCHDUPL20
+  Location: جاردن / ماكن غسيل
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+21. Row 121: متر ليزر GLM25_23
+  Code: 0601072W00
+  Generated Barcode: BOSCHDUPL21
+  Location: وحدات قياس / امتار ليزر
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+22. Row 122: متر ليز 40 Glm 40
+  Code: 601072900
+  Generated Barcode: BOSCHDUPL22
+  Location: وحدات قياس / امتار ليزر
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+⚠️ PRODUCTS WITH MISSING COST (9)
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+1. Row 9: هليتي عدل
+  Code: 06112A4001
+  Location: كهرباء / وهيلتي
+
+2. Row 10: هليتي عدل
+  Code: 06112A4000
+  Location: كهرباء / وهيلتي
+
+3. Row 59: بنط10مم
+  Code: 260359106S7
+  Location: اكسسوارات / بنط
+
+4. Row 68: بنطه 8 علبه
+  Code: 2608577248
+  Location: اكسسوارات / بنط
+
+5. Row 75: بنطة 10مم
+  Code: 2608585898
+  Location: اكسسوارات / بنط
+
+6. Row 80: سلاح اركت خشابي
+  Code: 2608630040
+  Location: اكسسوارات / صنية والماظة
+
+7. Row 95: حجر بسكوته بمباي 9 بوصه
+  Code: 2608601514
+  Location: اكسسوارات / احجار
+
+8. Row 96: حجر قطعيه سلفاني بمباي5 بوصه
+  Code: 2601113765
+  Location: اكسسوارات / احجار
+
+9. Row 121: متر ليزر GLM25_23
+  Code: 0601072W00
+  Location: وحدات قياس / امتار ليزر
+
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+END OF REPORT
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════

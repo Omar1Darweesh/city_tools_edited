@@ -1,0 +1,2964 @@
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+APT - COMPREHENSIVE DATA REPORT
+Generated: 2/11/2026, 10:27:24 PM
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+📊 SUMMARY
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+Total Rows Processed:                           170
+✅ Successfully Inserted:                        3
+❌ Insertion Errors:                             161
+❌ Skipped (No Name):                            0
+❌ Removed (Duplicate Codes in Excel):           6 products
+⭐ Auto-Generated Codes:                         3 products
+⭐ Barcodes Set to NULL (Duplicate in Excel):    8 products
+⭐ Barcodes Auto-Generated (Empty in Excel):     58 products
+⚠️  Barcodes Modified (Cross-Brand Conflict):    100 products (added DUPL suffix)
+📁 Empty ItemTypes Created:                      30
+
+📐 CALCULATION:
+  170 (total rows)
+  - 0 (no name)
+  - 6 (duplicate codes removed)
+  ───────────
+  = 164 (expected to insert)
+  - 161 (insertion errors)
+  ───────────
+  = 3 (actually inserted)
+
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+PRODUCT COUNTS BY HIERARCHY
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+📦 CATEGORIES:
+  APT: 164 products
+
+📂 SUBCATEGORIES:
+  APT > كهرباء: 40 products
+  APT > يدوي: 68 products
+  APT > اكسسوارات: 10 products
+  APT > بطاررية: 8 products
+  APT > جاردن: 15 products
+  APT > وحدات قياس: 15 products
+  APT > هواء: 8 products
+
+📁 ITEM TYPES (All):
+  APT > يدوي > بنس كماشة فرنساوي انجليزي: 18 products
+  APT > يدوي > مفكات: 16 products
+  APT > يدوي > شاكوش ومطرقة: 11 products
+  APT > كهرباء > صاروخ: 10 products
+  APT > كهرباء > وهيلتي: 9 products
+  APT > هواء > دهانات: 8 products
+  APT > اكسسوارات > صنية والماظة: 7 products
+  APT > بطاررية > شنيور وهيلتي ودريل: 7 products
+  APT > جاردن > خراطيم: 6 products
+  APT > وحدات قياس > امتار يدوي: 6 products
+  APT > يدوي > ادوات سيارات: 5 products
+  APT > يدوي > مقصات: 5 products
+  APT > جاردن > ماكن غسيل: 5 products
+  APT > كهرباء > شنيور: 4 products
+  APT > يدوي > مفاتيح: 4 products
+  APT > وحدات قياس > زاوية علام: 4 products
+  APT > كهرباء > تسخين هوت جن: 3 products
+  APT > كهرباء > اركت: 3 products
+  APT > كهرباء > صنفرة: 3 products
+  APT > جاردن > ادوات زراعة: 3 products
+  APT > وحدات قياس > ميزان ليزر: 3 products
+  APT > كهرباء > صنية: 2 products
+  APT > كهرباء > ديسك: 2 products
+  APT > يدوي > اطقم عده: 2 products
+  APT > يدوي > اطقم الن وبيبه: 2 products
+  APT > يدوي > قطرات: 2 products
+  APT > اكسسوارات > احجار: 2 products
+  APT > وحدات قياس > ميزان مياه: 2 products
+  APT > كهرباء > بلاور: 1 products
+  APT > كهرباء > راوتر: 1 products
+  APT > كهرباء > فارة: 1 products
+  APT > كهرباء > ماكن لحام  بولي: 1 products
+  APT > يدوي > لقم ويد سيستم: 1 products
+  APT > يدوي > مسدس شمع: 1 products
+  APT > يدوي > منشار خشابي وحدادي: 1 products
+  APT > اكسسوارات > فرش: 1 products
+  APT > بطاررية > صاروخ: 1 products
+  APT > جاردن > مناشير زراعية: 1 products
+  APT > كهرباء > دهانات: 0 products ⭐ EMPTY
+  APT > كهرباء > ماكن جلخ: 0 products ⭐ EMPTY
+  APT > كهرباء > ماكن لحام  قصدير: 0 products ⭐ EMPTY
+  APT > كهرباء > ماكن لحام حديد: 0 products ⭐ EMPTY
+  APT > يدوي > ماكن سيراميك: 0 products ⭐ EMPTY
+  APT > يدوي > شنط عده: 0 products ⭐ EMPTY
+  APT > يدوي > قمطة وزرجينة ومنجلة: 0 products ⭐ EMPTY
+  APT > يدوي > اجنة ومسمار يدوي: 0 products ⭐ EMPTY
+  APT > يدوي > مسدس سليكون: 0 products ⭐ EMPTY
+  APT > يدوي > بوكليز: 0 products ⭐ EMPTY
+  APT > يدوي > جوانتي: 0 products ⭐ EMPTY
+  APT > يدوي > نظارت: 0 products ⭐ EMPTY
+  APT > يدوي > ازميل: 0 products ⭐ EMPTY
+  APT > يدوي > دباسة خشب: 0 products ⭐ EMPTY
+  APT > يدوي > ادوات دهانات: 0 products ⭐ EMPTY
+  APT > اكسسوارات > بنط: 0 products ⭐ EMPTY
+  APT > اكسسوارات > قطع غيار: 0 products ⭐ EMPTY
+  APT > اكسسوارات > سلاح اركت: 0 products ⭐ EMPTY
+  APT > اكسسوارات > صنفرة وادوات ماكن لحام: 0 products ⭐ EMPTY
+  APT > بطاررية > اطقم كومبو: 0 products ⭐ EMPTY
+  APT > بطاررية > دهانات: 0 products ⭐ EMPTY
+  APT > بطاررية > بلاور وتسخين: 0 products ⭐ EMPTY
+  APT > بطاررية > كشافات: 0 products ⭐ EMPTY
+  APT > بطاررية > صنية: 0 products ⭐ EMPTY
+  APT > جاردن > رشاشات: 0 products ⭐ EMPTY
+  APT > جاردن > مقصات زرع: 0 products ⭐ EMPTY
+  APT > جاردن > ماكن قص نجيلة: 0 products ⭐ EMPTY
+  APT > وحدات قياس > امتار ليزر: 0 products ⭐ EMPTY
+  APT > هواء > دباسات: 0 products ⭐ EMPTY
+  APT > هواء > دريل: 0 products ⭐ EMPTY
+
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+⭐ EMPTY ITEM TYPES CREATED - 30
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+NOTE: These ItemTypes were found in Excel but have NO products.
+They were created in the database structure.
+
+1. APT > كهرباء > دهانات
+2. APT > كهرباء > ماكن جلخ
+3. APT > كهرباء > ماكن لحام  قصدير
+4. APT > كهرباء > ماكن لحام حديد
+5. APT > يدوي > ماكن سيراميك
+6. APT > يدوي > شنط عده
+7. APT > يدوي > قمطة وزرجينة ومنجلة
+8. APT > يدوي > اجنة ومسمار يدوي
+9. APT > يدوي > مسدس سليكون
+10. APT > يدوي > بوكليز
+11. APT > يدوي > جوانتي
+12. APT > يدوي > نظارت
+13. APT > يدوي > ازميل
+14. APT > يدوي > دباسة خشب
+15. APT > يدوي > ادوات دهانات
+16. APT > اكسسوارات > بنط
+17. APT > اكسسوارات > قطع غيار
+18. APT > اكسسوارات > سلاح اركت
+19. APT > اكسسوارات > صنفرة وادوات ماكن لحام
+20. APT > بطاررية > اطقم كومبو
+21. APT > بطاررية > دهانات
+22. APT > بطاررية > بلاور وتسخين
+23. APT > بطاررية > كشافات
+24. APT > بطاررية > صنية
+25. APT > جاردن > رشاشات
+26. APT > جاردن > مقصات زرع
+27. APT > جاردن > ماكن قص نجيلة
+28. APT > وحدات قياس > امتار ليزر
+29. APT > هواء > دباسات
+30. APT > هواء > دريل
+
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+MISSING FIELDS SUMMARY
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+⭐ Products with AUTO-GENERATED CODE:             12
+⭐ Products with AUTO-GENERATED BARCODE:          58
+ℹ️  Products with ZERO quantity:                  36
+
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+⭐ AUTO-GENERATED CODES - 3 PRODUCTS
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+NOTE: These products had NO CODE in Excel. Test codes were auto-generated.
+
+1. Row 108: دقماق
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Original Code: EMPTY
+  Generated Code: TEST-1770841643783-SDP2BS
+  Barcode: 6221257000023
+  Location: يدوي / شاكوش ومطرقة
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED CODE
+
+2. Row 109: مطرقه 1000
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Original Code: EMPTY
+  Generated Code: TEST-1770841643783-3KZAN7
+  Barcode: 6223007702263
+  Location: يدوي / شاكوش ومطرقة
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED CODE
+
+3. Row 196: خرطوم مياه 25 متر 2/1 بوصه
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Original Code: EMPTY
+  Generated Code: TEST-1770841643783-622DY7
+  Barcode: 6221257483994
+  Location: جاردن / خراطيم
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED CODE
+
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+❌ INSERTION ERRORS - 161 PRODUCTS FAILED TO INSERT
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+NOTE: These products passed validation but failed during database insertion.
+
+1. Row 5: شنيور 1050
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW02795 V4
+  Barcode: 6221257437829
+  Location: كهرباء / شنيور
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+2. Row 6: شنيور 10 مم 450 وات ظرف اتوماتيك
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW01315
+  Barcode: 6221257353211
+  Location: كهرباء / شنيور
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+3. Row 7: شنيور 13 مم دقاق 650
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW02635
+  Barcode: 6223007700030
+  Location: كهرباء / شنيور
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+4. Row 8: شنيور فك وربط 380وات 320 نيوتن نص
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW09430
+  Barcode: 6221257527612
+  Location: كهرباء / شنيور
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+5. Row 10: كيت شاكوش 850 وات
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW26GV4
+  Barcode: 6221257353365
+  Location: كهرباء / وهيلتي
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+6. Row 11: كيت شاكوش تكسير 1600 زيت
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW64
+  Barcode: 6221257507935
+  Location: كهرباء / وهيلتي
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+7. Row 12: كيت شاكوش تكسير 1700
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW63
+  Barcode: NULL
+  Location: كهرباء / وهيلتي
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+8. Row 13: كيت شاكوش 1500 وات 36معدن
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW36HT
+  Barcode: NULL
+  Location: كهرباء / وهيلتي
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+9. Row 14: كيت شاكوش عدل 800 ي\ش
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW26QCC
+  Barcode: 6223007700061
+  Location: كهرباء / وهيلتي
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+10. Row 15: هليتي عدل 800
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW2621
+  Barcode: NULL
+  Location: كهرباء / وهيلتي
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+11. Row 16: كيت شاكوش 1500 بلاستيك كبير
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW36DT
+  Barcode: NULL
+  Location: كهرباء / وهيلتي
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+12. Row 17: كيت شاكوش 1300
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW11C
+  Barcode: 6221257507911
+  Location: كهرباء / وهيلتي
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+13. Row 18: كيت شاكوش 1500 وات معدن
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW36PT
+  Barcode: 6221257353419
+  Location: كهرباء / وهيلتي
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+14. Row 20: بلاور 450 وات صيني
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW09320A V2
+  Barcode: 6221257520712
+  Location: كهرباء / بلاور
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+15. Row 22: مسدس تسخين 2000وات
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW09250
+  Barcode: NULL
+  Location: كهرباء / تسخين هوت جن
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+16. Row 23: مسدس تسخين 2000
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: dw09250
+  Barcode: 6221257354027
+  Location: كهرباء / تسخين هوت جن
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+17. Row 24: مسدس تسخين 1800
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW09223
+  Barcode: 6221257520743
+  Location: كهرباء / تسخين هوت جن
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+18. Row 27: صاروخ قطعيه 2100 وات9 بوصه
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW05623
+  Barcode: NULL
+  Location: كهرباء / صاروخ
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+19. Row 28: صاروخ 9"2200وات
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW05625_V2
+  Barcode: 6221257353655
+  Location: كهرباء / صاروخ
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+20. Row 29: صاروخ 750 وات 4.5 "
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW05215-V4
+  Barcode: 6221257513967
+  Location: كهرباء / صاروخ
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+21. Row 30: صاروخ 600
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW05215-V2
+  Barcode: NULL
+  Location: كهرباء / صاروخ
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+22. Row 31: صاروخ قطعيه يد طويله 1150وات
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW05369 V4
+  Barcode: 6221257456127
+  Location: كهرباء / صاروخ
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+23. Row 32: صاروخ تلميع 7"1200 وات
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW06350
+  Barcode: NULL
+  Location: كهرباء / صاروخ
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+24. Row 33: صاروخ قطعيه 7" 1500 وات
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW05555
+  Barcode: 6221257353631
+  Location: كهرباء / صاروخ
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+25. Row 34: صاروخ تلميع 7 بوصه 1300 وات
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW06352
+  Barcode: 6221257526684
+  Location: كهرباء / صاروخ
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+26. Row 35: صاروخ قطعيه 2000وات 9بوصه
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW05621
+  Barcode: 6221257541229
+  Location: كهرباء / صاروخ
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+27. Row 36: ميني كرافت 135وات 129 ق
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW06412
+  Barcode: NULL
+  Location: كهرباء / صاروخ
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+28. Row 38: اركيت 800 وات
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW07455
+  Barcode: 6221257353785
+  Location: كهرباء / اركت
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+29. Row 39: اركيت 570 وات
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW07405
+  Barcode: 6221257353778
+  Location: كهرباء / اركت
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+30. Row 40: اركيت 400 وات
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW07402
+  Barcode: 6221257523812
+  Location: كهرباء / اركت
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+31. Row 42: حليه الكتروني جسم معدن 440وات
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW08528
+  Barcode: 6221257353792
+  Location: كهرباء / راوتر
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+32. Row 44: منشار صنيه 7وربع بوصه 1200 وات
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW07220 V2
+  Barcode: 6221257353723
+  Location: كهرباء / صنية
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+33. Row 45: منشار صينيه 2000وات 9 بوصه جسم معدن
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW07340
+  Barcode: 6221257456271
+  Location: كهرباء / صنية
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+34. Row 49: ديسك قطعيه زوايا 2200 \12"
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW07751
+  Barcode: NULL
+  Location: كهرباء / ديسك
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+35. Row 52: ديسك 10 بوصه 2000وات
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW07743
+  Barcode: 6221257353877
+  Location: كهرباء / ديسك
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+36. Row 54: فاره كستير 560 وات 82مم
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW08300
+  Barcode: 6221257353747
+  Location: كهرباء / فارة
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+37. Row 56: اسكوتش قاعده صنفره
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW500065
+  Barcode: 6221257030716
+  Location: كهرباء / صنفرة
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+38. Row 57: صنفره هزاز 240وات
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW08203
+  Barcode: 6221257523782
+  Location: كهرباء / صنفرة
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+39. Row 58: صنفره دائريه300وات
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW08206
+  Barcode: 6221257523799
+  Location: كهرباء / صنفرة
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+40. Row 62: شنطه لحام مواسير بلاستيك 2000 وات
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW19925
+  Barcode: NULL
+  Location: كهرباء / ماكن لحام  بولي
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+41. Row 66: طقم مفك صليبه 2*38 +مفك عاده 6*38 عجوز
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: AH148507
+  Barcode: 6221257375695
+  Location: يدوي / مفكات
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+42. Row 67: مفك قلاب
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: 546201_L150
+  Barcode: 79011000161
+  Location: يدوي / مفكات
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+43. Row 68: مفك تيست 2 لون 140 مم غالي
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: AH1272130-140
+  Barcode: 6221257484977
+  Location: يدوي / مفكات
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+44. Row 69: مفك تست 2 لون 190 مم غالي
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: AH1272130-190
+  Barcode: 6221257487787
+  Location: يدوي / مفكات
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+45. Row 70: مفك عاده ازرق 5*150مم
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: AH114130073-5150
+  Barcode: NULL
+  Location: يدوي / مفكات
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+46. Row 71: مفك صليبه150*2 ازرق PH
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: AH114132073-2150
+  Barcode: NULL
+  Location: يدوي / مفكات
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+47. Row 72: مفك تست 140
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: AH0172130-140
+  Barcode: 6221257484281
+  Location: يدوي / مفكات
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+48. Row 73: علبه 10سن مفك عاده وصليبه
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: AH2061002114
+  Barcode: NULL
+  Location: يدوي / مفكات
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+49. Row 74: مفك تست 190
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: AH0172130-190
+  Barcode: 6221257484311
+  Location: يدوي / مفكات
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+50. Row 75: مفك عاده 2 لون 5*150 مم
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: AH140274
+  Barcode: 6223007701761
+  Location: يدوي / مفكات
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+51. Row 76: مفك صليبه 150*2 مم PH
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: AH142274
+  Barcode: NULL
+  Location: يدوي / مفكات
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+52. Row 77: مفك 2 لون قلاب 150 مم
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: AH145271
+  Barcode: 6223007702980
+  Location: يدوي / مفكات
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+53. Row 78: مفك دق صليبه شفاف سلاح اخر
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: 506025
+  Barcode: NULL
+  Location: يدوي / مفكات
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+54. Row 79: مفك دق عاده شفاف سلاح للاخر 6*150 مم
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: 506002
+  Barcode: NULL
+  Location: يدوي / مفكات
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+55. Row 80: مفك دق عاده شفاف سلاح للاخر 8*250مم
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: 506005
+  Barcode: NULL
+  Location: يدوي / مفكات
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+56. Row 81: علبه 10 سن مفك صليبه اتجاهين
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: AH2021002222
+  Barcode: NULL
+  Location: يدوي / مفكات
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+57. Row 84: طقم لقم رباط مسدسه2\1
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: 123012
+  Barcode: NULL
+  Location: يدوي / لقم ويد سيستم
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+58. Row 86: كماشه حداد مسلح 9" هندي
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: 5242-220
+  Barcode: NULL
+  Location: يدوي / بنس كماشة فرنساوي انجليزي
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+59. Row 87: بنسه لحام 800امبير
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: GW-800_AMP
+  Barcode: NULL
+  Location: يدوي / بنس كماشة فرنساوي انجليزي
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+60. Row 88: بنسه غراب 10"يد عازل هندي
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: 5231-250
+  Barcode: NULL
+  Location: يدوي / بنس كماشة فرنساوي انجليزي
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+61. Row 89: قصافه 6"
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: AH1401540-150
+  Barcode: 6223007708883
+  Location: يدوي / بنس كماشة فرنساوي انجليزي
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+62. Row 90: قصافه 6"يد بلاستيك
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: AH1301540-150
+  Barcode: 6221257496451
+  Location: يدوي / بنس كماشة فرنساوي انجليزي
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+63. Row 91: قصافه 7"بلاستك
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: AH1301540-180
+  Barcode: 6221257496468
+  Location: يدوي / بنس كماشة فرنساوي انجليزي
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+64. Row 92: بنسه7
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: AH1403540
+  Barcode: 6223007708920
+  Location: يدوي / بنس كماشة فرنساوي انجليزي
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+65. Row 93: بنسه 8
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: AH1403540-200
+  Barcode: 6223007708937
+  Location: يدوي / بنس كماشة فرنساوي انجليزي
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+66. Row 94: بنسة غراب 12 بوصة
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: AH1233240-12
+  Barcode: NULL
+  Location: يدوي / بنس كماشة فرنساوي انجليزي
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+67. Row 95: بوكليز 6"
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: TYK150
+  Barcode: NULL
+  Location: يدوي / بنس كماشة فرنساوي انجليزي
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+68. Row 96: بوكليز 8"
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: TYK200
+  Barcode: NULL
+  Location: يدوي / بنس كماشة فرنساوي انجليزي
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+69. Row 97: بنسه برشام 9.5"
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: AH2413100-230
+  Barcode: NULL
+  Location: يدوي / بنس كماشة فرنساوي انجليزي
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+70. Row 98: بنسه كلابه 10"
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: AH1039775-10
+  Barcode: 6223007702669
+  Location: يدوي / بنس كماشة فرنساوي انجليزي
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+71. Row 99: مفتاح فرنساوي 10"
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW15180-250
+  Barcode: 6221257378771
+  Location: يدوي / بنس كماشة فرنساوي انجليزي
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+72. Row 100: مفتاح فرنساوي 8
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW15180-200
+  Barcode: 6221257378764
+  Location: يدوي / بنس كماشة فرنساوي انجليزي
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+73. Row 101: بنسه تيل داخليه بوز عدل 7بوصه
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: AH1112040-180
+  Barcode: NULL
+  Location: يدوي / بنس كماشة فرنساوي انجليزي
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+74. Row 102: بنسه تيل خارجيه بوزعدل 7بوصه
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: AH1112240-18-
+  Barcode: 6221257482027
+  Location: يدوي / بنس كماشة فرنساوي انجليزي
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+75. Row 103: كماشه نجاري يد عازل 7 "هندي
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: GCF-519
+  Barcode: NULL
+  Location: يدوي / بنس كماشة فرنساوي انجليزي
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+76. Row 105: شنطه 219 قطعه
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: 121219
+  Barcode: NULL
+  Location: يدوي / اطقم عده
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+77. Row 106: شنطه لقم 82 قطعه
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: 121082
+  Barcode: NULL
+  Location: يدوي / اطقم عده
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+78. Row 110: شاكوش بناريج يد خشب 1500
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: AH0205340-150
+  Barcode: 6223007702249
+  Location: يدوي / شاكوش ومطرقة
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+79. Row 111: مطرقه صلب مربعه يد خشب 1500
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: AH0208340-150
+  Barcode: 6223007702287
+  Location: يدوي / شاكوش ومطرقة
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+80. Row 112: شاكوش2000 جرام يد خشب
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: AH0205340-200
+  Barcode: 6223007702256
+  Location: يدوي / شاكوش ومطرقة
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+81. Row 113: شاكوش بناريج يد خشب 300
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: AH0205340-030
+  Barcode: 6223007702218
+  Location: يدوي / شاكوش ومطرقة
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+82. Row 114: مطرقه صلب مربعه يد خشب 2000
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: AH0208340-200
+  Barcode: 62230007702287
+  Location: يدوي / شاكوش ومطرقة
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+83. Row 115: شاكوش بناريج يد خشب 500
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: AH0205340-050
+  Barcode: 6223007702225
+  Location: يدوي / شاكوش ومطرقة
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+84. Row 116: شاكوش يد خشب 1000#45
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: #45
+  Barcode: NULL
+  Location: يدوي / شاكوش ومطرقة
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+85. Row 117: دقماق كاوتش اسود يد فايبر 8 اوقيه
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: AH542004-08
+  Barcode: 6221257000054
+  Location: يدوي / شاكوش ومطرقة
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+86. Row 118: دقماق كاوتش ابيض يد فايبر 16 اوقيه
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: AH542104-16
+  Barcode: 6221257000085
+  Location: يدوي / شاكوش ومطرقة
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+87. Row 120: طقم بيبه 12 قطعه
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW481819-12
+  Barcode: NULL
+  Location: يدوي / اطقم الن وبيبه
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+88. Row 121: طقم الانكيه طويل عاده
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: AH511521-9
+  Barcode: NULL
+  Location: يدوي / اطقم الن وبيبه
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+89. Row 127: مسدس شمع 60 وات
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW12060
+  Barcode: B0924GTHK2
+  Location: يدوي / مسدس شمع
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+90. Row 129: برواز منشار حدادي 1 لون 12"
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: AH2211720-300
+  Barcode: 6221257447316
+  Location: يدوي / منشار خشابي وحدادي
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+91. Row 131: كتر بلاستيك 18مم 70 جرام
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: UC500
+  Barcode: NULL
+  Location: يدوي / قطرات
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+92. Row 132: كاتر بلاستيك كاوتش 18مم 70 جرام
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: UC601
+  Barcode: 6221257526400
+  Location: يدوي / قطرات
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+93. Row 134: طقم مشرشر 6الي 32
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: AH211406-SET12
+  Barcode: NULL
+  Location: يدوي / مفاتيح
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+94. Row 135: طقم مفتاح بلدي 6الي 32
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: GCF-302
+  Barcode: NULL
+  Location: يدوي / مفاتيح
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+95. Row 136: طقم مفتاح ناحيه وناحيه 8 الي 32
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: GCF-305
+  Barcode: NULL
+  Location: يدوي / مفاتيح
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+96. Row 137: طقم بناحيه سيستم
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: 8PC
+  Barcode: NULL
+  Location: يدوي / مفاتيح
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+97. Row 142: كوريك تمساح 1.5طن 300-128
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: TA82008
+  Barcode: 3800031500
+  Location: يدوي / ادوات سيارات
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+98. Row 143: كوريك تمساح شنطه بلاستك 2 طن
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: TA820050FS
+  Barcode: 6221257441611
+  Location: يدوي / ادوات سيارات
+  ❌ ERROR: 
+Invalid `prisma.product.create()` invocation in
+C:\Users\123om\Downloads\final-city\backend\prisma\seed-all-with-validation.js:395:62
+
+  392 
+  393 // ⭐ If barcode is null, keep it null (no generation)
+  394 
+→ 395 const product = await prisma.product.create({
+        data: {
+          code: "TA820050FS",
+          nameAr: "كوريك تمساح شنطه بلاستك 2 طن",
+          nameEn: "",
+          categoryId: 9,
+          itemTypeId: 423,
+          brand: "APT",
+          cost: 1352,
+          costAvg: 1352,
+          priceRetail: 1352,
+          priceWholesale: 1352,
+          unit: "PCS",
+          active: true,
+      +   barcode: String
+        }
+      })
+
+Argument `barcode` must not be null.
+
+99. Row 144: كوريك باكم صيني 2طن 276
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: T90204D
+  Barcode: 6221257441611
+  Location: يدوي / ادوات سيارات
+  ❌ ERROR: 
+Invalid `prisma.product.create()` invocation in
+C:\Users\123om\Downloads\final-city\backend\prisma\seed-all-with-validation.js:395:62
+
+  392 
+  393 // ⭐ If barcode is null, keep it null (no generation)
+  394 
+→ 395 const product = await prisma.product.create({
+        data: {
+          code: "T90204D",
+          nameAr: "كوريك باكم صيني 2طن 276",
+          nameEn: "",
+          categoryId: 9,
+          itemTypeId: 423,
+          brand: "APT",
+          cost: 412,
+          costAvg: 412,
+          priceRetail: 412,
+          priceWholesale: 412,
+          unit: "PCS",
+          active: true,
+      +   barcode: String
+        }
+      })
+
+Argument `barcode` must not be null.
+
+100. Row 145: كوريك باكم صيني 3 طن 350 مم
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: T90304D
+  Barcode: 6221257018509
+  Location: يدوي / ادوات سيارات
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+101. Row 146: كوريك باكم صيني 5 طن 355مم
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: T90504D
+  Barcode: NULL
+  Location: يدوي / ادوات سيارات
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+102. Row 149: مقص مواسير بولي 42
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: AH2053371-42B
+  Barcode: NULL
+  Location: يدوي / مقصات
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+103. Row 150: مقص مواسير بولي 75
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: AH2054370-75
+  Barcode: 6221257483871
+  Location: يدوي / مقصات
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+104. Row 151: مقص صاج عدل 10"
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: AH1422241
+  Barcode: 6221257375541
+  Location: يدوي / مقصات
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+105. Row 152: مقص صاج عدل بوزطويل 12"
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW34112-300S
+  Barcode: 6221257435290
+  Location: يدوي / مقصات
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+106. Row 153: مقص فواكه يد 2 لون 8"صيني
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: 3616
+  Barcode: NULL
+  Location: يدوي / مقصات
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+107. Row 160: صينه فيديا خشب 185
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW6010212
+  Barcode: NULL
+  Location: اكسسوارات / صنية والماظة
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+108. Row 161: صينيه فيديا خشب 60 سن
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW6010312
+  Barcode: 9605760103124
+  Location: اكسسوارات / صنية والماظة
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+109. Row 162: صينيه فيديا خشب 7" 40 سن
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW6010211
+  Barcode: 9605760102110
+  Location: اكسسوارات / صنية والماظة
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+110. Row 163: الماظة 5 بوصة حوائط
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW200316-5
+  Barcode: NULL
+  Location: اكسسوارات / صنية والماظة
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+111. Row 164: الماظة 7 بوصة حوائط
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW200316-7
+  Barcode: NULL
+  Location: اكسسوارات / صنية والماظة
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+112. Row 165: صينيه فيديا خشب 96سن
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW6010515
+  Barcode: 6221257031089
+  Location: اكسسوارات / صنية والماظة
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+113. Row 166: صينيه فيديا خشب 72
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW6010513
+  Barcode: 9605760105135
+  Location: اكسسوارات / صنية والماظة
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+114. Row 169: حجره قطعيه حديد
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: S22303022
+  Barcode: NULL
+  Location: اكسسوارات / احجار
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+115. Row 170: حجاره قطعيه لوكس 22.2*125
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: APTP11251022
+  Barcode: NULL
+  Location: اكسسوارات / احجار
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+116. Row 173: فرشه سلك تنظيف لحام يد بلاستك
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW788057
+  Barcode: 6221257466782
+  Location: اكسسوارات / فرش
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+117. Row 177: شنيور 2 بطاريه 12v
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: dw15105
+  Barcode: 6221257354089
+  Location: بطاررية / شنيور وهيلتي ودريل
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+118. Row 178: شنيور 2 بطاريه 18v
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: dw15515
+  Barcode: NULL
+  Location: بطاررية / شنيور وهيلتي ودريل
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+119. Row 181: شنيور دقاق 10مم ظرف معدن 20 فولت 50 نيوتن واحد بطاريه
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW1611045
+  Barcode: 6221257527315
+  Location: بطاررية / شنيور وهيلتي ودريل
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+120. Row 182: شنيور دقاق 13مم ظرف معدن 20 فولت 60 نيوتن 2بطاريه
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW1614060
+  Barcode: 6221257527346
+  Location: بطاررية / شنيور وهيلتي ودريل
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+121. Row 183: شنيور 12فولت
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW0110020
+  Barcode: 6221257523904
+  Location: بطاررية / شنيور وهيلتي ودريل
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+122. Row 184: شنيور دقاق ظرف معدن 20 فولت 50 نيوتن
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW1614045
+  Barcode: 6221257527728
+  Location: بطاررية / شنيور وهيلتي ودريل
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+123. Row 185: درل 350 نيوتن
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW2504350
+  Barcode: 6221257527377
+  Location: بطاررية / شنيور وهيلتي ودريل
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+124. Row 190: صاروخ قطعيه 20 فولت
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW4550000
+  Barcode: 6221257527445
+  Location: بطاررية / صاروخ
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+125. Row 195: خرطوم مياه 25 متر 2/1 بوصه بالوصلات
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: APTJLK12/25
+  Barcode: NULL
+  Location: جاردن / خراطيم
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+126. Row 197: خرطوم مياه 50 متر 2/1 بوصه
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: APTJ12/50
+  Barcode: 6221257470802
+  Location: جاردن / خراطيم
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+127. Row 198: خرطوم 50 متر 3/4
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: APT JL19/50
+  Barcode: NULL
+  Location: جاردن / خراطيم
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+128. Row 199: خرطوم 2/1 بوصه 100 متر
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: APTJL12/100
+  Barcode: 6221257470819
+  Location: جاردن / خراطيم
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+129. Row 200: خرطوم 1 " بوصه 50 متر
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: APTJL25/50
+  Barcode: 6221257470871
+  Location: جاردن / خراطيم
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+130. Row 203: مقص اسوار يد خشب 8"
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: 3904B
+  Barcode: 6223007708197
+  Location: جاردن / ادوات زراعة
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+131. Row 204: مقص اسوار يد معدن 2 لون 8"
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: 3922D
+  Barcode: 6223007708203
+  Location: جاردن / ادوات زراعة
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+132. Row 205: مقص اسوار يد الومنيوم 2 لون 10"
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: 3833B
+  Barcode: 6223007708234
+  Location: جاردن / ادوات زراعة
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+133. Row 208: ماكينه غسيل 150 بار 3200وات
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW20752
+  Barcode: NULL
+  Location: جاردن / ماكن غسيل
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+134. Row 209: ماكينه غسيل تحضير 90 بار 1500 وات
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW20090
+  Barcode: 6221257484533
+  Location: جاردن / ماكن غسيل
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+135. Row 210: ماكينه غسيل 110 بار 1400
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DWLP318
+  Barcode: NULL
+  Location: جاردن / ماكن غسيل
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+136. Row 211: ماكينه غسيل 140بار 1800
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DWLP407
+  Barcode: NULL
+  Location: جاردن / ماكن غسيل
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+137. Row 212: ماكينه غسيل تحضير 120 بار 1800وات
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW20123
+  Barcode: 6221257484557
+  Location: جاردن / ماكن غسيل
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+138. Row 214: منشار شجر كهرباء2200وات 16 بوصه
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW07515
+  Barcode: NULL
+  Location: جاردن / مناشير زراعية
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+139. Row 217: متر 5*25 سلاح ابيض 96
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: 25h42x
+  Barcode: 6221257470680
+  Location: وحدات قياس / امتار يدوي
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+140. Row 218: متر 3*16سلاح ابيض
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: CR-3K57W
+  Barcode: 6221257442557
+  Location: وحدات قياس / امتار يدوي
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+141. Row 219: متر 5*19سلاح ابيض
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: CR-5K47E
+  Barcode: 6223007702560
+  Location: وحدات قياس / امتار يدوي
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+142. Row 220: متر 8*25 سلاح ابيض 60
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: KR28h42x
+  Barcode: 6221257470697
+  Location: وحدات قياس / امتار يدوي
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+143. Row 221: متر 25*10
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: CR10K47X
+  Barcode: 6223007702591
+  Location: وحدات قياس / امتار يدوي
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+144. Row 222: متر قياس 3متر 16مم سلاح ابيض نيلون
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: CR-3K58W
+  Barcode: 6221257442601
+  Location: وحدات قياس / امتار يدوي
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+145. Row 225: ميزان مياه 2 عين 60 سم
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: 808B60
+  Barcode: NULL
+  Location: وحدات قياس / ميزان مياه
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+146. Row 226: ميزان مياه 2 عين 40 سم
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: 808b50
+  Barcode: 6221257024364
+  Location: وحدات قياس / ميزان مياه
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+147. Row 228: جهاز ليزر 5 خط
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: ALM-G5
+  Barcode: 6221257537918
+  Location: وحدات قياس / ميزان ليزر
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+148. Row 229: جهاز ليزر 360 اخضر 12 خط
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: COPTR-G12
+  Barcode: 6221257537956
+  Location: وحدات قياس / ميزان ليزر
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+149. Row 230: حامل ميزان جهاز ليزر 1.5
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: TRI-1.5
+  Barcode: 6221257537970
+  Location: وحدات قياس / ميزان ليزر
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+150. Row 232: زاويه صلب 300مم
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DL1C12
+  Barcode: 6221257025019
+  Location: وحدات قياس / زاوية علام
+  ❌ ERROR: 
+Invalid `prisma.product.create()` invocation in
+C:\Users\123om\Downloads\final-city\backend\prisma\seed-all-with-validation.js:395:62
+
+  392 
+  393 // ⭐ If barcode is null, keep it null (no generation)
+  394 
+→ 395 const product = await prisma.product.create({
+        data: {
+          code: "DL1C12",
+          nameAr: "زاويه صلب 300مم",
+          nameEn: "",
+          categoryId: 9,
+          itemTypeId: 453,
+          brand: "APT",
+          cost: 54,
+          costAvg: 54,
+          priceRetail: 54,
+          priceWholesale: 54,
+          unit: "PCS",
+          active: true,
+      +   barcode: String
+        }
+      })
+
+Argument `barcode` must not be null.
+
+151. Row 233: زاويه صلب 350مم
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DL1C14
+  Barcode: NULL
+  Location: وحدات قياس / زاوية علام
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+152. Row 234: زاويه 400 مم
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DL1C16
+  Barcode: 6221257025033
+  Location: وحدات قياس / زاوية علام
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+153. Row 235: زاويه صلب اسود 300_200
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: 200*300
+  Barcode: 6221257025019
+  Location: وحدات قياس / زاوية علام
+  ❌ ERROR: 
+Invalid `prisma.product.create()` invocation in
+C:\Users\123om\Downloads\final-city\backend\prisma\seed-all-with-validation.js:395:62
+
+  392 
+  393 // ⭐ If barcode is null, keep it null (no generation)
+  394 
+→ 395 const product = await prisma.product.create({
+        data: {
+          code: "200*300",
+          nameAr: "زاويه صلب اسود 300_200",
+          nameEn: "",
+          categoryId: 9,
+          itemTypeId: 453,
+          brand: "APT",
+          cost: 56,
+          costAvg: 56,
+          priceRetail: 56,
+          priceWholesale: 56,
+          unit: "PCS",
+          active: true,
+      +   barcode: String
+        }
+      })
+
+Argument `barcode` must not be null.
+
+154. Row 240: مسدس هواء بالعداد
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DG-10Y
+  Barcode: 6221257039405
+  Location: هواء / دهانات
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+155. Row 241: مسدس هواء بوز طويل
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DG-10S-2
+  Barcode: NULL
+  Location: هواء / دهانات
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+156. Row 242: مسدس دكو مقلوب فونيه 1.5
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: F75G
+  Barcode: 6221257038804
+  Location: هواء / دهانات
+  ❌ ERROR: 
+Invalid `prisma.product.create()` invocation in
+C:\Users\123om\Downloads\final-city\backend\prisma\seed-all-with-validation.js:395:62
+
+  392 
+  393 // ⭐ If barcode is null, keep it null (no generation)
+  394 
+→ 395 const product = await prisma.product.create({
+        data: {
+          code: "F75G",
+          nameAr: "مسدس دكو مقلوب فونيه 1.5",
+          nameEn: "",
+          categoryId: 9,
+          itemTypeId: 456,
+          brand: "APT",
+          cost: 500,
+          costAvg: 500,
+          priceRetail: 500,
+          priceWholesale: 500,
+          unit: "PCS",
+          active: true,
+      +   barcode: String
+        }
+      })
+
+Argument `barcode` must not be null.
+
+157. Row 243: مسدس دكو 1 لتر
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: W77S
+  Barcode: 6221257038750
+  Location: هواء / دهانات
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+158. Row 244: مسدس دكو مقلوب بنته بلاستك
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: AB-17G
+  Barcode: 6221257038804
+  Location: هواء / دهانات
+  ❌ ERROR: 
+Invalid `prisma.product.create()` invocation in
+C:\Users\123om\Downloads\final-city\backend\prisma\seed-all-with-validation.js:395:62
+
+  392 
+  393 // ⭐ If barcode is null, keep it null (no generation)
+  394 
+→ 395 const product = await prisma.product.create({
+        data: {
+          code: "AB-17G",
+          nameAr: "مسدس دكو مقلوب بنته بلاستك",
+          nameEn: "",
+          categoryId: 9,
+          itemTypeId: 456,
+          brand: "APT",
+          cost: 787,
+          costAvg: 787,
+          priceRetail: 787,
+          priceWholesale: 787,
+          unit: "PCS",
+          active: true,
+      +   barcode: String
+        }
+      })
+
+Argument `barcode` must not be null.
+
+159. Row 245: مسدس دكو سوكوتاه 1.80
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: 4001s
+  Barcode: 6221257038705
+  Location: هواء / دهانات
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+160. Row 246: مسدس دكو عدل معدن
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: S990S
+  Barcode: NULL
+  Location: هواء / دهانات
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+161. Row 247: كمبرسور 24 لتر
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: SGBM9037
+  Barcode: 6221257001945
+  Location: هواء / دهانات
+  ❌ ERROR: Code already exists in CROWN
+  ⚠️  CONFLICT WITH: CROWN brand (same code already exists)
+
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+⚠️ CROSS-BRAND BARCODE CONFLICTS - 100 FOUND
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+NOTE: These products have barcodes that already exist in OTHER brands.
+The barcode was MODIFIED by adding "DUPL" suffix.
+
+1. Row 5: شنيور 1050
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW02795 V4
+  Original Barcode: 6221257437829
+  Modified Barcode: 6221257437829DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: شنيور 1050
+  Location: كهرباء / شنيور
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+2. Row 6: شنيور 10 مم 450 وات ظرف اتوماتيك
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW01315
+  Original Barcode: 6221257353211
+  Modified Barcode: 6221257353211DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: شنيور 10 مم 450 وات ظرف اتوماتيك
+  Location: كهرباء / شنيور
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+3. Row 7: شنيور 13 مم دقاق 650
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW02635
+  Original Barcode: 6223007700030
+  Modified Barcode: 6223007700030DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: شنيور 13 مم دقاق 650
+  Location: كهرباء / شنيور
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+4. Row 8: شنيور فك وربط 380وات 320 نيوتن نص
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW09430
+  Original Barcode: 6221257527612
+  Modified Barcode: 6221257527612DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: شنيور فك وربط 380وات 320 نيوتن نص
+  Location: كهرباء / شنيور
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+5. Row 10: كيت شاكوش 850 وات
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW26GV4
+  Original Barcode: 6221257353365
+  Modified Barcode: 6221257353365DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: كيت شاكوش 850 وات
+  Location: كهرباء / وهيلتي
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+6. Row 11: كيت شاكوش تكسير 1600 زيت
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW64
+  Original Barcode: 6221257507935
+  Modified Barcode: 6221257507935DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: كيت شاكوش تكسير 1600 زيت
+  Location: كهرباء / وهيلتي
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+7. Row 14: كيت شاكوش عدل 800 ي\ش
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW26QCC
+  Original Barcode: 6223007700061
+  Modified Barcode: 6223007700061DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: كيت شاكوش عدل 800 ي\ش
+  Location: كهرباء / وهيلتي
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+8. Row 17: كيت شاكوش 1300
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW11C
+  Original Barcode: 6221257507911
+  Modified Barcode: 6221257507911DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: كيت شاكوش 1300
+  Location: كهرباء / وهيلتي
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+9. Row 18: كيت شاكوش 1500 وات معدن
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW36PT
+  Original Barcode: 6221257353419
+  Modified Barcode: 6221257353419DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: كيت شاكوش 1500 وات معدن
+  Location: كهرباء / وهيلتي
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+10. Row 20: بلاور 450 وات صيني
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW09320A V2
+  Original Barcode: 6221257520712
+  Modified Barcode: 6221257520712DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: بلاور 450 وات صيني
+  Location: كهرباء / بلاور
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+11. Row 23: مسدس تسخين 2000
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: dw09250
+  Original Barcode: 6221257354027
+  Modified Barcode: 6221257354027DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: مسدس تسخين 2000
+  Location: كهرباء / تسخين هوت جن
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+12. Row 24: مسدس تسخين 1800
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW09223
+  Original Barcode: 6221257520743
+  Modified Barcode: 6221257520743DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: مسدس تسخين 1800
+  Location: كهرباء / تسخين هوت جن
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+13. Row 28: صاروخ 9"2200وات
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW05625_V2
+  Original Barcode: 6221257353655
+  Modified Barcode: 6221257353655DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: صاروخ 9"2200وات
+  Location: كهرباء / صاروخ
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+14. Row 29: صاروخ 750 وات 4.5 "
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW05215-V4
+  Original Barcode: 6221257513967
+  Modified Barcode: 6221257513967DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: صاروخ 750 وات 4.5 "
+  Location: كهرباء / صاروخ
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+15. Row 31: صاروخ قطعيه يد طويله 1150وات
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW05369 V4
+  Original Barcode: 6221257456127
+  Modified Barcode: 6221257456127DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: صاروخ قطعيه يد طويله 1150وات
+  Location: كهرباء / صاروخ
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+16. Row 33: صاروخ قطعيه 7" 1500 وات
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW05555
+  Original Barcode: 6221257353631
+  Modified Barcode: 6221257353631DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: صاروخ قطعيه 7" 1500 وات
+  Location: كهرباء / صاروخ
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+17. Row 34: صاروخ تلميع 7 بوصه 1300 وات
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW06352
+  Original Barcode: 6221257526684
+  Modified Barcode: 6221257526684DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: صاروخ تلميع 7 بوصه 1300 وات
+  Location: كهرباء / صاروخ
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+18. Row 35: صاروخ قطعيه 2000وات 9بوصه
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW05621
+  Original Barcode: 6221257541229
+  Modified Barcode: 6221257541229DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: صاروخ قطعيه 2000وات 9بوصه
+  Location: كهرباء / صاروخ
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+19. Row 38: اركيت 800 وات
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW07455
+  Original Barcode: 6221257353785
+  Modified Barcode: 6221257353785DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: اركيت 800 وات
+  Location: كهرباء / اركت
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+20. Row 39: اركيت 570 وات
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW07405
+  Original Barcode: 6221257353778
+  Modified Barcode: 6221257353778DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: اركيت 570 وات
+  Location: كهرباء / اركت
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+21. Row 40: اركيت 400 وات
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW07402
+  Original Barcode: 6221257523812
+  Modified Barcode: 6221257523812DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: اركيت 400 وات
+  Location: كهرباء / اركت
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+22. Row 42: حليه الكتروني جسم معدن 440وات
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW08528
+  Original Barcode: 6221257353792
+  Modified Barcode: 6221257353792DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: حليه الكتروني جسم معدن 440وات
+  Location: كهرباء / راوتر
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+23. Row 44: منشار صنيه 7وربع بوصه 1200 وات
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW07220 V2
+  Original Barcode: 6221257353723
+  Modified Barcode: 6221257353723DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: منشار صنيه 7وربع بوصه 1200 وات
+  Location: كهرباء / صنية
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+24. Row 45: منشار صينيه 2000وات 9 بوصه جسم معدن
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW07340
+  Original Barcode: 6221257456271
+  Modified Barcode: 6221257456271DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: منشار صينيه 2000وات 9 بوصه جسم معدن
+  Location: كهرباء / صنية
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+25. Row 52: ديسك 10 بوصه 2000وات
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW07743
+  Original Barcode: 6221257353877
+  Modified Barcode: 6221257353877DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: ديسك 10 بوصه 2000وات
+  Location: كهرباء / ديسك
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+26. Row 54: فاره كستير 560 وات 82مم
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW08300
+  Original Barcode: 6221257353747
+  Modified Barcode: 6221257353747DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: فاره كستير 560 وات 82مم
+  Location: كهرباء / فارة
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+27. Row 56: اسكوتش قاعده صنفره
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW500065
+  Original Barcode: 6221257030716
+  Modified Barcode: 6221257030716DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: اسكوتش قاعده صنفره
+  Location: كهرباء / صنفرة
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+28. Row 57: صنفره هزاز 240وات
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW08203
+  Original Barcode: 6221257523782
+  Modified Barcode: 6221257523782DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: صنفره هزاز 240وات
+  Location: كهرباء / صنفرة
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+29. Row 58: صنفره دائريه300وات
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW08206
+  Original Barcode: 6221257523799
+  Modified Barcode: 6221257523799DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: صنفره دائريه300وات
+  Location: كهرباء / صنفرة
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+30. Row 66: طقم مفك صليبه 2*38 +مفك عاده 6*38 عجوز
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: AH148507
+  Original Barcode: 6221257375695
+  Modified Barcode: 6221257375695DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: طقم مفك صليبه 2*38 +مفك عاده 6*38 عجوز
+  Location: يدوي / مفكات
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+31. Row 67: مفك قلاب
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: 546201_L150
+  Original Barcode: 79011000161
+  Modified Barcode: 79011000161DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: مفك قلاب
+  Location: يدوي / مفكات
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+32. Row 68: مفك تيست 2 لون 140 مم غالي
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: AH1272130-140
+  Original Barcode: 6221257484977
+  Modified Barcode: 6221257484977DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: مفك تيست 2 لون 140 مم غالي
+  Location: يدوي / مفكات
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+33. Row 69: مفك تست 2 لون 190 مم غالي
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: AH1272130-190
+  Original Barcode: 6221257487787
+  Modified Barcode: 6221257487787DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: مفك تست 2 لون 190 مم غالي
+  Location: يدوي / مفكات
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+34. Row 72: مفك تست 140
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: AH0172130-140
+  Original Barcode: 6221257484281
+  Modified Barcode: 6221257484281DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: مفك تست 140
+  Location: يدوي / مفكات
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+35. Row 74: مفك تست 190
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: AH0172130-190
+  Original Barcode: 6221257484311
+  Modified Barcode: 6221257484311DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: مفك تست 190
+  Location: يدوي / مفكات
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+36. Row 75: مفك عاده 2 لون 5*150 مم
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: AH140274
+  Original Barcode: 6223007701761
+  Modified Barcode: 6223007701761DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: مفك عاده 2 لون 5*150 مم
+  Location: يدوي / مفكات
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+37. Row 77: مفك 2 لون قلاب 150 مم
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: AH145271
+  Original Barcode: 6223007702980
+  Modified Barcode: 6223007702980DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: مفك 2 لون قلاب 150 مم
+  Location: يدوي / مفكات
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+38. Row 89: قصافه 6"
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: AH1401540-150
+  Original Barcode: 6223007708883
+  Modified Barcode: 6223007708883DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: قصافه 6"
+  Location: يدوي / بنس كماشة فرنساوي انجليزي
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+39. Row 90: قصافه 6"يد بلاستيك
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: AH1301540-150
+  Original Barcode: 6221257496451
+  Modified Barcode: 6221257496451DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: قصافه 6"يد بلاستيك
+  Location: يدوي / بنس كماشة فرنساوي انجليزي
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+40. Row 91: قصافه 7"بلاستك
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: AH1301540-180
+  Original Barcode: 6221257496468
+  Modified Barcode: 6221257496468DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: قصافه 7"بلاستك
+  Location: يدوي / بنس كماشة فرنساوي انجليزي
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+41. Row 92: بنسه7
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: AH1403540
+  Original Barcode: 6223007708920
+  Modified Barcode: 6223007708920DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: بنسه7
+  Location: يدوي / بنس كماشة فرنساوي انجليزي
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+42. Row 93: بنسه 8
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: AH1403540-200
+  Original Barcode: 6223007708937
+  Modified Barcode: 6223007708937DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: بنسه 8
+  Location: يدوي / بنس كماشة فرنساوي انجليزي
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+43. Row 98: بنسه كلابه 10"
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: AH1039775-10
+  Original Barcode: 6223007702669
+  Modified Barcode: 6223007702669DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: بنسه كلابه 10"
+  Location: يدوي / بنس كماشة فرنساوي انجليزي
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+44. Row 99: مفتاح فرنساوي 10"
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW15180-250
+  Original Barcode: 6221257378771
+  Modified Barcode: 6221257378771DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: مفتاح فرنساوي 10"
+  Location: يدوي / بنس كماشة فرنساوي انجليزي
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+45. Row 100: مفتاح فرنساوي 8
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW15180-200
+  Original Barcode: 6221257378764
+  Modified Barcode: 6221257378764DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: مفتاح فرنساوي 8
+  Location: يدوي / بنس كماشة فرنساوي انجليزي
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+46. Row 102: بنسه تيل خارجيه بوزعدل 7بوصه
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: AH1112240-18-
+  Original Barcode: 6221257482027
+  Modified Barcode: 6221257482027DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: بنسه تيل خارجيه بوزعدل 7بوصه
+  Location: يدوي / بنس كماشة فرنساوي انجليزي
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+47. Row 108: دقماق
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: TEST-1770841643783-SDP2BS
+  Original Barcode: 6221257000023
+  Modified Barcode: 6221257000023DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: دقماق
+  Location: يدوي / شاكوش ومطرقة
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+48. Row 109: مطرقه 1000
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: TEST-1770841643783-3KZAN7
+  Original Barcode: 6223007702263
+  Modified Barcode: 6223007702263DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: مطرقه 1000
+  Location: يدوي / شاكوش ومطرقة
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+49. Row 110: شاكوش بناريج يد خشب 1500
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: AH0205340-150
+  Original Barcode: 6223007702249
+  Modified Barcode: 6223007702249DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: شاكوش بناريج يد خشب 1500
+  Location: يدوي / شاكوش ومطرقة
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+50. Row 111: مطرقه صلب مربعه يد خشب 1500
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: AH0208340-150
+  Original Barcode: 6223007702287
+  Modified Barcode: 6223007702287DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: مطرقه صلب مربعه يد خشب 1500
+  Location: يدوي / شاكوش ومطرقة
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+51. Row 112: شاكوش2000 جرام يد خشب
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: AH0205340-200
+  Original Barcode: 6223007702256
+  Modified Barcode: 6223007702256DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: شاكوش2000 جرام يد خشب
+  Location: يدوي / شاكوش ومطرقة
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+52. Row 113: شاكوش بناريج يد خشب 300
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: AH0205340-030
+  Original Barcode: 6223007702218
+  Modified Barcode: 6223007702218DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: شاكوش بناريج يد خشب 300
+  Location: يدوي / شاكوش ومطرقة
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+53. Row 114: مطرقه صلب مربعه يد خشب 2000
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: AH0208340-200
+  Original Barcode: 62230007702287
+  Modified Barcode: 62230007702287DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: مطرقه صلب مربعه يد خشب 2000
+  Location: يدوي / شاكوش ومطرقة
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+54. Row 115: شاكوش بناريج يد خشب 500
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: AH0205340-050
+  Original Barcode: 6223007702225
+  Modified Barcode: 6223007702225DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: شاكوش بناريج يد خشب 500
+  Location: يدوي / شاكوش ومطرقة
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+55. Row 117: دقماق كاوتش اسود يد فايبر 8 اوقيه
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: AH542004-08
+  Original Barcode: 6221257000054
+  Modified Barcode: 6221257000054DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: دقماق كاوتش اسود يد فايبر 8 اوقيه
+  Location: يدوي / شاكوش ومطرقة
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+56. Row 118: دقماق كاوتش ابيض يد فايبر 16 اوقيه
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: AH542104-16
+  Original Barcode: 6221257000085
+  Modified Barcode: 6221257000085DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: دقماق كاوتش ابيض يد فايبر 16 اوقيه
+  Location: يدوي / شاكوش ومطرقة
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+57. Row 127: مسدس شمع 60 وات
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW12060
+  Original Barcode: B0924GTHK2
+  Modified Barcode: B0924GTHK2DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: مسدس شمع 60 وات
+  Location: يدوي / مسدس شمع
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+58. Row 129: برواز منشار حدادي 1 لون 12"
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: AH2211720-300
+  Original Barcode: 6221257447316
+  Modified Barcode: 6221257447316DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: برواز منشار حدادي 1 لون 12"
+  Location: يدوي / منشار خشابي وحدادي
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+59. Row 132: كاتر بلاستيك كاوتش 18مم 70 جرام
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: UC601
+  Original Barcode: 6221257526400
+  Modified Barcode: 6221257526400DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: كاتر بلاستيك كاوتش 18مم 70 جرام
+  Location: يدوي / قطرات
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+60. Row 142: كوريك تمساح 1.5طن 300-128
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: TA82008
+  Original Barcode: 3800031500
+  Modified Barcode: 3800031500DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: كوريك تمساح 1.5طن 300-128
+  Location: يدوي / ادوات سيارات
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+61. Row 145: كوريك باكم صيني 3 طن 350 مم
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: T90304D
+  Original Barcode: 6221257018509
+  Modified Barcode: 6221257018509DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: كوريك باكم صيني 3 طن 350 مم
+  Location: يدوي / ادوات سيارات
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+62. Row 150: مقص مواسير بولي 75
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: AH2054370-75
+  Original Barcode: 6221257483871
+  Modified Barcode: 6221257483871DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: مقص مواسير بولي 75
+  Location: يدوي / مقصات
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+63. Row 151: مقص صاج عدل 10"
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: AH1422241
+  Original Barcode: 6221257375541
+  Modified Barcode: 6221257375541DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: مقص صاج عدل 10"
+  Location: يدوي / مقصات
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+64. Row 152: مقص صاج عدل بوزطويل 12"
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW34112-300S
+  Original Barcode: 6221257435290
+  Modified Barcode: 6221257435290DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: مقص صاج عدل بوزطويل 12"
+  Location: يدوي / مقصات
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+65. Row 161: صينيه فيديا خشب 60 سن
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW6010312
+  Original Barcode: 9605760103124
+  Modified Barcode: 9605760103124DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: صينيه فيديا خشب 60 سن
+  Location: اكسسوارات / صنية والماظة
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+66. Row 162: صينيه فيديا خشب 7" 40 سن
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW6010211
+  Original Barcode: 9605760102110
+  Modified Barcode: 9605760102110DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: صينيه فيديا خشب 7" 40 سن
+  Location: اكسسوارات / صنية والماظة
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+67. Row 165: صينيه فيديا خشب 96سن
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW6010515
+  Original Barcode: 6221257031089
+  Modified Barcode: 6221257031089DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: صينيه فيديا خشب 96سن
+  Location: اكسسوارات / صنية والماظة
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+68. Row 166: صينيه فيديا خشب 72
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW6010513
+  Original Barcode: 9605760105135
+  Modified Barcode: 9605760105135DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: صينيه فيديا خشب 72
+  Location: اكسسوارات / صنية والماظة
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+69. Row 173: فرشه سلك تنظيف لحام يد بلاستك
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW788057
+  Original Barcode: 6221257466782
+  Modified Barcode: 6221257466782DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: فرشه سلك تنظيف لحام يد بلاستك
+  Location: اكسسوارات / فرش
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+70. Row 177: شنيور 2 بطاريه 12v
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: dw15105
+  Original Barcode: 6221257354089
+  Modified Barcode: 6221257354089DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: شنيور 2 بطاريه 12v
+  Location: بطاررية / شنيور وهيلتي ودريل
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+71. Row 181: شنيور دقاق 10مم ظرف معدن 20 فولت 50 نيوتن واحد بطاريه
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW1611045
+  Original Barcode: 6221257527315
+  Modified Barcode: 6221257527315DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: شنيور دقاق 10مم ظرف معدن 20 فولت 50 نيوتن واحد بطاريه
+  Location: بطاررية / شنيور وهيلتي ودريل
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+72. Row 182: شنيور دقاق 13مم ظرف معدن 20 فولت 60 نيوتن 2بطاريه
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW1614060
+  Original Barcode: 6221257527346
+  Modified Barcode: 6221257527346DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: شنيور دقاق 13مم ظرف معدن 20 فولت 60 نيوتن 2بطاريه
+  Location: بطاررية / شنيور وهيلتي ودريل
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+73. Row 183: شنيور 12فولت
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW0110020
+  Original Barcode: 6221257523904
+  Modified Barcode: 6221257523904DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: شنيور 12فولت
+  Location: بطاررية / شنيور وهيلتي ودريل
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+74. Row 184: شنيور دقاق ظرف معدن 20 فولت 50 نيوتن
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW1614045
+  Original Barcode: 6221257527728
+  Modified Barcode: 6221257527728DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: شنيور دقاق ظرف معدن 20 فولت 50 نيوتن
+  Location: بطاررية / شنيور وهيلتي ودريل
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+75. Row 185: درل 350 نيوتن
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW2504350
+  Original Barcode: 6221257527377
+  Modified Barcode: 6221257527377DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: درل 350 نيوتن
+  Location: بطاررية / شنيور وهيلتي ودريل
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+76. Row 190: صاروخ قطعيه 20 فولت
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW4550000
+  Original Barcode: 6221257527445
+  Modified Barcode: 6221257527445DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: صاروخ قطعيه 20 فولت
+  Location: بطاررية / صاروخ
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+77. Row 196: خرطوم مياه 25 متر 2/1 بوصه
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: TEST-1770841643783-622DY7
+  Original Barcode: 6221257483994
+  Modified Barcode: 6221257483994DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: خرطوم مياه 25 متر 2/1 بوصه
+  Location: جاردن / خراطيم
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+78. Row 197: خرطوم مياه 50 متر 2/1 بوصه
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: APTJ12/50
+  Original Barcode: 6221257470802
+  Modified Barcode: 6221257470802DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: خرطوم مياه 50 متر 2/1 بوصه
+  Location: جاردن / خراطيم
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+79. Row 199: خرطوم 2/1 بوصه 100 متر
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: APTJL12/100
+  Original Barcode: 6221257470819
+  Modified Barcode: 6221257470819DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: خرطوم 2/1 بوصه 100 متر
+  Location: جاردن / خراطيم
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+80. Row 200: خرطوم 1 " بوصه 50 متر
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: APTJL25/50
+  Original Barcode: 6221257470871
+  Modified Barcode: 6221257470871DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: خرطوم 1 " بوصه 50 متر
+  Location: جاردن / خراطيم
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+81. Row 203: مقص اسوار يد خشب 8"
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: 3904B
+  Original Barcode: 6223007708197
+  Modified Barcode: 6223007708197DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: مقص اسوار يد خشب 8"
+  Location: جاردن / ادوات زراعة
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+82. Row 204: مقص اسوار يد معدن 2 لون 8"
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: 3922D
+  Original Barcode: 6223007708203
+  Modified Barcode: 6223007708203DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: مقص اسوار يد معدن 2 لون 8"
+  Location: جاردن / ادوات زراعة
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+83. Row 205: مقص اسوار يد الومنيوم 2 لون 10"
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: 3833B
+  Original Barcode: 6223007708234
+  Modified Barcode: 6223007708234DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: مقص اسوار يد الومنيوم 2 لون 10"
+  Location: جاردن / ادوات زراعة
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+84. Row 209: ماكينه غسيل تحضير 90 بار 1500 وات
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW20090
+  Original Barcode: 6221257484533
+  Modified Barcode: 6221257484533DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: ماكينه غسيل تحضير 90 بار 1500 وات
+  Location: جاردن / ماكن غسيل
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+85. Row 212: ماكينه غسيل تحضير 120 بار 1800وات
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DW20123
+  Original Barcode: 6221257484557
+  Modified Barcode: 6221257484557DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: ماكينه غسيل تحضير 120 بار 1800وات
+  Location: جاردن / ماكن غسيل
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+86. Row 217: متر 5*25 سلاح ابيض 96
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: 25h42x
+  Original Barcode: 6221257470680
+  Modified Barcode: 6221257470680DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: متر 5*25 سلاح ابيض 96
+  Location: وحدات قياس / امتار يدوي
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+87. Row 218: متر 3*16سلاح ابيض
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: CR-3K57W
+  Original Barcode: 6221257442557
+  Modified Barcode: 6221257442557DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: متر 3*16سلاح ابيض
+  Location: وحدات قياس / امتار يدوي
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+88. Row 219: متر 5*19سلاح ابيض
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: CR-5K47E
+  Original Barcode: 6223007702560
+  Modified Barcode: 6223007702560DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: متر 5*19سلاح ابيض
+  Location: وحدات قياس / امتار يدوي
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+89. Row 220: متر 8*25 سلاح ابيض 60
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: KR28h42x
+  Original Barcode: 6221257470697
+  Modified Barcode: 6221257470697DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: متر 8*25 سلاح ابيض 60
+  Location: وحدات قياس / امتار يدوي
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+90. Row 221: متر 25*10
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: CR10K47X
+  Original Barcode: 6223007702591
+  Modified Barcode: 6223007702591DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: متر 25*10
+  Location: وحدات قياس / امتار يدوي
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+91. Row 222: متر قياس 3متر 16مم سلاح ابيض نيلون
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: CR-3K58W
+  Original Barcode: 6221257442601
+  Modified Barcode: 6221257442601DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: متر قياس 3متر 16مم سلاح ابيض نيلون
+  Location: وحدات قياس / امتار يدوي
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+92. Row 226: ميزان مياه 2 عين 40 سم
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: 808b50
+  Original Barcode: 6221257024364
+  Modified Barcode: 6221257024364DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: ميزان مياه 2 عين 40 سم
+  Location: وحدات قياس / ميزان مياه
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+93. Row 228: جهاز ليزر 5 خط
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: ALM-G5
+  Original Barcode: 6221257537918
+  Modified Barcode: 6221257537918DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: جهاز ليزر 5 خط
+  Location: وحدات قياس / ميزان ليزر
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+94. Row 229: جهاز ليزر 360 اخضر 12 خط
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: COPTR-G12
+  Original Barcode: 6221257537956
+  Modified Barcode: 6221257537956DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: جهاز ليزر 360 اخضر 12 خط
+  Location: وحدات قياس / ميزان ليزر
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+95. Row 230: حامل ميزان جهاز ليزر 1.5
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: TRI-1.5
+  Original Barcode: 6221257537970
+  Modified Barcode: 6221257537970DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: حامل ميزان جهاز ليزر 1.5
+  Location: وحدات قياس / ميزان ليزر
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+96. Row 234: زاويه 400 مم
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DL1C16
+  Original Barcode: 6221257025033
+  Modified Barcode: 6221257025033DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: زاويه 400 مم
+  Location: وحدات قياس / زاوية علام
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+97. Row 240: مسدس هواء بالعداد
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: DG-10Y
+  Original Barcode: 6221257039405
+  Modified Barcode: 6221257039405DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: مسدس هواء بالعداد
+  Location: هواء / دهانات
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+98. Row 243: مسدس دكو 1 لتر
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: W77S
+  Original Barcode: 6221257038750
+  Modified Barcode: 6221257038750DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: مسدس دكو 1 لتر
+  Location: هواء / دهانات
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+99. Row 245: مسدس دكو سوكوتاه 1.80
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: 4001s
+  Original Barcode: 6221257038705
+  Modified Barcode: 6221257038705DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: مسدس دكو سوكوتاه 1.80
+  Location: هواء / دهانات
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+100. Row 247: كمبرسور 24 لتر
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: SGBM9037
+  Original Barcode: 6221257001945
+  Modified Barcode: 6221257001945DUPL
+  ⚠️  DUPLICATE BARCODE FOUND IN: CROWN brand
+  Conflicting Product: كمبرسور 24 لتر
+  Location: هواء / دهانات
+  ✅ ACTION TAKEN: Added "DUPL" suffix to barcode, product inserted
+
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+❌ DUPLICATE CODES IN EXCEL - 3 FOUND (ALL PRODUCTS REMOVED)
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+NOTE: When CODE is duplicated within the Excel sheet, ALL products with that code are REMOVED.
+CODE must be unique - it is the primary identifier.
+
+❌ CODE: DW07705 (used 2 times - ALL 2 PRODUCTS REMOVED)
+  1. Row 47: ديسك قطعيه 900وات 7 وربع
+     Barcode: EMPTY
+     Location: كهرباء / ديسك
+  2. Row 51: ديسك قطعيه زوايا 900
+     Barcode: 6221257377149
+     Location: كهرباء / ديسك
+
+❌ CODE: DW07716 (used 2 times - ALL 2 PRODUCTS REMOVED)
+  1. Row 48: ديسك قطعيه 1200وات
+     Barcode: EMPTY
+     Location: كهرباء / ديسك
+  2. Row 50: ديسك قطعيه زوايا 1200 8"
+     Barcode: 6221257353860
+     Location: كهرباء / ديسك
+
+❌ CODE: DW0611045 (used 2 times - ALL 2 PRODUCTS REMOVED)
+  1. Row 179: شنيور 10مم ظرف معدن 20 فولت 50 نيوتن واحد بطاريه عاده
+     Barcode: 6221257527667
+     Location: بطاررية / شنيور وهيلتي ودريل
+  2. Row 180: شنيور 10 مم ظرف معدن 20 فولت 50 نيوتن2بطاريه شنطه عاده
+     Barcode: 6221257527667
+     Location: بطاررية / شنيور وهيلتي ودريل
+
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+⭐ DUPLICATE BARCODES IN EXCEL - 4 FOUND
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+NOTE: When BARCODE is duplicated within the Excel sheet, barcode is SET TO NULL.
+Products are inserted WITHOUT barcode.
+
+⭐ BARCODE: 6221257441611 (used 2 times)
+  1. Row 143: كوريك تمساح شنطه بلاستك 2 طن
+     Code: TA820050FS
+     Original Barcode: 6221257441611
+     Modified Barcode: NULL
+     Location: يدوي / ادوات سيارات
+     Status: ✅ PRODUCT INSERTED WITHOUT BARCODE
+  2. Row 144: كوريك باكم صيني 2طن 276
+     Code: T90204D
+     Original Barcode: 6221257441611
+     Modified Barcode: NULL
+     Location: يدوي / ادوات سيارات
+     Status: ✅ PRODUCT INSERTED WITHOUT BARCODE
+
+⭐ BARCODE: 6221257527667 (used 2 times)
+  1. Row 179: شنيور 10مم ظرف معدن 20 فولت 50 نيوتن واحد بطاريه عاده
+     Code: DW0611045
+     Original Barcode: 6221257527667
+     Modified Barcode: NULL
+     Location: بطاررية / شنيور وهيلتي ودريل
+     Status: ✅ PRODUCT INSERTED WITHOUT BARCODE
+  2. Row 180: شنيور 10 مم ظرف معدن 20 فولت 50 نيوتن2بطاريه شنطه عاده
+     Code: DW0611045
+     Original Barcode: 6221257527667
+     Modified Barcode: NULL
+     Location: بطاررية / شنيور وهيلتي ودريل
+     Status: ✅ PRODUCT INSERTED WITHOUT BARCODE
+
+⭐ BARCODE: 6221257025019 (used 2 times)
+  1. Row 232: زاويه صلب 300مم
+     Code: DL1C12
+     Original Barcode: 6221257025019
+     Modified Barcode: NULL
+     Location: وحدات قياس / زاوية علام
+     Status: ✅ PRODUCT INSERTED WITHOUT BARCODE
+  2. Row 235: زاويه صلب اسود 300_200
+     Code: 200*300
+     Original Barcode: 6221257025019
+     Modified Barcode: NULL
+     Location: وحدات قياس / زاوية علام
+     Status: ✅ PRODUCT INSERTED WITHOUT BARCODE
+
+⭐ BARCODE: 6221257038804 (used 2 times)
+  1. Row 242: مسدس دكو مقلوب فونيه 1.5
+     Code: F75G
+     Original Barcode: 6221257038804
+     Modified Barcode: NULL
+     Location: هواء / دهانات
+     Status: ✅ PRODUCT INSERTED WITHOUT BARCODE
+  2. Row 244: مسدس دكو مقلوب بنته بلاستك
+     Code: AB-17G
+     Original Barcode: 6221257038804
+     Modified Barcode: NULL
+     Location: هواء / دهانات
+     Status: ✅ PRODUCT INSERTED WITHOUT BARCODE
+
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+⭐ PRODUCTS WITH AUTO-GENERATED BARCODE (58)
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+NOTE: These products had NO barcode in Excel. Barcode was auto-generated from hierarchy.
+
+1. Row 12: كيت شاكوش تكسير 1700
+  Code: DW63
+  Generated Barcode: APT
+  Location: كهرباء / وهيلتي
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+2. Row 13: كيت شاكوش 1500 وات 36معدن
+  Code: DW36HT
+  Generated Barcode: APTDUPL1
+  Location: كهرباء / وهيلتي
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+3. Row 15: هليتي عدل 800
+  Code: DW2621
+  Generated Barcode: APTDUPL2
+  Location: كهرباء / وهيلتي
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+4. Row 16: كيت شاكوش 1500 بلاستيك كبير
+  Code: DW36DT
+  Generated Barcode: APTDUPL3
+  Location: كهرباء / وهيلتي
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+5. Row 22: مسدس تسخين 2000وات
+  Code: DW09250
+  Generated Barcode: APTDUPL4
+  Location: كهرباء / تسخين هوت جن
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+6. Row 27: صاروخ قطعيه 2100 وات9 بوصه
+  Code: DW05623
+  Generated Barcode: APTDUPL5
+  Location: كهرباء / صاروخ
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+7. Row 30: صاروخ 600
+  Code: DW05215-V2
+  Generated Barcode: APTDUPL6
+  Location: كهرباء / صاروخ
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+8. Row 32: صاروخ تلميع 7"1200 وات
+  Code: DW06350
+  Generated Barcode: APTDUPL7
+  Location: كهرباء / صاروخ
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+9. Row 36: ميني كرافت 135وات 129 ق
+  Code: DW06412
+  Generated Barcode: APTDUPL8
+  Location: كهرباء / صاروخ
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+10. Row 49: ديسك قطعيه زوايا 2200 \12"
+  Code: DW07751
+  Generated Barcode: APTDUPL11
+  Location: كهرباء / ديسك
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+11. Row 62: شنطه لحام مواسير بلاستيك 2000 وات
+  Code: DW19925
+  Generated Barcode: APTDUPL12
+  Location: كهرباء / ماكن لحام  بولي
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+12. Row 70: مفك عاده ازرق 5*150مم
+  Code: AH114130073-5150
+  Generated Barcode: APTDUPL13
+  Location: يدوي / مفكات
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+13. Row 71: مفك صليبه150*2 ازرق PH
+  Code: AH114132073-2150
+  Generated Barcode: APTDUPL14
+  Location: يدوي / مفكات
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+14. Row 73: علبه 10سن مفك عاده وصليبه
+  Code: AH2061002114
+  Generated Barcode: APTDUPL15
+  Location: يدوي / مفكات
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+15. Row 76: مفك صليبه 150*2 مم PH
+  Code: AH142274
+  Generated Barcode: APTDUPL16
+  Location: يدوي / مفكات
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+16. Row 78: مفك دق صليبه شفاف سلاح اخر
+  Code: 506025
+  Generated Barcode: APTDUPL17
+  Location: يدوي / مفكات
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+17. Row 79: مفك دق عاده شفاف سلاح للاخر 6*150 مم
+  Code: 506002
+  Generated Barcode: APTDUPL18
+  Location: يدوي / مفكات
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+18. Row 80: مفك دق عاده شفاف سلاح للاخر 8*250مم
+  Code: 506005
+  Generated Barcode: APTDUPL19
+  Location: يدوي / مفكات
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+19. Row 81: علبه 10 سن مفك صليبه اتجاهين
+  Code: AH2021002222
+  Generated Barcode: APTDUPL20
+  Location: يدوي / مفكات
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+20. Row 84: طقم لقم رباط مسدسه2\1
+  Code: 123012
+  Generated Barcode: APTDUPL21
+  Location: يدوي / لقم ويد سيستم
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+21. Row 86: كماشه حداد مسلح 9" هندي
+  Code: 5242-220
+  Generated Barcode: APTDUPL22
+  Location: يدوي / بنس كماشة فرنساوي انجليزي
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+22. Row 87: بنسه لحام 800امبير
+  Code: GW-800_AMP
+  Generated Barcode: APTDUPL23
+  Location: يدوي / بنس كماشة فرنساوي انجليزي
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+23. Row 88: بنسه غراب 10"يد عازل هندي
+  Code: 5231-250
+  Generated Barcode: APTDUPL24
+  Location: يدوي / بنس كماشة فرنساوي انجليزي
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+24. Row 94: بنسة غراب 12 بوصة
+  Code: AH1233240-12
+  Generated Barcode: APTDUPL25
+  Location: يدوي / بنس كماشة فرنساوي انجليزي
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+25. Row 95: بوكليز 6"
+  Code: TYK150
+  Generated Barcode: APTDUPL26
+  Location: يدوي / بنس كماشة فرنساوي انجليزي
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+26. Row 96: بوكليز 8"
+  Code: TYK200
+  Generated Barcode: APTDUPL27
+  Location: يدوي / بنس كماشة فرنساوي انجليزي
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+27. Row 97: بنسه برشام 9.5"
+  Code: AH2413100-230
+  Generated Barcode: APTDUPL28
+  Location: يدوي / بنس كماشة فرنساوي انجليزي
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+28. Row 101: بنسه تيل داخليه بوز عدل 7بوصه
+  Code: AH1112040-180
+  Generated Barcode: APTDUPL29
+  Location: يدوي / بنس كماشة فرنساوي انجليزي
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+29. Row 103: كماشه نجاري يد عازل 7 "هندي
+  Code: GCF-519
+  Generated Barcode: APTDUPL30
+  Location: يدوي / بنس كماشة فرنساوي انجليزي
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+30. Row 105: شنطه 219 قطعه
+  Code: 121219
+  Generated Barcode: APTDUPL31
+  Location: يدوي / اطقم عده
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+... and 28 more
+
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+⚠️ PRODUCTS WITH MISSING COST (12)
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+1. Row 5: شنيور 1050
+  Code: DW02795 V4
+  Location: كهرباء / شنيور
+
+2. Row 52: ديسك 10 بوصه 2000وات
+  Code: DW07743
+  Location: كهرباء / ديسك
+
+3. Row 67: مفك قلاب
+  Code: 546201_L150
+  Location: يدوي / مفكات
+
+4. Row 87: بنسه لحام 800امبير
+  Code: GW-800_AMP
+  Location: يدوي / بنس كماشة فرنساوي انجليزي
+
+5. Row 108: دقماق
+  Code: TEST-1770841643783-SDP2BS
+  Location: يدوي / شاكوش ومطرقة
+
+6. Row 109: مطرقه 1000
+  Code: TEST-1770841643783-3KZAN7
+  Location: يدوي / شاكوش ومطرقة
+
+7. Row 121: طقم الانكيه طويل عاده
+  Code: AH511521-9
+  Location: يدوي / اطقم الن وبيبه
+
+8. Row 135: طقم مفتاح بلدي 6الي 32
+  Code: GCF-302
+  Location: يدوي / مفاتيح
+
+9. Row 136: طقم مفتاح ناحيه وناحيه 8 الي 32
+  Code: GCF-305
+  Location: يدوي / مفاتيح
+
+10. Row 164: الماظة 7 بوصة حوائط
+  Code: DW200316-7
+  Location: اكسسوارات / صنية والماظة
+
+11. Row 218: متر 3*16سلاح ابيض
+  Code: CR-3K57W
+  Location: وحدات قياس / امتار يدوي
+
+12. Row 219: متر 5*19سلاح ابيض
+  Code: CR-5K47E
+  Location: وحدات قياس / امتار يدوي
+
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+END OF REPORT
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════

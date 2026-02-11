@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import apiClient from '../api/client';
-import { Plus, Edit, Trash, Shield, Check } from 'lucide-react';
+import { Plus, Edit, Trash, Shield, Check, Database } from 'lucide-react';
 
 interface Page {
     id: number;
@@ -63,6 +63,24 @@ export default function Roles() {
             console.error(e);
         }
     };
+
+    const handleBackup = async () => {
+        try {
+            const confirmed = confirm('هل تريد إنشاء نسخة احتياطية من قاعدة البيانات؟');
+            if (!confirmed) return;
+
+            // Show loading state
+            alert('جاري إنشاء النسخة الاحتياطية...');
+
+            const { data } = await apiClient.post('/database/backup');
+
+            alert(`✅ تم إنشاء النسخة الاحتياطية بنجاح!\n\nاسم الملف: ${data.filename}\nالحجم: ${(data.size / 1024 / 1024).toFixed(2)} MB`);
+        } catch (e: any) {
+            alert(e.response?.data?.message || 'فشل في إنشاء النسخة الاحتياطية');
+            console.error(e);
+        }
+    };
+
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -137,18 +155,60 @@ export default function Roles() {
                     </h1>
                     <p style={{ color: '#64748b' }}>إدارة أدوار المستخدمين وصلاحياتهم في النظام</p>
                 </div>
-                <button
-                    onClick={() => {
-                        setEditingRole(null);
-                        setFormData({ name: '', description: '', pageIds: [], platformPermissionIds: [] });
-                        setShowModal(true);
-                    }}
-                    style={{ background: '#6366f1', color: 'white', border: 'none', padding: '12px 24px', borderRadius: '8px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px', fontSize: '15px', fontWeight: '500' }}
-                >
-                    <Plus size={20} />
-                    دور جديد
-                </button>
+
+                <div style={{ display: 'flex', gap: '12px' }}>
+                    {/* Backup Button */}
+                    <button
+                        onClick={handleBackup}
+                        style={{
+                            background: '#10b981',
+                            color: 'white',
+                            border: 'none',
+                            padding: '12px 24px',
+                            borderRadius: '8px',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '8px',
+                            fontSize: '15px',
+                            fontWeight: '500',
+                            boxShadow: '0 4px 12px rgba(16, 185, 129, 0.3)',
+                            transition: 'all 0.2s'
+                        }}
+                        onMouseEnter={(e) => e.currentTarget.style.transform = 'translateY(-2px)'}
+                        onMouseLeave={(e) => e.currentTarget.style.transform = 'translateY(0)'}
+                    >
+                        <Database size={20} />
+                        نسخة احتياطية
+                    </button>
+
+                    {/* New Role Button */}
+                    <button
+                        onClick={() => {
+                            setEditingRole(null);
+                            setFormData({ name: '', description: '', pageIds: [], platformPermissionIds: [] });
+                            setShowModal(true);
+                        }}
+                        style={{
+                            background: '#6366f1',
+                            color: 'white',
+                            border: 'none',
+                            padding: '12px 24px',
+                            borderRadius: '8px',
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '8px',
+                            fontSize: '15px',
+                            fontWeight: '500'
+                        }}
+                    >
+                        <Plus size={20} />
+                        دور جديد
+                    </button>
+                </div>
             </div>
+
 
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(350px, 1fr))', gap: '20px' }}>
                 {roles.map(role => (

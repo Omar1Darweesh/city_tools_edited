@@ -1,8 +1,10 @@
 import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 import { AppModule } from './app.module';
+import { DatabaseService } from './database/database.service';
 import * as dotenv from 'dotenv';
 import * as os from 'os';
+import * as cron from 'node-cron';
 
 // Load environment variables
 dotenv.config();
@@ -70,6 +72,38 @@ async function bootstrap() {
     console.log('📝 Environment:', process.env.NODE_ENV || 'development');
     console.log('🔄 Press Ctrl+C to stop the server');
     console.log('='.repeat(70));
+
+    // ============================================
+    // START BACKUP SCHEDULER
+    // ============================================
+    console.log('💾 Starting backup scheduler...');
+    console.log('📅 Daily backups scheduled for 2:00 AM');
+
+    // Get DatabaseService instance
+    const databaseService = app.get(DatabaseService);
+
+    // Schedule backup at 2:00 AM daily
+    cron.schedule('0 2 * * *', async () => {
+
+      console.log(`[${new Date().toISOString()}] Starting scheduled backup...`);
+
+      try {
+        // Pass false for automatic backup
+        const result = await databaseService.createBackup(false);
+
+        if (result.success) {
+          console.log('✅ Scheduled backup completed successfully');
+          console.log(`📁 File: ${result.filename}`);
+          console.log(`📊 Size: ${(result.size / 1024 / 1024).toFixed(2)} MB`);
+        }
+      } catch (error) {
+        console.error('❌ Scheduled backup failed:', error.message);
+      }
+    });
+
+    console.log('✅ Backup scheduler is active');
+    console.log('='.repeat(70));
+
   } catch (error) {
     console.error('❌ Failed to start server:', error);
     process.exit(1);

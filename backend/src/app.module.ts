@@ -15,6 +15,7 @@ import { CustomersModule } from './customers/customers.module';
 import { ReportsModule } from './reports/reports.module';
 import { SettingsModule } from './settings/settings.module';
 import { RolesModule } from './roles/roles.module';
+import { DatabaseModule } from './database/database.module';
 
 @Module({
   imports: [
@@ -32,8 +33,9 @@ import { RolesModule } from './roles/roles.module';
     ReportsModule,
     SettingsModule,
     RolesModule,
+    DatabaseModule,
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService],
 })
-export class AppModule {}
+export class AppModule { }

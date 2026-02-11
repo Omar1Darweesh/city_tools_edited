@@ -1,0 +1,784 @@
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+TOTAL - COMPREHENSIVE DATA REPORT
+Generated: 2/11/2026, 10:27:22 PM
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+📊 SUMMARY
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+Total Rows Processed:                           430
+✅ Successfully Inserted:                        412
+❌ Insertion Errors:                             8
+❌ Skipped (No Name):                            4
+❌ Removed (Duplicate Codes in Excel):           6 products
+⭐ Auto-Generated Codes:                         2 products
+⭐ Barcodes Set to NULL (Duplicate in Excel):    8 products
+⭐ Barcodes Auto-Generated (Empty in Excel):     318 products
+⚠️  Barcodes Modified (Cross-Brand Conflict):    0 products (added DUPL suffix)
+📁 Empty ItemTypes Created:                      8
+
+📐 CALCULATION:
+  430 (total rows)
+  - 4 (no name)
+  - 6 (duplicate codes removed)
+  ───────────
+  = 420 (expected to insert)
+  - 8 (insertion errors)
+  ───────────
+  = 412 (actually inserted)
+
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+PRODUCT COUNTS BY HIERARCHY
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+📦 CATEGORIES:
+  TOTAL: 420 products
+
+📂 SUBCATEGORIES:
+  TOTAL > كهرباء: 66 products
+  TOTAL > يدوي: 176 products
+  TOTAL > اكسسوارات: 42 products
+  TOTAL > بطاررية: 69 products
+  TOTAL > جاردن: 36 products
+  TOTAL > وحدات قياس: 8 products
+  TOTAL > هواء: 23 products
+
+📁 ITEM TYPES (All):
+  TOTAL > يدوي > بنس كماشة فرنساوي انجليزي: 40 products
+  TOTAL > بطاررية > شنيور وهيلتي ودريل: 32 products
+  TOTAL > يدوي > مفكات: 21 products
+  TOTAL > اكسسوارات > بنط: 20 products
+  TOTAL > يدوي > ادوات سيارات: 15 products
+  TOTAL > كهرباء > صاروخ: 12 products
+  TOTAL > يدوي > لقم ويد سيستم: 12 products
+  TOTAL > بطاررية > صاروخ: 12 products
+  TOTAL > جاردن > رشاشات: 12 products
+  TOTAL > يدوي > شنط عده: 11 products
+  TOTAL > اكسسوارات > قطع غيار: 11 products
+  TOTAL > هواء > دهانات: 11 products
+  TOTAL > يدوي > اجنة ومسمار يدوي: 10 products
+  TOTAL > جاردن > ماكن غسيل: 10 products
+  TOTAL > كهرباء > شنيور: 9 products
+  TOTAL > كهرباء > وهيلتي: 9 products
+  TOTAL > بطاررية > اطقم كومبو: 9 products
+  TOTAL > يدوي > شاكوش ومطرقة: 8 products
+  TOTAL > يدوي > مقصات: 8 products
+  TOTAL > بطاررية > بلاور وتسخين: 8 products
+  TOTAL > كهرباء > صنفرة: 7 products
+  TOTAL > يدوي > اطقم عده: 7 products
+  TOTAL > جاردن > مناشير زراعية: 7 products
+  TOTAL > جاردن > ادوات زراعة: 6 products
+  TOTAL > هواء > مواتير مياه: 6 products
+  TOTAL > كهرباء > ماكن لحام  قصدير: 5 products
+  TOTAL > يدوي > اطقم الن وبيبه: 5 products
+  TOTAL > يدوي > مسدس سليكون: 5 products
+  TOTAL > يدوي > مفاتيح: 5 products
+  TOTAL > يدوي > ادوات دهانات: 5 products
+  TOTAL > اكسسوارات > صنية والماظة: 5 products
+  TOTAL > كهرباء > تسخين هوت جن: 4 products
+  TOTAL > كهرباء > ماكن لحام حديد: 4 products
+  TOTAL > يدوي > ماكن سيراميك: 4 products
+  TOTAL > يدوي > منشار خشابي وحدادي: 4 products
+  TOTAL > بطاررية > دهانات: 4 products
+  TOTAL > بطاررية > كشافات: 4 products
+  TOTAL > وحدات قياس > امتار يدوي: 4 products
+  TOTAL > كهرباء > بلاور: 3 products
+  TOTAL > كهرباء > اركت: 3 products
+  TOTAL > يدوي > قمطة وزرجينة ومنجلة: 3 products
+  TOTAL > يدوي > قطرات: 3 products
+  TOTAL > يدوي > جوانتي: 3 products
+  TOTAL > يدوي > ازميل: 3 products
+  TOTAL > وحدات قياس > ميزان مياه: 3 products
+  TOTAL > كهرباء > راوتر: 2 products
+  TOTAL > كهرباء > صنية: 2 products
+  TOTAL > كهرباء > فارة: 2 products
+  TOTAL > يدوي > بوكليز: 2 products
+  TOTAL > يدوي > نظارت: 2 products
+  TOTAL > اكسسوارات > سلاح اركت: 2 products
+  TOTAL > اكسسوارات > صنفرة وادوات ماكن لحام: 2 products
+  TOTAL > اكسسوارات > فرش: 2 products
+  TOTAL > هواء > بطاريات حجر: 2 products
+  TOTAL > هواء > مكبس هيدروليك: 2 products
+  TOTAL > كهرباء > دهانات: 1 products
+  TOTAL > كهرباء > ديسك: 1 products
+  TOTAL > كهرباء > ماكن جلخ: 1 products
+  TOTAL > كهرباء > ماكن لحام  بولي: 1 products
+  TOTAL > جاردن > ماكن قص نجيلة: 1 products
+  TOTAL > وحدات قياس > امتار ليزر: 1 products
+  TOTAL > هواء > دباسات: 1 products
+  TOTAL > هواء > موازين: 1 products
+  TOTAL > يدوي > دباسة خشب: 0 products ⭐ EMPTY
+  TOTAL > اكسسوارات > احجار: 0 products ⭐ EMPTY
+  TOTAL > بطاررية > صنية: 0 products ⭐ EMPTY
+  TOTAL > جاردن > خراطيم: 0 products ⭐ EMPTY
+  TOTAL > جاردن > مقصات زرع: 0 products ⭐ EMPTY
+  TOTAL > وحدات قياس > ميزان ليزر: 0 products ⭐ EMPTY
+  TOTAL > وحدات قياس > زاوية علام: 0 products ⭐ EMPTY
+  TOTAL > هواء > دريل: 0 products ⭐ EMPTY
+
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+⭐ EMPTY ITEM TYPES CREATED - 8
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+NOTE: These ItemTypes were found in Excel but have NO products.
+They were created in the database structure.
+
+1. TOTAL > يدوي > دباسة خشب
+2. TOTAL > اكسسوارات > احجار
+3. TOTAL > بطاررية > صنية
+4. TOTAL > جاردن > خراطيم
+5. TOTAL > جاردن > مقصات زرع
+6. TOTAL > وحدات قياس > ميزان ليزر
+7. TOTAL > وحدات قياس > زاوية علام
+8. TOTAL > هواء > دريل
+
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+MISSING FIELDS SUMMARY
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+⭐ Products with AUTO-GENERATED CODE:             12
+⭐ Products with AUTO-GENERATED BARCODE:          318
+ℹ️  Products with ZERO quantity:                  115
+
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+⭐ AUTO-GENERATED CODES - 2 PRODUCTS
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+NOTE: These products had NO CODE in Excel. Test codes were auto-generated.
+
+1. Row 71: صنفره دائري 5 بوصه 320وات
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Original Code: EMPTY
+  Generated Code: TEST-1770841641119-IY0OFP
+  Barcode: NULL
+  Location: كهرباء / صنفرة
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED CODE
+
+2. Row 498: حجر قلم
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Original Code: EMPTY
+  Generated Code: TEST-1770841641120-TCJNB1
+  Barcode: NULL
+  Location: هواء / بطاريات حجر
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED CODE
+
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+❌ INSERTION ERRORS - 8 PRODUCTS FAILED TO INSERT
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+NOTE: These products passed validation but failed during database insertion.
+
+1. Row 45: صاروخ حوائط 5 بوصه 1500
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: TWLC1256
+  Barcode: 6976057333177
+  Location: كهرباء / صاروخ
+  ❌ ERROR: 
+Invalid `prisma.product.create()` invocation in
+C:\Users\123om\Downloads\final-city\backend\prisma\seed-all-with-validation.js:395:62
+
+  392 
+  393 // ⭐ If barcode is null, keep it null (no generation)
+  394 
+→ 395 const product = await prisma.product.create({
+        data: {
+          code: "TWLC1256",
+          nameAr: "صاروخ حوائط 5 بوصه 1500",
+          nameEn: "",
+          categoryId: 3,
+          itemTypeId: 6,
+          brand: "TOTAL",
+          cost: 3998,
+          costAvg: 3998,
+          priceRetail: 3998,
+          priceWholesale: 3998,
+          unit: "PCS",
+          active: true,
+      +   barcode: String
+        }
+      })
+
+Argument `barcode` must not be null.
+
+2. Row 83: ماكينه لحام 130
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: TW213059
+  Barcode: 6976057333177
+  Location: كهرباء / ماكن لحام حديد
+  ❌ ERROR: 
+Invalid `prisma.product.create()` invocation in
+C:\Users\123om\Downloads\final-city\backend\prisma\seed-all-with-validation.js:395:62
+
+  392 
+  393 // ⭐ If barcode is null, keep it null (no generation)
+  394 
+→ 395 const product = await prisma.product.create({
+        data: {
+          code: "TW213059",
+          nameAr: "ماكينه لحام 130",
+          nameEn: "",
+          categoryId: 3,
+          itemTypeId: 16,
+          brand: "TOTAL",
+          cost: 2583,
+          costAvg: 2583,
+          priceRetail: 2583,
+          priceWholesale: 2583,
+          unit: "PCS",
+          active: true,
+      +   barcode: String
+        }
+      })
+
+Argument `barcode` must not be null.
+
+3. Row 84: ماكينه لحام160 امبير
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: tw216049
+  Barcode: 6976057333177
+  Location: كهرباء / ماكن لحام حديد
+  ❌ ERROR: 
+Invalid `prisma.product.create()` invocation in
+C:\Users\123om\Downloads\final-city\backend\prisma\seed-all-with-validation.js:395:62
+
+  392 
+  393 // ⭐ If barcode is null, keep it null (no generation)
+  394 
+→ 395 const product = await prisma.product.create({
+        data: {
+          code: "tw216049",
+          nameAr: "ماكينه لحام160 امبير",
+          nameEn: "",
+          categoryId: 3,
+          itemTypeId: 16,
+          brand: "TOTAL",
+          cost: 2843,
+          costAvg: 2843,
+          priceRetail: 2843,
+          priceWholesale: 2843,
+          unit: "PCS",
+          active: true,
+      +   barcode: String
+        }
+      })
+
+Argument `barcode` must not be null.
+
+4. Row 172: طقم 165قطعه
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: THKTHP11652
+  Barcode: 6976057333177
+  Location: يدوي / اطقم عده
+  ❌ ERROR: 
+Invalid `prisma.product.create()` invocation in
+C:\Users\123om\Downloads\final-city\backend\prisma\seed-all-with-validation.js:395:62
+
+  392 
+  393 // ⭐ If barcode is null, keep it null (no generation)
+  394 
+→ 395 const product = await prisma.product.create({
+        data: {
+          code: "THKTHP11652",
+          nameAr: "طقم 165قطعه",
+          nameEn: "",
+          categoryId: 3,
+          itemTypeId: 21,
+          brand: "TOTAL",
+          cost: 2485,
+          costAvg: 2485,
+          priceRetail: 2485,
+          priceWholesale: 2485,
+          unit: "PCS",
+          active: true,
+      +   barcode: String
+        }
+      })
+
+Argument `barcode` must not be null.
+
+5. Row 265: مكنسه سياره تايب سي
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: TVLI2026
+  Barcode: 6976057333177
+  Location: يدوي / ادوات سيارات
+  ❌ ERROR: 
+Invalid `prisma.product.create()` invocation in
+C:\Users\123om\Downloads\final-city\backend\prisma\seed-all-with-validation.js:395:62
+
+  392 
+  393 // ⭐ If barcode is null, keep it null (no generation)
+  394 
+→ 395 const product = await prisma.product.create({
+        data: {
+          code: "TVLI2026",
+          nameAr: "مكنسه سياره تايب سي",
+          nameEn: "",
+          categoryId: 3,
+          itemTypeId: 34,
+          brand: "TOTAL",
+          cost: 1102,
+          costAvg: 1102,
+          priceRetail: 1102,
+          priceWholesale: 1102,
+          unit: "PCS",
+          active: true,
+      +   barcode: String
+        }
+      })
+
+Argument `barcode` must not be null.
+
+6. Row 303: طقم ايزي اوت 6 قطع
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: TACSE0061
+  Barcode: 6925582160352
+  Location: اكسسوارات / بنط
+  ❌ ERROR: 
+Invalid `prisma.product.create()` invocation in
+C:\Users\123om\Downloads\final-city\backend\prisma\seed-all-with-validation.js:395:62
+
+  392 
+  393 // ⭐ If barcode is null, keep it null (no generation)
+  394 
+→ 395 const product = await prisma.product.create({
+        data: {
+          code: "TACSE0061",
+          nameAr: "طقم ايزي اوت 6 قطع",
+          nameEn: "",
+          categoryId: 3,
+          itemTypeId: 39,
+          brand: "TOTAL",
+          cost: 162,
+          costAvg: 162,
+          priceRetail: 162,
+          priceWholesale: 162,
+          unit: "PCS",
+          active: true,
+      +   barcode: String
+        }
+      })
+
+Argument `barcode` must not be null.
+
+7. Row 390: بلاور حدائق20 فولت بدون بطاريه وشاحن جديد
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: TABLI20323
+  Barcode: 6925582160352
+  Location: بطاررية / بلاور وتسخين
+  ❌ ERROR: 
+Invalid `prisma.product.create()` invocation in
+C:\Users\123om\Downloads\final-city\backend\prisma\seed-all-with-validation.js:395:62
+
+  392 
+  393 // ⭐ If barcode is null, keep it null (no generation)
+  394 
+→ 395 const product = await prisma.product.create({
+        data: {
+          code: "TABLI20323",
+          nameAr: "بلاور حدائق20 فولت بدون بطاريه وشاحن جديد",
+          nameEn: "",
+          categoryId: 3,
+          itemTypeId: 49,
+          brand: "TOTAL",
+          cost: 958,
+          costAvg: 958,
+          priceRetail: 958,
+          priceWholesale: 958,
+          unit: "PCS",
+          active: true,
+      +   barcode: String
+        }
+      })
+
+Argument `barcode` must not be null.
+
+8. Row 409: صاروخ بطاريه 5 بوصه 1200وات بدون شربون
+  ───────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+  Code: TAGLI221253
+  Barcode: 6976057333177
+  Location: بطاررية / صاروخ
+  ❌ ERROR: 
+Invalid `prisma.product.create()` invocation in
+C:\Users\123om\Downloads\final-city\backend\prisma\seed-all-with-validation.js:395:62
+
+  392 
+  393 // ⭐ If barcode is null, keep it null (no generation)
+  394 
+→ 395 const product = await prisma.product.create({
+        data: {
+          code: "TAGLI221253",
+          nameAr: "صاروخ بطاريه 5 بوصه 1200وات بدون شربون",
+          nameEn: "",
+          categoryId: 3,
+          itemTypeId: 51,
+          brand: "TOTAL",
+          cost: 1665,
+          costAvg: 1665,
+          priceRetail: 1665,
+          priceWholesale: 1665,
+          unit: "PCS",
+          active: true,
+      +   barcode: String
+        }
+      })
+
+Argument `barcode` must not be null.
+
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+❌ DUPLICATE CODES IN EXCEL - 3 FOUND (ALL PRODUCTS REMOVED)
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+NOTE: When CODE is duplicated within the Excel sheet, ALL products with that code are REMOVED.
+CODE must be unique - it is the primary identifier.
+
+❌ CODE: TG10911576 (used 2 times - ALL 2 PRODUCTS REMOVED)
+  1. Row 39: صاورخ960
+     Barcode: EMPTY
+     Location: كهرباء / صاروخ
+  2. Row 317: شاحن 2 امبير
+     Barcode: EMPTY
+     Location: اكسسوارات / قطع غيار
+
+❌ CODE: TACSD0125 (used 2 times - ALL 2 PRODUCTS REMOVED)
+  1. Row 296: طقم بنط حدادي 12 قطعه
+     Barcode: EMPTY
+     Location: اكسسوارات / بنط
+  2. Row 302: طقم بنط12 قطعه
+     Barcode: EMPTY
+     Location: اكسسوارات / بنط
+
+❌ CODE: TGTRN360 (used 2 times - ALL 2 PRODUCTS REMOVED)
+  1. Row 418: وصله مسدس ماكينه غسيل 360 درجه
+     Barcode: EMPTY
+     Location: جاردن / رشاشات
+  2. Row 424: فوهه غسيل360
+     Barcode: 6942210224347
+     Location: جاردن / رشاشات
+
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+⭐ DUPLICATE BARCODES IN EXCEL - 2 FOUND
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+NOTE: When BARCODE is duplicated within the Excel sheet, barcode is SET TO NULL.
+Products are inserted WITHOUT barcode.
+
+⭐ BARCODE: 6976057333177 (used 6 times)
+  1. Row 45: صاروخ حوائط 5 بوصه 1500
+     Code: TWLC1256
+     Original Barcode: 6976057333177
+     Modified Barcode: NULL
+     Location: كهرباء / صاروخ
+     Status: ✅ PRODUCT INSERTED WITHOUT BARCODE
+  2. Row 83: ماكينه لحام 130
+     Code: TW213059
+     Original Barcode: 6976057333177
+     Modified Barcode: NULL
+     Location: كهرباء / ماكن لحام حديد
+     Status: ✅ PRODUCT INSERTED WITHOUT BARCODE
+  3. Row 84: ماكينه لحام160 امبير
+     Code: tw216049
+     Original Barcode: 6976057333177
+     Modified Barcode: NULL
+     Location: كهرباء / ماكن لحام حديد
+     Status: ✅ PRODUCT INSERTED WITHOUT BARCODE
+  4. Row 172: طقم 165قطعه
+     Code: THKTHP11652
+     Original Barcode: 6976057333177
+     Modified Barcode: NULL
+     Location: يدوي / اطقم عده
+     Status: ✅ PRODUCT INSERTED WITHOUT BARCODE
+  5. Row 265: مكنسه سياره تايب سي
+     Code: TVLI2026
+     Original Barcode: 6976057333177
+     Modified Barcode: NULL
+     Location: يدوي / ادوات سيارات
+     Status: ✅ PRODUCT INSERTED WITHOUT BARCODE
+  6. Row 409: صاروخ بطاريه 5 بوصه 1200وات بدون شربون
+     Code: TAGLI221253
+     Original Barcode: 6976057333177
+     Modified Barcode: NULL
+     Location: بطاررية / صاروخ
+     Status: ✅ PRODUCT INSERTED WITHOUT BARCODE
+
+⭐ BARCODE: 6925582160352 (used 2 times)
+  1. Row 303: طقم ايزي اوت 6 قطع
+     Code: TACSE0061
+     Original Barcode: 6925582160352
+     Modified Barcode: NULL
+     Location: اكسسوارات / بنط
+     Status: ✅ PRODUCT INSERTED WITHOUT BARCODE
+  2. Row 390: بلاور حدائق20 فولت بدون بطاريه وشاحن جديد
+     Code: TABLI20323
+     Original Barcode: 6925582160352
+     Modified Barcode: NULL
+     Location: بطاررية / بلاور وتسخين
+     Status: ✅ PRODUCT INSERTED WITHOUT BARCODE
+
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+❌ SKIPPED - NO PRODUCT NAME (4)
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+NOTE: Products without a name are skipped even if they have other data.
+
+1. Row 492:
+  Code: EMPTY
+  Barcode: 6925582155105
+  Cost: 1116
+  Quantity: 1
+  Location: هواء / دهانات
+
+2. Row 495:
+  Code: EMPTY
+  Barcode: EMPTY
+  Cost: 8
+  Quantity: 35
+  Location: هواء / موازين
+
+3. Row 499:
+  Code: EMPTY
+  Barcode: EMPTY
+  Cost: 1785
+  Quantity: 1
+  Location: هواء / بطاريات حجر
+
+4. Row 503:
+  Code: EMPTY
+  Barcode: 6941639812722
+  Cost: 1065
+  Quantity: 3
+  Location: هواء / مكبس هيدروليك
+
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+⭐ PRODUCTS WITH AUTO-GENERATED BARCODE (318)
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+NOTE: These products had NO barcode in Excel. Barcode was auto-generated from hierarchy.
+
+1. Row 5: شنيور 450وات
+  Code: TD45656
+  Generated Barcode: TOTAL
+  Location: كهرباء / شنيور
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+2. Row 6: شنيور 500 وات
+  Code: TD2051026-2
+  Generated Barcode: TOTALDUPL1
+  Location: كهرباء / شنيور
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+3. Row 7: شنيور 550
+  Code: TD55108
+  Generated Barcode: TOTALDUPL2
+  Location: كهرباء / شنيور
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+4. Row 8: شنيور 680
+  Code: ‎ TG1061356
+  Generated Barcode: TOTALDUPL3
+  Location: كهرباء / شنيور
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+5. Row 9: شنيور 710وات
+  Code: TG1071366
+  Generated Barcode: TOTALDUPL4
+  Location: كهرباء / شنيور
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+6. Row 10: شنيور 810
+  Code: TG1081316
+  Generated Barcode: TOTALDUPL5
+  Location: كهرباء / شنيور
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+7. Row 12: شنيور 1100وات نصف معدن سرعتين
+  Code: TG211166
+  Generated Barcode: TOTALDUPL6
+  Location: كهرباء / شنيور
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+8. Row 13: خلاط دهانات
+  Code: TD614006
+  Generated Barcode: TOTALDUPL7
+  Location: كهرباء / شنيور
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+9. Row 15: هيلتي 1050
+  Code: TH110266
+  Generated Barcode: TOTALDUPL8
+  Location: كهرباء / وهيلتي
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+10. Row 16: هيلتي 1050
+  Code: TH1153216
+  Generated Barcode: TOTALDUPL9
+  Location: كهرباء / وهيلتي
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+11. Row 17: هيلتي 1500وات جسم معدن
+  Code: TH1153256
+  Generated Barcode: TOTALDUPL10
+  Location: كهرباء / وهيلتي
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+12. Row 18: هيلتي 1600 وات ماكس
+  Code: th116386
+  Generated Barcode: TOTALDUPL11
+  Location: كهرباء / وهيلتي
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+13. Row 19: هيلتي تكسير1300
+  Code: TH2130016
+  Generated Barcode: TOTALDUPL12
+  Location: كهرباء / وهيلتي
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+14. Row 20: جاك هامر وات 16 كيلو 1700
+  Code: TH215456
+  Generated Barcode: TOTALDUPL13
+  Location: كهرباء / وهيلتي
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+15. Row 21: جاك هامر وات 14كيلو 1700
+  Code: th217068
+  Generated Barcode: TOTALDUPL14
+  Location: كهرباء / وهيلتي
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+16. Row 22: هيلتي 800 عدل
+  Code: TH308268
+  Generated Barcode: TOTALDUPL15
+  Location: كهرباء / وهيلتي
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+17. Row 23: شاكوش 25مم650 وات
+  Code: TH306236
+  Generated Barcode: TOTALDUPL16
+  Location: كهرباء / وهيلتي
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+18. Row 25: بلاور 400
+  Code: TB4036
+  Generated Barcode: TOTALDUPL17
+  Location: كهرباء / بلاور
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+19. Row 31: مسدس شمع 100 وات
+  Code: tt101116
+  Generated Barcode: TOTALDUPL18
+  Location: كهرباء / تسخين هوت جن
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+20. Row 32: مسدس شمع 250وات
+  Code: TT401116
+  Generated Barcode: TOTALDUPL19
+  Location: كهرباء / تسخين هوت جن
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+21. Row 34: مسدس دكو موتور منفصل 550 وات معدن
+  Code: TT5006-2
+  Generated Barcode: TOTALDUPL20
+  Location: كهرباء / دهانات
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+22. Row 36: صاورخ 710
+  Code: tg10711576
+  Generated Barcode: TOTALDUPL21
+  Location: كهرباء / صاروخ
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+23. Row 37: صاروخ750
+  Code: TG10711556
+  Generated Barcode: TOTALDUPL22
+  Location: كهرباء / صاروخ
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+24. Row 38: صاروخ900وات
+  Code: TG109125565
+  Generated Barcode: TOTALDUPL23
+  Location: كهرباء / صاروخ
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+25. Row 40: صاروخ 1100وات
+  Code: TG110125565
+  Generated Barcode: TOTALDUPL25
+  Location: كهرباء / صاروخ
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+26. Row 41: صاروخ2000وات
+  Code: TG12018026
+  Generated Barcode: TOTALDUPL26
+  Location: كهرباء / صاروخ
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+27. Row 42: صاروخ 2200
+  Code: TG12223026
+  Generated Barcode: TOTALDUPL27
+  Location: كهرباء / صاروخ
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+28. Row 43: صارورخ 2400 وات
+  Code: TG1252306
+  Generated Barcode: TOTALDUPL28
+  Location: كهرباء / صاروخ
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+29. Row 44: صاروخ ترددي 300
+  Code: TS3006
+  Generated Barcode: TOTALDUPL29
+  Location: كهرباء / صاروخ
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+30. Row 46: صاروخ اصطمبات بوز طويل 550
+  Code: TG55061
+  Generated Barcode: TOTALDUPL30
+  Location: كهرباء / صاروخ
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+... and 288 more
+
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+⚠️ PRODUCTS WITH MISSING COST (12)
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+1. Row 211: اجنه مبططه
+  Code: tac15311301
+  Location: يدوي / اجنة ومسمار يدوي
+
+2. Row 222: مسدس سليكون تقيل
+  Code: tht20409
+  Location: يدوي / مسدس سليكون
+
+3. Row 465: متر 3*16
+  Code: TMT126331M
+  Location: وحدات قياس / امتار يدوي
+
+4. Row 469: طقم كومبو 2 قطعه متر ليزر 100 م مع متر قياس 5 م
+  Code: TOS250902
+  Location: وحدات قياس / امتار ليزر
+
+5. Row 491: طقم فرش دهان 8 قطع
+  Code: THT8450801
+  Location: هواء / دهانات
+
+6. Row 494: ميزان ديجتال 30 كيلو
+  Code: TESA3301
+  Location: هواء / موازين
+
+7. Row 497: حجر ريموت
+  Code: THAB3A01
+  Location: هواء / بطاريات حجر
+
+8. Row 498: حجر قلم
+  Code: TEST-1770841641120-TCJNB1
+  Location: هواء / بطاريات حجر
+
+9. Row 501: مكبس كابلات هيدوليك 300
+  Code: thct0240
+  Location: هواء / مكبس هيدروليك
+
+10. Row 502: مكبس كابلات70 ملي
+  Code: THCT070
+  Location: هواء / مكبس هيدروليك
+
+11. Row 505: ماتور مياه نص حصان 370 وات (جديد)
+  Code: TWP137016
+  Location: هواء / مواتير مياه
+
+12. Row 508: ماتور مياه 1.5 حصان 1100
+  Code: TWP311006
+  Location: هواء / مواتير مياه
+
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+END OF REPORT
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════

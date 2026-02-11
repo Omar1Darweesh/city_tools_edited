@@ -1,0 +1,370 @@
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+INGCO - COMPREHENSIVE DATA REPORT
+Generated: 2/11/2026, 10:27:23 PM
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+📊 SUMMARY
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+Total Rows Processed:                           102
+✅ Successfully Inserted:                        102
+❌ Insertion Errors:                             0
+❌ Skipped (No Name):                            0
+❌ Removed (Duplicate Codes in Excel):           0 products
+⭐ Auto-Generated Codes:                         0 products
+⭐ Barcodes Set to NULL (Duplicate in Excel):    0 products
+⭐ Barcodes Auto-Generated (Empty in Excel):     28 products
+⚠️  Barcodes Modified (Cross-Brand Conflict):    0 products (added DUPL suffix)
+📁 Empty ItemTypes Created:                      31
+
+📐 CALCULATION:
+  102 (total rows)
+  - 0 (no name)
+  - 0 (duplicate codes removed)
+  ───────────
+  = 102 (expected to insert)
+  - 0 (insertion errors)
+  ───────────
+  = 102 (actually inserted)
+
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+PRODUCT COUNTS BY HIERARCHY
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+📦 CATEGORIES:
+  INGCO: 102 products
+
+📂 SUBCATEGORIES:
+  INGCO > كهرباء: 27 products
+  INGCO > يدوي: 39 products
+  INGCO > اكسسوارات: 9 products
+  INGCO > بطاررية: 12 products
+  INGCO > جاردن: 4 products
+  INGCO > وحدات قياس: 9 products
+  INGCO > هواء: 2 products
+
+📁 ITEM TYPES (All):
+  INGCO > يدوي > بنس كماشة فرنساوي انجليزي: 13 products
+  INGCO > يدوي > مفكات: 6 products
+  INGCO > بطاررية > شنيور وهيلتي ودريل: 6 products
+  INGCO > وحدات قياس > امتار يدوي: 6 products
+  INGCO > كهرباء > شنيور: 5 products
+  INGCO > اكسسوارات > قطع غيار: 5 products
+  INGCO > كهرباء > صاروخ: 4 products
+  INGCO > يدوي > لقم ويد سيستم: 4 products
+  INGCO > كهرباء > وهيلتي: 3 products
+  INGCO > كهرباء > بلاور: 3 products
+  INGCO > كهرباء > تسخين هوت جن: 3 products
+  INGCO > كهرباء > دهانات: 3 products
+  INGCO > كهرباء > اركت: 3 products
+  INGCO > يدوي > قطرات: 3 products
+  INGCO > يدوي > ادوات سيارات: 3 products
+  INGCO > اكسسوارات > صنية والماظة: 3 products
+  INGCO > بطاررية > اطقم كومبو: 3 products
+  INGCO > بطاررية > بلاور وتسخين: 3 products
+  INGCO > جاردن > ماكن غسيل: 3 products
+  INGCO > يدوي > ماكن سيراميك: 2 products
+  INGCO > يدوي > مقصات: 2 products
+  INGCO > وحدات قياس > ميزان ليزر: 2 products
+  INGCO > كهرباء > راوتر: 1 products
+  INGCO > كهرباء > صنية: 1 products
+  INGCO > كهرباء > فارة: 1 products
+  INGCO > يدوي > اطقم عده: 1 products
+  INGCO > يدوي > شاكوش ومطرقة: 1 products
+  INGCO > يدوي > شنط عده: 1 products
+  INGCO > يدوي > مسدس سليكون: 1 products
+  INGCO > يدوي > مفاتيح: 1 products
+  INGCO > يدوي > جوانتي: 1 products
+  INGCO > اكسسوارات > بنط: 1 products
+  INGCO > جاردن > رشاشات: 1 products
+  INGCO > وحدات قياس > امتار ليزر: 1 products
+  INGCO > هواء > دباسات: 1 products
+  INGCO > هواء > دهانات: 1 products
+  INGCO > كهرباء > ديسك: 0 products ⭐ EMPTY
+  INGCO > كهرباء > صنفرة: 0 products ⭐ EMPTY
+  INGCO > كهرباء > ماكن جلخ: 0 products ⭐ EMPTY
+  INGCO > كهرباء > ماكن لحام  قصدير: 0 products ⭐ EMPTY
+  INGCO > كهرباء > ماكن لحام  بولي: 0 products ⭐ EMPTY
+  INGCO > كهرباء > ماكن لحام حديد: 0 products ⭐ EMPTY
+  INGCO > يدوي > اطقم الن وبيبه: 0 products ⭐ EMPTY
+  INGCO > يدوي > قمطة وزرجينة ومنجلة: 0 products ⭐ EMPTY
+  INGCO > يدوي > اجنة ومسمار يدوي: 0 products ⭐ EMPTY
+  INGCO > يدوي > منشار خشابي وحدادي: 0 products ⭐ EMPTY
+  INGCO > يدوي > بوكليز: 0 products ⭐ EMPTY
+  INGCO > يدوي > نظارت: 0 products ⭐ EMPTY
+  INGCO > يدوي > ازميل: 0 products ⭐ EMPTY
+  INGCO > يدوي > دباسة خشب: 0 products ⭐ EMPTY
+  INGCO > يدوي > ادوات دهانات: 0 products ⭐ EMPTY
+  INGCO > اكسسوارات > سلاح اركت: 0 products ⭐ EMPTY
+  INGCO > اكسسوارات > احجار: 0 products ⭐ EMPTY
+  INGCO > اكسسوارات > صنفرة وادوات ماكن لحام: 0 products ⭐ EMPTY
+  INGCO > اكسسوارات > فرش: 0 products ⭐ EMPTY
+  INGCO > بطاررية > دهانات: 0 products ⭐ EMPTY
+  INGCO > بطاررية > كشافات: 0 products ⭐ EMPTY
+  INGCO > بطاررية > صاروخ: 0 products ⭐ EMPTY
+  INGCO > بطاررية > صنية: 0 products ⭐ EMPTY
+  INGCO > جاردن > خراطيم: 0 products ⭐ EMPTY
+  INGCO > جاردن > مقصات زرع: 0 products ⭐ EMPTY
+  INGCO > جاردن > ادوات زراعة: 0 products ⭐ EMPTY
+  INGCO > جاردن > ماكن قص نجيلة: 0 products ⭐ EMPTY
+  INGCO > جاردن > مناشير زراعية: 0 products ⭐ EMPTY
+  INGCO > وحدات قياس > ميزان مياه: 0 products ⭐ EMPTY
+  INGCO > وحدات قياس > زاوية علام: 0 products ⭐ EMPTY
+  INGCO > هواء > دريل: 0 products ⭐ EMPTY
+
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+⭐ EMPTY ITEM TYPES CREATED - 31
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+NOTE: These ItemTypes were found in Excel but have NO products.
+They were created in the database structure.
+
+1. INGCO > كهرباء > ديسك
+2. INGCO > كهرباء > صنفرة
+3. INGCO > كهرباء > ماكن جلخ
+4. INGCO > كهرباء > ماكن لحام  قصدير
+5. INGCO > كهرباء > ماكن لحام  بولي
+6. INGCO > كهرباء > ماكن لحام حديد
+7. INGCO > يدوي > اطقم الن وبيبه
+8. INGCO > يدوي > قمطة وزرجينة ومنجلة
+9. INGCO > يدوي > اجنة ومسمار يدوي
+10. INGCO > يدوي > منشار خشابي وحدادي
+11. INGCO > يدوي > بوكليز
+12. INGCO > يدوي > نظارت
+13. INGCO > يدوي > ازميل
+14. INGCO > يدوي > دباسة خشب
+15. INGCO > يدوي > ادوات دهانات
+16. INGCO > اكسسوارات > سلاح اركت
+17. INGCO > اكسسوارات > احجار
+18. INGCO > اكسسوارات > صنفرة وادوات ماكن لحام
+19. INGCO > اكسسوارات > فرش
+20. INGCO > بطاررية > دهانات
+21. INGCO > بطاررية > كشافات
+22. INGCO > بطاررية > صاروخ
+23. INGCO > بطاررية > صنية
+24. INGCO > جاردن > خراطيم
+25. INGCO > جاردن > مقصات زرع
+26. INGCO > جاردن > ادوات زراعة
+27. INGCO > جاردن > ماكن قص نجيلة
+28. INGCO > جاردن > مناشير زراعية
+29. INGCO > وحدات قياس > ميزان مياه
+30. INGCO > وحدات قياس > زاوية علام
+31. INGCO > هواء > دريل
+
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+MISSING FIELDS SUMMARY
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+⭐ Products with AUTO-GENERATED CODE:             8
+⭐ Products with AUTO-GENERATED BARCODE:          28
+ℹ️  Products with ZERO quantity:                  32
+
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+⭐ PRODUCTS WITH AUTO-GENERATED BARCODE (28)
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+NOTE: These products had NO barcode in Excel. Barcode was auto-generated from hierarchy.
+
+1. Row 5: شنيور 450 وات
+  Code: ED45658
+  Generated Barcode: INGCO
+  Location: كهرباء / شنيور
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+2. Row 12: هيلتي تكسير 1300
+  Code: pDB13008
+  Generated Barcode: INGCODUPL1
+  Location: كهرباء / وهيلتي
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+3. Row 15: بلاور 400
+  Code: AB4018
+  Generated Barcode: INGCODUPL2
+  Location: كهرباء / بلاور
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+4. Row 16: بلاور 650
+  Code: AB6038
+  Generated Barcode: INGCODUPL3
+  Location: كهرباء / بلاور
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+5. Row 20: مسدس تسخين 2000
+  Code: hg2000385
+  Generated Barcode: INGCODUPL4
+  Location: كهرباء / تسخين هوت جن
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+6. Row 23: مسدس رش كهرباء 450وات
+  Code: SPG3508
+  Generated Barcode: INGCODUPL5
+  Location: كهرباء / دهانات
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+7. Row 29: صاروخ 9" 2200 وات
+  Code: AG220018
+  Generated Barcode: INGCODUPL6
+  Location: كهرباء / صاروخ
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+8. Row 32: اركت 400 وات
+  Code: JS400285
+  Generated Barcode: INGCODUPL7
+  Location: كهرباء / اركت
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+9. Row 33: اركت 570وات
+  Code: JS57028
+  Generated Barcode: INGCODUPL8
+  Location: كهرباء / اركت
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+10. Row 38: منشار صنيه 2200 وات 9"
+  Code: CS23522
+  Generated Barcode: INGCODUPL9
+  Location: كهرباء / صنية
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+11. Row 57: هزاز سراميك 20 فولت 1 بطاريه
+  Code: TTVLI20101
+  Generated Barcode: INGCODUPL10
+  Location: يدوي / ماكن سيراميك
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+12. Row 62: طقم لقم 46 قطعه
+  Code: hkts14462
+  Generated Barcode: INGCODUPL11
+  Location: يدوي / لقم ويد سيستم
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+13. Row 70: اكماشه نجار 8 بوصه
+  Code: HCPP02200
+  Generated Barcode: INGCODUPL12
+  Location: يدوي / بنس كماشة فرنساوي انجليزي
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+14. Row 72: بنسه غراب 10 "
+  Code: HPP28258
+  Generated Barcode: INGCODUPL13
+  Location: يدوي / بنس كماشة فرنساوي انجليزي
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+15. Row 73: بنسه بوز طويل 6"
+  Code: HLNP08168
+  Generated Barcode: INGCODUPL14
+  Location: يدوي / بنس كماشة فرنساوي انجليزي
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+16. Row 100: وصله بطاريه 600امبير3متر
+  Code: HBTCP6008
+  Generated Barcode: INGCODUPL15
+  Location: يدوي / ادوات سيارات
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+17. Row 106: مقص عقله 8"
+  Code: HPS0201
+  Generated Barcode: INGCODUPL16
+  Location: يدوي / مقصات
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+18. Row 114: واحد بطاريه شنيور 12فولت تايب سي 20 نيوتن
+  Code: CDLI12456
+  Generated Barcode: INGCODUPL17
+  Location: اكسسوارات / قطع غيار
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+19. Row 115: شاحن بطاريه 20
+  Code: FCLI2001
+  Generated Barcode: INGCODUPL18
+  Location: اكسسوارات / قطع غيار
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+20. Row 116: بطاريه 20 فولت
+  Code: FBLI20011
+  Generated Barcode: INGCODUPL19
+  Location: اكسسوارات / قطع غيار
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+21. Row 128: طقم عده 165قطعه
+  Code: HKTHP11651
+  Generated Barcode: INGCODUPL20
+  Location: بطاررية / اطقم كومبو
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+22. Row 129: طقم شنيور 66 وهليتي وصاروخ بطاريه وشاحن
+  Code: COSLI241198
+  Generated Barcode: INGCODUPL21
+  Location: بطاررية / اطقم كومبو
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+23. Row 141: بلاور 20 فولت بدون
+  Code: CABLI20028
+  Generated Barcode: INGCODUPL22
+  Location: بطاررية / بلاور وتسخين
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+24. Row 155: مغسله 20 فولت بطاريه وشاحن 24 بار
+  Code: CPWLI20362
+  Generated Barcode: INGCODUPL23
+  Location: جاردن / ماكن غسيل
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+25. Row 165: متر 25*10 2 وش
+  Code: HSMT081025
+  Generated Barcode: INGCODUPL24
+  Location: وحدات قياس / امتار يدوي
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+26. Row 167: متر ليزر 70 متر متر5متر كاوتش 32
+  Code: HLDD241201
+  Generated Barcode: INGCODUPL25
+  Location: وحدات قياس / امتار ليزر
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+27. Row 170: ميزان مياه 3 عين 30 سم
+  Code: HSL08030
+  Generated Barcode: INGCODUPL26
+  Location: وحدات قياس / ميزان ليزر
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+28. Row 171: ميزان مياه 3 عين 22 سم
+  Code: HMSL01030
+  Generated Barcode: INGCODUPL27
+  Location: وحدات قياس / ميزان ليزر
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+⚠️ PRODUCTS WITH MISSING COST (8)
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+1. Row 16: بلاور 650
+  Code: AB6038
+  Location: كهرباء / بلاور
+
+2. Row 92: قطر بلاستك
+  Code: HKNS16001
+  Location: يدوي / قطرات
+
+3. Row 97: جوانتي
+  Code: HGPUG02
+  Location: يدوي / جوانتي
+
+4. Row 115: شاحن بطاريه 20
+  Code: FCLI2001
+  Location: اكسسوارات / قطع غيار
+
+5. Row 116: بطاريه 20 فولت
+  Code: FBLI20011
+  Location: اكسسوارات / قطع غيار
+
+6. Row 140: بلاور 20 فولت بطاريه وشاحن
+  Code: CABLI2078
+  Location: بطاررية / بلاور وتسخين
+
+7. Row 141: بلاور 20 فولت بدون
+  Code: CABLI20028
+  Location: بطاررية / بلاور وتسخين
+
+8. Row 165: متر 25*10 2 وش
+  Code: HSMT081025
+  Location: وحدات قياس / امتار يدوي
+
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+END OF REPORT
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════

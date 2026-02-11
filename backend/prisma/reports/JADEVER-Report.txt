@@ -1,0 +1,278 @@
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+JADEVER - COMPREHENSIVE DATA REPORT
+Generated: 2/11/2026, 10:27:23 PM
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+📊 SUMMARY
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+Total Rows Processed:                           52
+✅ Successfully Inserted:                        52
+❌ Insertion Errors:                             0
+❌ Skipped (No Name):                            0
+❌ Removed (Duplicate Codes in Excel):           0 products
+⭐ Auto-Generated Codes:                         0 products
+⭐ Barcodes Set to NULL (Duplicate in Excel):    0 products
+⭐ Barcodes Auto-Generated (Empty in Excel):     15 products
+⚠️  Barcodes Modified (Cross-Brand Conflict):    0 products (added DUPL suffix)
+📁 Empty ItemTypes Created:                      41
+
+📐 CALCULATION:
+  52 (total rows)
+  - 0 (no name)
+  - 0 (duplicate codes removed)
+  ───────────
+  = 52 (expected to insert)
+  - 0 (insertion errors)
+  ───────────
+  = 52 (actually inserted)
+
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+PRODUCT COUNTS BY HIERARCHY
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+📦 CATEGORIES:
+  JADEVER: 52 products
+
+📂 SUBCATEGORIES:
+  JADEVER > كهرباء: 7 products
+  JADEVER > يدوي: 29 products
+  JADEVER > بطاررية: 4 products
+  JADEVER > جاردن: 4 products
+  JADEVER > وحدات قياس: 7 products
+  JADEVER > هواء: 1 products
+
+📁 ITEM TYPES (All):
+  JADEVER > يدوي > شاكوش ومطرقة: 5 products
+  JADEVER > يدوي > شنط عده: 5 products
+  JADEVER > يدوي > ادوات سيارات: 5 products
+  JADEVER > يدوي > اطقم الن وبيبه: 4 products
+  JADEVER > يدوي > بنس كماشة فرنساوي انجليزي: 3 products
+  JADEVER > بطاررية > شنيور وهيلتي ودريل: 3 products
+  JADEVER > وحدات قياس > ميزان ليزر: 3 products
+  JADEVER > يدوي > مفكات: 2 products
+  JADEVER > يدوي > لقم ويد سيستم: 2 products
+  JADEVER > جاردن > ادوات زراعة: 2 products
+  JADEVER > وحدات قياس > ميزان مياه: 2 products
+  JADEVER > كهرباء > وهيلتي: 1 products
+  JADEVER > كهرباء > بلاور: 1 products
+  JADEVER > كهرباء > تسخين هوت جن: 1 products
+  JADEVER > كهرباء > راوتر: 1 products
+  JADEVER > كهرباء > صنية: 1 products
+  JADEVER > كهرباء > ماكن لحام  قصدير: 1 products
+  JADEVER > كهرباء > ماكن لحام حديد: 1 products
+  JADEVER > يدوي > ماكن سيراميك: 1 products
+  JADEVER > يدوي > منشار خشابي وحدادي: 1 products
+  JADEVER > يدوي > مفاتيح: 1 products
+  JADEVER > بطاررية > صاروخ: 1 products
+  JADEVER > جاردن > خراطيم: 1 products
+  JADEVER > جاردن > مقصات زرع: 1 products
+  JADEVER > وحدات قياس > امتار يدوي: 1 products
+  JADEVER > وحدات قياس > امتار ليزر: 1 products
+  JADEVER > هواء > دهانات: 1 products
+  JADEVER > كهرباء > شنيور: 0 products ⭐ EMPTY
+  JADEVER > كهرباء > دهانات: 0 products ⭐ EMPTY
+  JADEVER > كهرباء > صاروخ: 0 products ⭐ EMPTY
+  JADEVER > كهرباء > اركت: 0 products ⭐ EMPTY
+  JADEVER > كهرباء > ديسك: 0 products ⭐ EMPTY
+  JADEVER > كهرباء > فارة: 0 products ⭐ EMPTY
+  JADEVER > كهرباء > صنفرة: 0 products ⭐ EMPTY
+  JADEVER > كهرباء > ماكن جلخ: 0 products ⭐ EMPTY
+  JADEVER > كهرباء > ماكن لحام  بولي: 0 products ⭐ EMPTY
+  JADEVER > يدوي > اطقم عده: 0 products ⭐ EMPTY
+  JADEVER > يدوي > قمطة وزرجينة ومنجلة: 0 products ⭐ EMPTY
+  JADEVER > يدوي > اجنة ومسمار يدوي: 0 products ⭐ EMPTY
+  JADEVER > يدوي > مسدس سليكون: 0 products ⭐ EMPTY
+  JADEVER > يدوي > مسدس شمع: 0 products ⭐ EMPTY
+  JADEVER > يدوي > قطرات: 0 products ⭐ EMPTY
+  JADEVER > يدوي > بوكليز: 0 products ⭐ EMPTY
+  JADEVER > يدوي > جوانتي: 0 products ⭐ EMPTY
+  JADEVER > يدوي > نظارت: 0 products ⭐ EMPTY
+  JADEVER > يدوي > ازميل: 0 products ⭐ EMPTY
+  JADEVER > يدوي > مقصات: 0 products ⭐ EMPTY
+  JADEVER > يدوي > دباسة خشب: 0 products ⭐ EMPTY
+  JADEVER > يدوي > ادوات دهانات: 0 products ⭐ EMPTY
+  JADEVER > اكسسوارات > بنط: 0 products ⭐ EMPTY
+  JADEVER > اكسسوارات > قطع غيار: 0 products ⭐ EMPTY
+  JADEVER > اكسسوارات > صنية والماظة: 0 products ⭐ EMPTY
+  JADEVER > اكسسوارات > سلاح اركت: 0 products ⭐ EMPTY
+  JADEVER > اكسسوارات > احجار: 0 products ⭐ EMPTY
+  JADEVER > اكسسوارات > صنفرة وادوات ماكن لحام: 0 products ⭐ EMPTY
+  JADEVER > اكسسوارات > فرش: 0 products ⭐ EMPTY
+  JADEVER > بطاررية > اطقم كومبو: 0 products ⭐ EMPTY
+  JADEVER > بطاررية > دهانات: 0 products ⭐ EMPTY
+  JADEVER > بطاررية > بلاور وتسخين: 0 products ⭐ EMPTY
+  JADEVER > بطاررية > كشافات: 0 products ⭐ EMPTY
+  JADEVER > بطاررية > صنية: 0 products ⭐ EMPTY
+  JADEVER > جاردن > رشاشات: 0 products ⭐ EMPTY
+  JADEVER > جاردن > ماكن قص نجيلة: 0 products ⭐ EMPTY
+  JADEVER > جاردن > ماكن غسيل: 0 products ⭐ EMPTY
+  JADEVER > جاردن > مناشير زراعية: 0 products ⭐ EMPTY
+  JADEVER > وحدات قياس > زاوية علام: 0 products ⭐ EMPTY
+  JADEVER > هواء > دباسات: 0 products ⭐ EMPTY
+  JADEVER > هواء > دريل: 0 products ⭐ EMPTY
+
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+⭐ EMPTY ITEM TYPES CREATED - 41
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+NOTE: These ItemTypes were found in Excel but have NO products.
+They were created in the database structure.
+
+1. JADEVER > كهرباء > شنيور
+2. JADEVER > كهرباء > دهانات
+3. JADEVER > كهرباء > صاروخ
+4. JADEVER > كهرباء > اركت
+5. JADEVER > كهرباء > ديسك
+6. JADEVER > كهرباء > فارة
+7. JADEVER > كهرباء > صنفرة
+8. JADEVER > كهرباء > ماكن جلخ
+9. JADEVER > كهرباء > ماكن لحام  بولي
+10. JADEVER > يدوي > اطقم عده
+11. JADEVER > يدوي > قمطة وزرجينة ومنجلة
+12. JADEVER > يدوي > اجنة ومسمار يدوي
+13. JADEVER > يدوي > مسدس سليكون
+14. JADEVER > يدوي > مسدس شمع
+15. JADEVER > يدوي > قطرات
+16. JADEVER > يدوي > بوكليز
+17. JADEVER > يدوي > جوانتي
+18. JADEVER > يدوي > نظارت
+19. JADEVER > يدوي > ازميل
+20. JADEVER > يدوي > مقصات
+21. JADEVER > يدوي > دباسة خشب
+22. JADEVER > يدوي > ادوات دهانات
+23. JADEVER > اكسسوارات > بنط
+24. JADEVER > اكسسوارات > قطع غيار
+25. JADEVER > اكسسوارات > صنية والماظة
+26. JADEVER > اكسسوارات > سلاح اركت
+27. JADEVER > اكسسوارات > احجار
+28. JADEVER > اكسسوارات > صنفرة وادوات ماكن لحام
+29. JADEVER > اكسسوارات > فرش
+30. JADEVER > بطاررية > اطقم كومبو
+31. JADEVER > بطاررية > دهانات
+32. JADEVER > بطاررية > بلاور وتسخين
+33. JADEVER > بطاررية > كشافات
+34. JADEVER > بطاررية > صنية
+35. JADEVER > جاردن > رشاشات
+36. JADEVER > جاردن > ماكن قص نجيلة
+37. JADEVER > جاردن > ماكن غسيل
+38. JADEVER > جاردن > مناشير زراعية
+39. JADEVER > وحدات قياس > زاوية علام
+40. JADEVER > هواء > دباسات
+41. JADEVER > هواء > دريل
+
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+MISSING FIELDS SUMMARY
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+⭐ Products with AUTO-GENERATED CODE:             2
+⭐ Products with AUTO-GENERATED BARCODE:          15
+ℹ️  Products with ZERO quantity:                  10
+
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+⭐ PRODUCTS WITH AUTO-GENERATED BARCODE (15)
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+NOTE: These products had NO barcode in Excel. Barcode was auto-generated from hierarchy.
+
+1. Row 6: شاكوش تكسير 1600 وات 14 كيلو
+  Code: JDB1D80
+  Generated Barcode: JADEVER
+  Location: كهرباء / وهيلتي
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+2. Row 17: منشار صينيه 7.وريع 1200 وات
+  Code: JDCW1512001
+  Generated Barcode: JADEVERDUPL1
+  Location: كهرباء / صنية
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+3. Row 26: وش لحام اتوماتيك
+  Code: JDWH2501
+  Generated Barcode: JADEVERDUPL2
+  Location: كهرباء / ماكن لحام حديد
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+4. Row 29: طقم مفك 6قطع يد بلاستيك
+  Code: JDSS2206
+  Generated Barcode: JADEVERDUPL3
+  Location: يدوي / مفكات
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+5. Row 32: 60 سراميك تقطيع ماكينه
+  Code: JDTR1506
+  Generated Barcode: JADEVERDUPL4
+  Location: يدوي / ماكن سيراميك
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+6. Row 38: بنسه كلابه 10"
+  Code: JDLP1110
+  Generated Barcode: JADEVERDUPL5
+  Location: يدوي / بنس كماشة فرنساوي انجليزي
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+7. Row 42: مطرقه 220 جرام كاوتش فايبر
+  Code: JDHM7301
+  Generated Barcode: JADEVERDUPL6
+  Location: يدوي / شاكوش ومطرقة
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+8. Row 57: شنطه 16
+  Code: JDTG3116
+  Generated Barcode: JADEVERDUPL7
+  Location: يدوي / شنط عده
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+9. Row 71: باور بنك لبطاريه السياره 600 امبير
+  Code: JDLY1512
+  Generated Barcode: JADEVERDUPL8
+  Location: يدوي / ادوات سيارات
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+10. Row 72: باور بنك بطاريه 400
+  Code: JDLY1508
+  Generated Barcode: JADEVERDUPL9
+  Location: يدوي / ادوات سيارات
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+11. Row 75: منفاخ سياره 8 فولت
+  Code: JDAAM572
+  Generated Barcode: JADEVERDUPL10
+  Location: يدوي / ادوات سيارات
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+12. Row 91: شنيور 12Vبطاريه يدون شاحن
+  Code: JDCDS510
+  Generated Barcode: JADEVERDUPL11
+  Location: بطاررية / شنيور وهيلتي ودريل
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+13. Row 93: شنيور 20 فولت دقاق +بطاريه وشاحن
+  Code: JDCDP521
+  Generated Barcode: JADEVERDUPL12
+  Location: بطاررية / شنيور وهيلتي ودريل
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+14. Row 107: وصلات ري 3 قطع
+  Code: JDQC2E33
+  Generated Barcode: JADEVERDUPL13
+  Location: جاردن / ادوات زراعة
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+15. Row 108: خرطوم مياه 15 متر
+  Code: JDVZ1515
+  Generated Barcode: JADEVERDUPL14
+  Location: جاردن / ادوات زراعة
+  ✅ STATUS: INSERTED WITH AUTO-GENERATED BARCODE
+
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+⚠️ PRODUCTS WITH MISSING COST (2)
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+
+1. Row 75: منفاخ سياره 8 فولت
+  Code: JDAAM572
+  Location: يدوي / ادوات سيارات
+
+2. Row 107: وصلات ري 3 قطع
+  Code: JDQC2E33
+  Location: جاردن / ادوات زراعة
+
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════
+END OF REPORT
+════════════════════════════════════════════════════════════════════════════════════════════════════════════════════════

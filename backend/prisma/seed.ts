@@ -355,6 +355,7 @@ async function main() {
             roleId: adminRole.id,
         },
     });
+
     console.log('✅ Admin user created (username: admin, password: admin123)\n');
 
     console.log('🎉 Seed complete!\n');
